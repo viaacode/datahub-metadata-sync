@@ -72,7 +72,7 @@ def callable_virtualenv():
     print(Style.RESET_ALL)
     for _ in range(10):
         print(Style.DIM + 'Please wait...', flush=True)
-        sleep(10)
+        sleep(3)
     print('Finished')
 
 
