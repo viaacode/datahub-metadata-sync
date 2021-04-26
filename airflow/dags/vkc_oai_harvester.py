@@ -5,7 +5,10 @@ from pprint import pprint
 from airflow import DAG
 from airflow.operators.python import PythonOperator, PythonVirtualenvOperator
 from airflow.utils.dates import days_ago
+
 from task_services.oai_api import OaiApi
+from task_services.xml_transformer import XmlTransformer
+from task_services.rabbit_publisher import RabbitPublisher
 
 args = {
     'owner': 'airflow',
@@ -29,10 +32,14 @@ def harvest_oai(full_sync=False):
 
 def transform_lido_to_mh(**context):
     print(f'transform_lido_to_mh called with context={context} transform xml format by iterating database')
+    tr = XmlTransformer()
+    record = tr.convert('some record')
     time.sleep(1)
 
 def publish_to_rabbitmq(**context):
     print(f'publish_to_rabbitmq called with context={context} pushes data to rabbit mq')
+    rp = RabbitPublisher()
+    rp.publish('some record data')
     time.sleep(3)
 
 

@@ -12,9 +12,11 @@ class OaiApi:
         self.AUTH_URL = '/oauth/v2/auth'
         self.TOKEN_URL = '/oauth/v2/token'
         self.token = 'todo_fetch_with_auth_call'
-
         print("OaiApi initialized")
 
+
+    # we might alter this soon to fetch xml instead of using the json
+    # api, depending on how the xml transformation needs to work...
     def get_data(self, limit=20, offset=0, sort=None):
         path = self.API_URL + '/api/v1/data'
         headers={'Authorization': 'Bearer {}'.format(self.token)}
