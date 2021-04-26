@@ -40,19 +40,17 @@ with dag:
     harvest_oai_task = PythonOperator(
         task_id='harvest_oai',
         python_callable=harvest_oai,
-        provide_context=True
+        # provide_context=True
     )
 
     transform_lido_task = PythonOperator(
         task_id='transform_lido_to_mh',
         python_callable=transform_lido_to_mh,
-        provide_context=True
     )
 
     publish_to_rabbitmq_task = PythonOperator(
         task_id='publish_to_rabbitmq',
         python_callable=publish_to_rabbitmq,
-        provide_context=True
     )
 
     harvest_oai_task >> transform_lido_task >> publish_to_rabbitmq_task
