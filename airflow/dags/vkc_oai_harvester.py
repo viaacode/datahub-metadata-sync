@@ -24,14 +24,16 @@ def harvest_oai(**context):
     print(f'harvest_oai called with context={context} harvest OAI data and store it in database')
     oai_api = OaiApi()
     results = oai_api.get_data()
+    time.sleep(2)
     return results
 
 def transform_lido_to_mh(**context):
     print(f'transform_lido_to_mh called with context={context} transform xml format by iterating database')
+    time.sleep(1)
 
 def publish_to_rabbitmq(**context):
     print(f'publish_to_rabbitmq called with context={context} pushes data to rabbit mq')
-
+    time.sleep(3)
 
 
 with dag:
