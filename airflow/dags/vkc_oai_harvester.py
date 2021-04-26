@@ -20,8 +20,8 @@ dag = DAG(
 )
 
 
-def harvest_oai(**context):
-    print(f'harvest_oai called with context={context} harvest OAI data and store it in database')
+def harvest_oai(full_sync=False):
+    print(f'harvest_oai called with full_sync={full_sync} harvest OAI data and store it in database')
     oai_api = OaiApi()
     results = oai_api.get_data()
     time.sleep(2)
@@ -40,7 +40,7 @@ with dag:
     harvest_oai_task = PythonOperator(
         task_id='harvest_oai',
         python_callable=harvest_oai,
-        # provide_context=True
+        op_kwargs={'full_sync': True}
     )
 
     transform_lido_task = PythonOperator(
@@ -56,46 +56,8 @@ with dag:
     harvest_oai_task >> transform_lido_task >> publish_to_rabbitmq_task
 
 
-
-# original example code, does a lot of things we currently don't need yet but keeping
-# this for later inspiration. 
-# TODO clear this out once above dag is finished:
-
-# # [START howto_operator_python]
-# def print_context(ds, **kwargs):
-#     """Print the Airflow context and ds variable from the context."""
-#     pprint(kwargs)
-#     print(ds)
-#     return 'Whatever you return gets printed in the logs'
-# 
-# 
-# run_this = PythonOperator(
-#     task_id='print_the_context',
-#     python_callable=print_context,
-#     dag=dag,
-# )
-# # [END howto_operator_python]
-# 
-# 
-# # [START howto_operator_python_kwargs]
-# def my_sleeping_function(random_base):
-#     """This is a function that will run within the DAG execution"""
-#     time.sleep(random_base)
-# 
-# 
-# # Generate 5 sleeping tasks, sleeping from 0.0 to 0.4 seconds respectively
-# for i in range(5):
-#     task = PythonOperator(
-#         task_id='sleep_for_' + str(i),
-#         python_callable=my_sleeping_function,
-#         op_kwargs={'random_base': float(i) / 10},
-#         dag=dag,
-#     )
-# 
-#     run_this >> task
-# # [END howto_operator_python_kwargs]
-# 
-# 
+# Example of virtualenv python, right now we don't need it as we just incorporated
+# wanted packages in the main env usign requirements.txt
 # # [START howto_operator_python_venv]
 # def callable_virtualenv():
 #     """
