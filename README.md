@@ -53,25 +53,26 @@ Testrun a task for instance harvest oai data to target database:
 
 ```
 airflow tasks test vkc_oai_harvester  harvest_oai 2015-06-01
-[2021-04-26 16:34:39,043] {dagbag.py:451} INFO - Filling up the DagBag from /Users/wschrep/FreelanceWork/VIAA/IIIF_newproject/datahub-metadata-sync/airflow/dags
-[2021-04-26 16:34:39,064] {taskinstance.py:877} INFO - Dependencies all met for <TaskInstance: vkc_oai_harvester.harvest_oai 2015-06-01T00:00:00+00:00 [None]>
-[2021-04-26 16:34:39,071] {taskinstance.py:877} INFO - Dependencies all met for <TaskInstance: vkc_oai_harvester.harvest_oai 2015-06-01T00:00:00+00:00 [None]>
-[2021-04-26 16:34:39,071] {taskinstance.py:1068} INFO -
+[2021-04-27 14:46:30,050] {dagbag.py:451} INFO - Filling up the DagBag from /Users/wschrep/FreelanceWork/VIAA/IIIF_newproject/datahub-metadata-sync/airflow/dags
+[2021-04-27 14:46:30,088] {taskinstance.py:877} INFO - Dependencies all met for <TaskInstance: vkc_oai_harvester.harvest_oai 2015-06-01T00:00:00+00:00 [None]>
+[2021-04-27 14:46:30,098] {taskinstance.py:877} INFO - Dependencies all met for <TaskInstance: vkc_oai_harvester.harvest_oai 2015-06-01T00:00:00+00:00 [None]>
+[2021-04-27 14:46:30,098] {taskinstance.py:1068} INFO -
 --------------------------------------------------------------------------------
-[2021-04-26 16:34:39,071] {taskinstance.py:1069} INFO - Starting attempt 1 of 1
-[2021-04-26 16:34:39,071] {taskinstance.py:1070} INFO -
+[2021-04-27 14:46:30,099] {taskinstance.py:1069} INFO - Starting attempt 1 of 1
+[2021-04-27 14:46:30,099] {taskinstance.py:1070} INFO -
 --------------------------------------------------------------------------------
-[2021-04-26 16:34:39,072] {taskinstance.py:1089} INFO - Executing <Task(PythonOperator): harvest_oai> on 2015-06-01T00:00:00+00:00
-[2021-04-26 16:34:39,147] {taskinstance.py:1281} INFO - Exporting the following env vars:
+[2021-04-27 14:46:30,100] {taskinstance.py:1089} INFO - Executing <Task(PythonOperator): harvest_oai> on 2015-06-01T00:00:00+00:00
+[2021-04-27 14:46:30,184] {taskinstance.py:1281} INFO - Exporting the following env vars:
 AIRFLOW_CTX_DAG_OWNER=airflow
 AIRFLOW_CTX_DAG_ID=vkc_oai_harvester
 AIRFLOW_CTX_TASK_ID=harvest_oai
 AIRFLOW_CTX_EXECUTION_DATE=2015-06-01T00:00:00+00:00
-harvest_oai called with context={'conf': ... harvest OAI data and store it in database
+harvest_oai called with full_sync=True harvest OAI data and store it in database
 OaiApi initialized
-[2021-04-26 16:34:41,152] {python.py:118} INFO - Done. Returned value was: []
-[2021-04-26 16:34:41,164] {taskinstance.py:1185} INFO - Marking task as SUCCESS. dag_id=vkc_oai_harvester, task_id=harvest_oai, execution_date=20150601T000000, start_date=20210426T143439, end_date=20210426T143441
-
+status code=401
+[2021-04-27 14:46:30,364] {base.py:69} INFO - Using connection to: id: postgres_default. Host: localhost, Port: 5432, Schema: airflow_development, Login: postgres, Password: XXXXXXXX, extra: None
+[2021-04-27 14:46:30,374] {python.py:118} INFO - Done. Returned value was: None
+[2021-04-27 14:46:30,379] {taskinstance.py:1185} INFO - Marking task as SUCCESS. dag_id=vkc_oai_harvester, task_id=harvest_oai, execution_date=20150601T000000, start_date=20210427T124630, end_date=20210427T124630
 ```
 
 
