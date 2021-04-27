@@ -38,7 +38,7 @@ def harvest_oai(full_sync=False):
 
     while len(records)>0:
         progress = round((total_count/total)*100,1)
-        print(f"Saving {len(records)} of {total} records progress is {progress} %", flush=True)
+        print(f"Saving {len(records)} of {total} records, progress is {progress} %", flush=True)
         for record in records:
             cursor.execute(
                 """
@@ -131,7 +131,7 @@ with dag:
     clear_harvest_table = PostgresOperator(
         task_id="clear_harvest_table", 
         postgres_conn_id=DB_CONNECT_ID, 
-        sql="SELECT * FROM harvest_oai limit 1;" # TODO: change this into 'TRUNCATE TABLE harvest_oai;'
+        sql="TRUNCATE TABLE harvest_oai;"
     )
 
     create_db_table >> \
@@ -139,35 +139,3 @@ with dag:
     clear_harvest_table
 
 
-
-
-# Example of virtualenv python operator, right now we don't need it yet as we just incorporated
-# wanted packages in the main env usign requirements.txt and don't have clashes between versions
-# 
-# def callable_virtualenv():
-#     """
-#     Example function that will be performed in a virtual environment.
-# 
-#     Importing at the module level ensures that it will not attempt to import the
-#     library before it is installed.
-#     """
-#     from time import sleep
-# 
-#     from colorama import Back, Fore, Style
-# 
-#     print(Fore.RED + 'some red text')
-#     print(Back.GREEN + 'and with a green background')
-#     print(Style.DIM + 'and in dim text')
-#     print(Style.RESET_ALL)
-#     for _ in range(10):
-#         print(Style.DIM + 'Please wait...', flush=True)
-#         sleep(3)
-#     print('Finished')
-# 
-# virtualenv_task = PythonVirtualenvOperator(
-#     task_id="virtualenv_python",
-#     python_callable=callable_virtualenv,
-#     requirements=["colorama==0.4.0"],
-#     system_site_packages=False,
-#     dag=dag,
-# )
