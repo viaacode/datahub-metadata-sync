@@ -10,6 +10,10 @@ from task_services.oai_api import OaiApi
 from task_services.xml_transformer import XmlTransformer
 from task_services.rabbit_publisher import RabbitPublisher
 
+from airflow.providers.postgres.operators.postgres import PostgresOperator
+from airflow.providers.postgres.hooks.postgres import PostgresHook
+
+
 args = {
     'owner': 'airflow',
 }
@@ -27,8 +31,19 @@ def harvest_oai(full_sync=False):
     print(f'harvest_oai called with full_sync={full_sync} harvest OAI data and store it in database')
     oai_api = OaiApi()
     results = oai_api.get_data()
-    time.sleep(2)
-    return results
+
+    conn = PostgresHook(postgres_conn_id='postgres_default').get_conn()
+    cursor = conn.cursor()
+
+    xml_doc = 'some result xml document from OAI'
+    cursor.execute(f"""INSERT INTO harvest_oai (data, mam_data, updated_at)
+                      VALUES('{xml_doc}', NULL, now())""")
+    conn.commit() # commit the insert otherwise its not stored
+    cursor.close()
+    conn.close()
+
+    # return results we don't return them, it just populates the airflow db with garbage that does not 
+    # get cleaned up
 
 def transform_lido_to_mh(**context):
     print(f'transform_lido_to_mh called with context={context} transform xml format by iterating database')
@@ -44,6 +59,14 @@ def publish_to_rabbitmq(**context):
 
 
 with dag:
+    
+    # postgres_default is defined in the admin/connections (its just another entry in the airflow database).
+    create_db_table = PostgresOperator(
+      task_id="create_harvest_table",
+      postgres_conn_id="postgres_default",
+      sql="sql/harvest_oai_table.sql"
+    )
+
     harvest_oai_task = PythonOperator(
         task_id='harvest_oai',
         python_callable=harvest_oai,
@@ -60,11 +83,43 @@ with dag:
         python_callable=publish_to_rabbitmq,
     )
 
-    harvest_oai_task >> transform_lido_task >> publish_to_rabbitmq_task
+    clear_harvest_table = PostgresOperator(
+        task_id="clear_harvest_table", 
+        postgres_conn_id="postgres_default", 
+        sql="SELECT * FROM harvest_oai limit 1;" # TODO: change this into 'TRUNCATE TABLE harvest_oai;'
+    )
+
+    create_db_table >> \
+    harvest_oai_task >> transform_lido_task >> publish_to_rabbitmq_task >> \
+    clear_harvest_table
 
 
-# Example of virtualenv python, right now we don't need it as we just incorporated
-# wanted packages in the main env usign requirements.txt
+
+# example of using PostgresHook to do custom queries :
+# https://towardsdatascience.com/airflow-sharing-data-between-tasks-7bbaa27eeb1
+# https://airflow.apache.org/docs/apache-airflow-providers-postgres/stable/_api/airflow/providers/postgres/hooks/postgres/index.html
+# def load_data(ds, **kwargs):
+#     conn = PostgresHook(postgres_conn_id=src_conn_id).get_conn()
+#     # Notice: cursor had to be named to make loading in batches work      (so called "server cursor")
+#     cursor = conn.cursor('serverCursor')
+#     cursor.execute(kwargs['query'])
+#     while True:
+#         records = cursor.fetchmany(size=10000)
+#         if not records:
+#             break
+#         [ ... do something with records ...]
+#     cursor.close()
+#     conn.close()
+# 
+# load_and_transform = PythonOperator(task_id='load_and_transform',
+#     python_callable=load_data,
+#     op_kwargs={'query': 'SELECT * FROM TABLE_IN'},
+#     provide_context=True,
+#     dag=your_dag)
+# 
+
+# Example of virtualenv python, right now we don't need it yet as we just incorporated
+# wanted packages in the main env usign requirements.txt and don't have clashes between versions
 # # [START howto_operator_python_venv]
 # def callable_virtualenv():
 #     """
