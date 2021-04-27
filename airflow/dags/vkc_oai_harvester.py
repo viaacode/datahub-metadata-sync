@@ -14,7 +14,7 @@ from airflow.providers.postgres.operators.postgres import PostgresOperator
 from airflow.providers.postgres.hooks.postgres import PostgresHook
 
 DB_CONNECT_ID = 'postgres_default'
-BATCH_SIZE = 2 # something like 200 or 500 records soon
+BATCH_SIZE = 100
 
 args = {
     'owner': 'airflow',
@@ -29,7 +29,7 @@ dag = DAG(
 )
 
 def harvest_oai(full_sync=False):
-    print(f'harvest_oai called with full_sync={full_sync} harvest OAI data and store it in database')
+    print(f'harvest_oai called with full_sync={full_sync} storing records in harvest_oai table')
     conn = PostgresHook(postgres_conn_id=DB_CONNECT_ID).get_conn()
     cursor = conn.cursor()
     api = OaiApi()
