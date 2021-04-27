@@ -37,8 +37,10 @@ def harvest_oai(full_sync=False):
     cursor = conn.cursor()
 
     xml_doc = 'some result xml document from OAI'
-    cursor.execute(f"""INSERT INTO harvest_oai (data, mam_data, updated_at)
-                      VALUES('{xml_doc}', NULL, now())""")
+    cursor.execute(f"""
+        INSERT INTO harvest_oai (data, mam_data, updated_at)
+        VALUES('{xml_doc}', NULL, now())
+    """)
     conn.commit() # commit the insert otherwise its not stored
     cursor.close()
     conn.close()
@@ -47,21 +49,36 @@ def transform_lido_to_mh(**context):
     print(f'transform_lido_to_mh called with context={context} transform xml format by iterating database')
     tr = XmlTransformer()
 
-    conn = PostgresHook(postgres_conn_id=DB_CONNECT_ID).get_conn()
     # Notice: using server cursor, makes batches work
-    cursor = conn.cursor('serverCursor')
-    cursor.execute('select * from harvest_oai')
+    # we open a second connection and cursor to do our update calls for eatch batch
+    read_conn = PostgresHook(postgres_conn_id=DB_CONNECT_ID).get_conn()
+    update_conn = PostgresHook(postgres_conn_id=DB_CONNECT_ID).get_conn()
+
+    rc = read_conn.cursor('serverCursor')
+    rc.execute('select * from harvest_oai')
     while True:
-        records = cursor.fetchmany(size=BATCH_SIZE)
+        records = rc.fetchmany(size=BATCH_SIZE)
         if not records:
             break
         print(f"fetched {len(records)} records, now converting...", flush=True)
+        uc = update_conn.cursor()
         for record in records:
-            res = tr.convert(record)
-            print(f"result after convert={res} TODO now use a default cursor to update record here!", flush=True)
+            record_id = record[0]
+            converted_record = tr.convert(record[1]) 
+            print(f"updating record id={record_id} mam_data={converted_record}", flush=True)
 
-    cursor.close()
-    conn.close()
+            uc.execute(f"""
+                UPDATE harvest_oai
+                SET mam_data = '{converted_record}',
+                    updated_at = now()
+                WHERE id={record_id}
+            """)
+    
+        update_conn.commit() # commit all updates current batch
+        uc.close()
+
+    rc.close()
+    read_conn.close()
 
 def publish_to_rabbitmq(**context):
     print(f'publish_to_rabbitmq called with context={context} pushes data to rabbit mq')

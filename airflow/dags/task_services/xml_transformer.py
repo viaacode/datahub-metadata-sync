@@ -7,8 +7,9 @@ class XmlTransformer:
         """transform OAI into MAM xml format"""
         print("XmlTransformer initialized")
 
-    def convert(self, src_record):
+    def convert(self, oai_xml_doc):
         # todo some actual transformation here
-        trg_record = src_record
-        return trg_record
+        result = 'TODO CONVERT TO MAM FORMAT:' + oai_xml_doc
+
+        return result
 
