@@ -13,6 +13,8 @@ from task_services.rabbit_publisher import RabbitPublisher
 from airflow.providers.postgres.operators.postgres import PostgresOperator
 from airflow.providers.postgres.hooks.postgres import PostgresHook
 
+DB_CONNECT_ID = 'postgres_default'
+BATCH_SIZE = 2 # something like 200 or 500 records soon
 
 args = {
     'owner': 'airflow',
@@ -26,13 +28,12 @@ dag = DAG(
     tags=['VKC'],
 )
 
-
 def harvest_oai(full_sync=False):
     print(f'harvest_oai called with full_sync={full_sync} harvest OAI data and store it in database')
     oai_api = OaiApi()
     results = oai_api.get_data()
 
-    conn = PostgresHook(postgres_conn_id='postgres_default').get_conn()
+    conn = PostgresHook(postgres_conn_id=DB_CONNECT_ID).get_conn()
     cursor = conn.cursor()
 
     xml_doc = 'some result xml document from OAI'
@@ -42,14 +43,25 @@ def harvest_oai(full_sync=False):
     cursor.close()
     conn.close()
 
-    # return results we don't return them, it just populates the airflow db with garbage that does not 
-    # get cleaned up
-
 def transform_lido_to_mh(**context):
     print(f'transform_lido_to_mh called with context={context} transform xml format by iterating database')
     tr = XmlTransformer()
-    record = tr.convert('some record')
-    time.sleep(1)
+
+    conn = PostgresHook(postgres_conn_id=DB_CONNECT_ID).get_conn()
+    # Notice: using server cursor, makes batches work
+    cursor = conn.cursor('serverCursor')
+    cursor.execute('select * from harvest_oai')
+    while True:
+        records = cursor.fetchmany(size=BATCH_SIZE)
+        if not records:
+            break
+        print(f"fetched {len(records)} records, now converting...", flush=True)
+        for record in records:
+            res = tr.convert(record)
+            print(f"result after convert={res} TODO now use a default cursor to update record here!", flush=True)
+
+    cursor.close()
+    conn.close()
 
 def publish_to_rabbitmq(**context):
     print(f'publish_to_rabbitmq called with context={context} pushes data to rabbit mq')
@@ -59,11 +71,10 @@ def publish_to_rabbitmq(**context):
 
 
 with dag:
-    
     # postgres_default is defined in the admin/connections (its just another entry in the airflow database).
     create_db_table = PostgresOperator(
       task_id="create_harvest_table",
-      postgres_conn_id="postgres_default",
+      postgres_conn_id=DB_CONNECT_ID,
       sql="sql/harvest_oai_table.sql"
     )
 
@@ -85,7 +96,7 @@ with dag:
 
     clear_harvest_table = PostgresOperator(
         task_id="clear_harvest_table", 
-        postgres_conn_id="postgres_default", 
+        postgres_conn_id=DB_CONNECT_ID, 
         sql="SELECT * FROM harvest_oai limit 1;" # TODO: change this into 'TRUNCATE TABLE harvest_oai;'
     )
 
@@ -95,32 +106,10 @@ with dag:
 
 
 
-# example of using PostgresHook to do custom queries :
-# https://towardsdatascience.com/airflow-sharing-data-between-tasks-7bbaa27eeb1
-# https://airflow.apache.org/docs/apache-airflow-providers-postgres/stable/_api/airflow/providers/postgres/hooks/postgres/index.html
-# def load_data(ds, **kwargs):
-#     conn = PostgresHook(postgres_conn_id=src_conn_id).get_conn()
-#     # Notice: cursor had to be named to make loading in batches work      (so called "server cursor")
-#     cursor = conn.cursor('serverCursor')
-#     cursor.execute(kwargs['query'])
-#     while True:
-#         records = cursor.fetchmany(size=10000)
-#         if not records:
-#             break
-#         [ ... do something with records ...]
-#     cursor.close()
-#     conn.close()
-# 
-# load_and_transform = PythonOperator(task_id='load_and_transform',
-#     python_callable=load_data,
-#     op_kwargs={'query': 'SELECT * FROM TABLE_IN'},
-#     provide_context=True,
-#     dag=your_dag)
-# 
 
-# Example of virtualenv python, right now we don't need it yet as we just incorporated
+# Example of virtualenv python operator, right now we don't need it yet as we just incorporated
 # wanted packages in the main env usign requirements.txt and don't have clashes between versions
-# # [START howto_operator_python_venv]
+# 
 # def callable_virtualenv():
 #     """
 #     Example function that will be performed in a virtual environment.
@@ -141,7 +130,6 @@ with dag:
 #         sleep(3)
 #     print('Finished')
 # 
-# 
 # virtualenv_task = PythonVirtualenvOperator(
 #     task_id="virtualenv_python",
 #     python_callable=callable_virtualenv,
@@ -149,4 +137,3 @@ with dag:
 #     system_site_packages=False,
 #     dag=dag,
 # )
-# # [END howto_operator_python_venv]
