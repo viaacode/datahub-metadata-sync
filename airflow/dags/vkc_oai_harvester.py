@@ -1,4 +1,4 @@
-"""Example DAG demonstrating the usage of the PythonOperator."""
+"""DAG for harvesting and converting OAI data Vlaamse Kunst Collectie to target MAM."""
 import time
 from pprint import pprint
 
