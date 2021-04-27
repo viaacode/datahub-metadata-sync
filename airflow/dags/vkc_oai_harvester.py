@@ -30,18 +30,32 @@ dag = DAG(
 
 def harvest_oai(full_sync=False):
     print(f'harvest_oai called with full_sync={full_sync} harvest OAI data and store it in database')
-    oai_api = OaiApi()
-    results = oai_api.get_data()
-
     conn = PostgresHook(postgres_conn_id=DB_CONNECT_ID).get_conn()
     cursor = conn.cursor()
+    api = OaiApi()
+    records, token, total = api.list_records()
+    total_count=len(records)
 
-    xml_doc = 'some result xml document from OAI'
-    cursor.execute(f"""
-        INSERT INTO harvest_oai (data, mam_data, updated_at)
-        VALUES('{xml_doc}', NULL, now())
-    """)
-    conn.commit() # commit the insert otherwise its not stored
+    while len(records)>0:
+        progress = round((total_count/total)*100,1)
+        print(f"Saving {len(records)} of {total} records progress is {progress} %", flush=True)
+        for record in records:
+            cursor.execute(
+                """
+                INSERT INTO harvest_oai (data, mam_data, updated_at)
+                VALUES(%s, NULL, now())
+                """,
+                (record,)
+            )
+        conn.commit() # commit the insert otherwise its not stored
+
+        if total_count >= total:
+            break
+
+        # fetch next batch of records with api
+        records, token, total = api.list_records(resumptionToken=token)
+        total_count += len(records)
+
     cursor.close()
     conn.close()
 
@@ -67,12 +81,15 @@ def transform_lido_to_mh(**context):
             converted_record = tr.convert(record[1]) 
             print(f"updating record id={record_id} mam_data={converted_record}", flush=True)
 
-            uc.execute(f"""
+            uc.execute(
+                """
                 UPDATE harvest_oai
-                SET mam_data = '{converted_record}',
+                SET mam_data = %s,
                     updated_at = now()
-                WHERE id={record_id}
-            """)
+                WHERE id=%s
+                """,
+                (converted_record, record_id)
+            )
     
         update_conn.commit() # commit all updates current batch
         uc.close()
