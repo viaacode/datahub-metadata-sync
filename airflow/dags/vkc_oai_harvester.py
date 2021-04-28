@@ -28,8 +28,25 @@ dag = DAG(
     tags=['VKC'],
 )
 
-def harvest_oai(full_sync=False):
-    print(f'harvest_oai called with full_sync={full_sync} storing records in harvest_oai table')
+
+def reset_table():
+    conn = PostgresHook(postgres_conn_id=DB_CONNECT_ID).get_conn()
+    cursor = conn.cursor()
+    cursor.execute( "TRUNCATE TABLE harvest_oai" )
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+
+def harvest_oai(**context):
+    print("context=",context)
+
+    if full_sync:
+        print("Full sync requested, clearing harvest table")
+        # reset_table() #disable until rabbit publisher is completed
+    else:
+        print("Delta sync requested, todo: run query to get last_oai_datetime to pass into list_records")
+
     conn = PostgresHook(postgres_conn_id=DB_CONNECT_ID).get_conn()
     cursor = conn.cursor()
     api = OaiApi()
@@ -47,7 +64,7 @@ def harvest_oai(full_sync=False):
                 """,
                 (record,)
             )
-        conn.commit() # commit the insert otherwise its not stored
+        conn.commit()  # commit the insert otherwise its not stored
 
         if total_count >= total:
             break
@@ -91,7 +108,7 @@ def transform_lido_to_mh(**context):
                 (converted_record, record_id)
             )
     
-        update_conn.commit() # commit all updates current batch
+        update_conn.commit()  # commit all updates current batch
         uc.close()
 
     rc.close()
@@ -128,14 +145,14 @@ with dag:
         python_callable=publish_to_rabbitmq,
     )
 
-    clear_harvest_table = PostgresOperator(
-        task_id="clear_harvest_table", 
-        postgres_conn_id=DB_CONNECT_ID, 
-        sql="TRUNCATE TABLE harvest_oai;"
-    )
+    # for deltas we dont clear our table
+    # clear_harvest_table = PostgresOperator(
+    #     task_id="clear_harvest_table", 
+    #     postgres_conn_id=DB_CONNECT_ID, 
+    #     sql="TRUNCATE TABLE harvest_oai;"
+    # )
 
-    create_db_table >> \
-    harvest_oai_task >> transform_lido_task >> publish_to_rabbitmq_task >> \
-    clear_harvest_table
+    create_db_table >> harvest_oai_task >> transform_lido_task >> publish_to_rabbitmq_task
+    # >> clear_harvest_table
 
 

@@ -11,7 +11,6 @@ class XmlTransformer:
         print("XmlTransformer initialized")
 
 
-    
     def convert(self, lido_xml):
         return 'TODO CONVERT TO MAM FORMAT:' + lido_xml
 
