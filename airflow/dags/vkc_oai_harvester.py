@@ -41,6 +41,7 @@ def reset_table():
 def harvest_oai(**context):
     print("context=",context)
 
+    full_sync = context['full_sync']
     if full_sync:
         print("Full sync requested, clearing harvest table")
         # reset_table() #disable until rabbit publisher is completed

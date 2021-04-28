@@ -14,13 +14,15 @@ class XmlTransformer:
     def convert(self, lido_xml):
         return 'TODO CONVERT TO MAM FORMAT:' + lido_xml
 
-        # TODO: instead do a POST /v1/transform to the deployed mtd-transformer.
+        # TODO: in meeting tomorrow we might 
+        # do a POST /v1/transform to the deployed mtd-transformer.
+        # or somehow fetch the lido_to_mam xlst from the mtd-transformer and then
+        # run below code. (Needs some setup of Saxon HE to be installed, see Dockerfile
+        # for inspiration...
 
-        # # this code would work, but needs more setup, cython binding and saxon home edition
-        # # installed with java and a whole lot of other things I'm missing in our setup...
         # xslt_path = self.__get_path_to_xslt('lido_to_mam')
         # xslt_proc = self.saxon_processor.new_xslt30_processor()
-        # #node = self.saxon_processor.parse_xml(xml_text=xml.decode("utf-8"))
+        # # node = self.saxon_processor.parse_xml(xml_text=xml.decode("utf-8"))
         # node = self.saxon_processor.parse_xml(xml_text=lido_xml)
         # result = xslt_proc.transform_to_string(stylesheet_file=xslt_path, xdm_node=node)
         # 
