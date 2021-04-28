@@ -78,9 +78,9 @@ def transform_lido_to_mh(**context):
         uc = update_conn.cursor()
         for record in records:
             record_id = record[0]
-            converted_record = tr.convert(record[1]) 
-            print(f"updating record id={record_id} mam_data={converted_record}", flush=True)
+            # TODO check: moet de record gesynced worden? (bestaat de record bij meemoo?)
 
+            converted_record = tr.convert(record[1]) 
             uc.execute(
                 """
                 UPDATE harvest_oai
