@@ -9,15 +9,9 @@ import xml.etree.ElementTree as ET
 class OaiApi:
     def __init__(self):
         """initialize api for datahub.vlaamsekunstcollectie.be"""
-        # fetching data with oai/xml needs no auth at all.
-        #self.API_URL = 'http://datahub.vlaamsekunstcollectie.be'
-        #self.AUTH_URL = '/oauth/v2/auth'
-        #self.TOKEN_URL = '/oauth/v2/token'
-        #self.token = 'todo_fetch_with_auth_call'
-
         self.API_URL = 'http://datahub.vlaamsekunstcollectie.be'
-
-
+        self.ns0 = {'ns0':'http://www.openarchives.org/OAI/2.0/'}
+        self.ns1 = {'ns1':'http://www.lido-schema.org'}
         print("OaiApi initialized")
 
     def list_records(self, from_filter='2011-06-01T00:00:00Z', prefix='oai_lido', resumptionToken=None):
@@ -38,20 +32,17 @@ class OaiApi:
             return [], None, 0
 
         root = ET.fromstring(res.text) # use res.content for bytes
-        ns0 = {'ns0':'http://www.openarchives.org/OAI/2.0/'}
-        ns1 = {'ns1':'http://www.lido-schema.org'}
-
-        items = root.find('.//ns0:ListRecords', ns0)
+        items = root.find('.//ns0:ListRecords', self.ns0)
         records = []
         for record in items:
             if 'resumptionToken' not in record.tag:
                 vkc_xml = ET.tostring(record, encoding="UTF-8", xml_declaration=True).decode()
                 
-                header = record.find('.//ns0:header', ns0)
-                header_identifier = header.find('.//ns0:identifier', ns0).text
-                header_datestamp = header.find('.//ns0:datestamp', ns0).text
+                header = record.find('.//ns0:header', self.ns0)
+                header_identifier = header.find('.//ns0:identifier', self.ns0).text
+                header_datestamp = header.find('.//ns0:datestamp', self.ns0).text
 
-                published_tag = record.find('.//ns1:objectPublishedID', ns1)
+                published_tag = record.find('.//ns1:objectPublishedID', self.ns1)
                 if published_tag is None:
                     published_id = None
                 else:
@@ -64,7 +55,7 @@ class OaiApi:
                     'datestamp': header_datestamp
                 })
 
-        resumptionTag = items.find('.//ns0:resumptionToken', ns0)
+        resumptionTag = items.find('.//ns0:resumptionToken', self.ns0)
         if resumptionTag is not None:
             resumptionToken = resumptionTag.text
             total_records = int(resumptionTag.attrib['completeListSize'])
