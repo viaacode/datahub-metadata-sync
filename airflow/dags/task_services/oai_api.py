@@ -46,13 +46,21 @@ class OaiApi:
         for record in items:
             if 'resumptionToken' not in record.tag:
                 vkc_xml = ET.tostring(record, encoding="UTF-8", xml_declaration=True).decode()
-                published_id = record.find('.//ns1:objectPublishedID', ns1).text
+                
                 header = record.find('.//ns0:header', ns0)
+                header_identifier = header.find('.//ns0:identifier', ns0).text
                 header_datestamp = header.find('.//ns0:datestamp', ns0).text
 
+                published_tag = record.find('.//ns1:objectPublishedID', ns1)
+                if published_tag is None:
+                    published_id = None
+                else:
+                    published_id = published_tag.text
+
                 records.append({
-                    'published_id': published_id,
                     'xml': vkc_xml,
+                    'identifier': header_identifier,
+                    'published_id': published_id,
                     'datestamp': header_datestamp
                 })
 

@@ -45,7 +45,7 @@ def harvest_oai(**context):
     full_sync = context['full_sync']
     if full_sync:
         print("Full sync requested")
-        reset_table() #disable until rabbit publisher is completed
+        reset_table()
     else:
         print("Delta sync requested, todo: run query to get last_oai_datetime to pass into list_records")
 
@@ -61,10 +61,10 @@ def harvest_oai(**context):
         for record in records:
             cursor.execute(
                 """
-                INSERT INTO harvest_oai (published_id, vkc_xml, mam_xml, datestamp)
-                VALUES(%s, %s, NULL, %s)
+                INSERT INTO harvest_oai (identifier, published_id, vkc_xml, mam_xml, datestamp)
+                VALUES(%s, %s, %s, NULL, %s)
                 """,
-                (record['published_id'], record['xml'],record['datestamp'])
+                (record['identifier'], record['published_id'], record['xml'], record['datestamp'])
             )
         conn.commit()  # commit the insert otherwise its not stored
 
@@ -98,6 +98,8 @@ def transform_lido_to_mh(**context):
         for record in records:
             record_id = record[0]
             # TODO check: moet de record gesynced worden? (bestaat de record bij meemoo?)
+            # gebruiken we hier identifier of published_id (tweede is niet altijd aanwezig)
+            # mam call nodig hier enzo. Alsook by full_sync toch update doen hier indien al aanwezig???
 
             converted_record = tr.convert(record[1]) 
             uc.execute(
@@ -147,14 +149,6 @@ with dag:
         python_callable=publish_to_rabbitmq,
     )
 
-    # for deltas we dont clear our table
-    # clear_harvest_table = PostgresOperator(
-    #     task_id="clear_harvest_table", 
-    #     postgres_conn_id=DB_CONNECT_ID, 
-    #     sql="TRUNCATE TABLE harvest_oai;"
-    # )
-
     create_db_table >> harvest_oai_task >> transform_lido_task >> publish_to_rabbitmq_task
-    # >> clear_harvest_table
 
 
