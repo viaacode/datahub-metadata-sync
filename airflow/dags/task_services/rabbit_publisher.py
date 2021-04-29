@@ -9,6 +9,7 @@ class RabbitPublisher:
 
     def publish(self, record):
         """publish to rabbitmq"""
-        # todo push record to rabbit mq here...
-        return None
+        record_id = record[0]
+        mam_xml = record[2]
+        print(f"push record with id={record_id} to rabbitmq mam_xml={mam_xml[0:20]}", flush=True)
 

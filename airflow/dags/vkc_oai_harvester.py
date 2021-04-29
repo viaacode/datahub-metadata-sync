@@ -6,7 +6,7 @@ from airflow import DAG
 from airflow.operators.python import PythonOperator, PythonVirtualenvOperator
 from airflow.utils.dates import days_ago
 
-from task_services.oai_api import OaiApi
+from task_services.vkc_api import VkcApi
 from task_services.xml_transformer import XmlTransformer
 from task_services.rabbit_publisher import RabbitPublisher
 
@@ -30,16 +30,16 @@ dag = DAG(
 
 
 def reset_table():
-    print("Clearing harvest_oai table")
+    print("Clearing harvest_vkc table")
     conn = PostgresHook(postgres_conn_id=DB_CONNECT_ID).get_conn()
     cursor = conn.cursor()
-    cursor.execute( "TRUNCATE TABLE harvest_oai" )
+    cursor.execute( "TRUNCATE TABLE harvest_vkc" )
     conn.commit()
     cursor.close()
     conn.close()
 
 
-def harvest_oai(**context):
+def harvest_vkc(**context):
     print("context=",context)
 
     full_sync = context['full_sync']
@@ -47,11 +47,11 @@ def harvest_oai(**context):
         print("Full sync requested")
         reset_table()
     else:
-        print("Delta sync requested, todo: run query to get last_oai_datetime to pass into list_records")
+        print("Delta sync requested, todo: run query to get datestamp to pass into list_records")
 
     conn = PostgresHook(postgres_conn_id=DB_CONNECT_ID).get_conn()
     cursor = conn.cursor()
-    api = OaiApi()
+    api = VkcApi()
     records, token, total = api.list_records()
     total_count=len(records)
 
@@ -61,7 +61,7 @@ def harvest_oai(**context):
         for record in records:
             cursor.execute(
                 """
-                INSERT INTO harvest_oai (identifier, published_id, vkc_xml, mam_xml, datestamp)
+                INSERT INTO harvest_vkc (identifier, published_id, vkc_xml, mam_xml, datestamp)
                 VALUES(%s, %s, %s, NULL, %s)
                 """,
                 (record['identifier'], record['published_id'], record['xml'], record['datestamp'])
@@ -88,7 +88,7 @@ def transform_lido_to_mh(**context):
     update_conn = PostgresHook(postgres_conn_id=DB_CONNECT_ID).get_conn()
 
     rc = read_conn.cursor('serverCursor')
-    rc.execute('select * from harvest_oai')
+    rc.execute('select * from harvest_vkc where synchronized=false')
     while True:
         records = rc.fetchmany(size=BATCH_SIZE)
         if not records:
@@ -101,15 +101,19 @@ def transform_lido_to_mh(**context):
             # gebruiken we hier identifier of published_id (tweede is niet altijd aanwezig)
             # mam call nodig hier enzo. Alsook by full_sync toch update doen hier indien al aanwezig???
 
+            to_be_synced = True
+            synchronized = not to_be_synced
+
             converted_record = tr.convert(record[1]) 
             uc.execute(
                 """
-                UPDATE harvest_oai
+                UPDATE harvest_vkc
                 SET mam_xml = %s,
+                    synchronized = %s,
                     updated_at = now()
                 WHERE id=%s
                 """,
-                (converted_record, record_id)
+                (converted_record, synchronized, record_id)
             )
     
         update_conn.commit()  # commit all updates current batch
@@ -121,8 +125,39 @@ def transform_lido_to_mh(**context):
 def publish_to_rabbitmq(**context):
     print(f'publish_to_rabbitmq called with context={context} pushes data to rabbit mq')
     rp = RabbitPublisher()
-    rp.publish('some record data')
-    time.sleep(3)
+
+    read_conn = PostgresHook(postgres_conn_id=DB_CONNECT_ID).get_conn()
+    update_conn = PostgresHook(postgres_conn_id=DB_CONNECT_ID).get_conn()
+
+    rc = read_conn.cursor('serverCursor')
+    rc.execute('select * from harvest_vkc where synchronized=false')
+    while True:
+        records = rc.fetchmany(size=BATCH_SIZE)
+        if not records:
+            break
+        print(f"fetched {len(records)} records, pushing on rabbitmq...", flush=True)
+        uc = update_conn.cursor()
+        for record in records:
+            record_id = record[0]
+            rp.publish(record)
+
+            # set synchronized flag to true
+            uc.execute(
+                """
+                UPDATE harvest_vkc
+                SET synchronized = 'true',
+                    updated_at = now()
+                WHERE id=%s
+                """,
+                (record_id,)
+            )
+    
+        update_conn.commit()  # commit all updates current batch
+        uc.close()
+
+    rc.close()
+    read_conn.close()
+
 
 
 with dag:
@@ -130,12 +165,12 @@ with dag:
     create_db_table = PostgresOperator(
       task_id="create_harvest_table",
       postgres_conn_id=DB_CONNECT_ID,
-      sql="sql/harvest_oai_table.sql"
+      sql="sql/harvest_vkc_table.sql"
     )
 
-    harvest_oai_task = PythonOperator(
-        task_id='harvest_oai',
-        python_callable=harvest_oai,
+    harvest_vkc_task = PythonOperator(
+        task_id='harvest_vkc',
+        python_callable=harvest_vkc,
         op_kwargs={'full_sync': True}
     )
 
@@ -149,6 +184,6 @@ with dag:
         python_callable=publish_to_rabbitmq,
     )
 
-    create_db_table >> harvest_oai_task >> transform_lido_task >> publish_to_rabbitmq_task
+    create_db_table >> harvest_vkc_task >> transform_lido_task >> publish_to_rabbitmq_task
 
 

@@ -6,13 +6,13 @@ import time
 from datetime import datetime
 import xml.etree.ElementTree as ET
 
-class OaiApi:
+class VkcApi:
     def __init__(self):
         """initialize api for datahub.vlaamsekunstcollectie.be"""
         self.API_URL = 'http://datahub.vlaamsekunstcollectie.be'
         self.ns0 = {'ns0':'http://www.openarchives.org/OAI/2.0/'}
         self.ns1 = {'ns1':'http://www.lido-schema.org'}
-        print("OaiApi initialized")
+        print("VkcApi initialized")
 
     def list_records(self, from_filter='2011-06-01T00:00:00Z', prefix='oai_lido', resumptionToken=None):
         path = self.API_URL + '/oai/'
