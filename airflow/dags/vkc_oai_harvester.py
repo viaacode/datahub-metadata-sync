@@ -175,7 +175,7 @@ with dag:
     )
 
     transform_lido_task = PythonOperator(
-        task_id='transform_lido_to_mh',
+        task_id='transform_xml',
         python_callable=transform_lido_to_mh,
     )
 
