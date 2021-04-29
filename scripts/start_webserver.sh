@@ -1,6 +1,7 @@
 source python_env/bin/activate
 export AIRFLOW_HOME=$(PWD)/airflow
 export AIRFLOW__CORE__SQL_ALCHEMY_CON=postgresql+psycopg2://postgres:postgres@localhost:5432/airflow_development
+export PYTHONPATH=$(pwd)/saxon/Saxon.C.API/python-saxon
 
 echo "visit localhost:8080 in the browser and use the admin account"
 echo "created to login. Enable the example_bash_operator dag in the home page"
