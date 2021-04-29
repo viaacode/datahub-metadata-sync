@@ -33,24 +33,34 @@ class OaiApi:
             params['resumptionToken'] = resumptionToken
 
         res = requests.get(path, params=params)
+        if res.status_code != 200:
+            print(f"WARNING: status code={res.status_code} returning empty result", flush=True)
+            return [], None, 0
+
+        root = ET.fromstring(res.text) # use res.content for bytes
+        ns0 = {'ns0':'http://www.openarchives.org/OAI/2.0/'}
+        ns1 = {'ns1':'http://www.lido-schema.org'}
+
+        items = root.find('.//ns0:ListRecords', ns0)
         records = []
-        total_records = 0
-        if res.status_code == 200:
-            root = ET.fromstring(res.text) # use res.content for bytes
-            ns = {'d':'http://www.openarchives.org/OAI/2.0/'}
-            items = root.find('.//d:ListRecords', ns)
-            resumptionTag = items.find('.//d:resumptionToken', ns)
+        for record in items:
+            if 'resumptionToken' not in record.tag:
+                vkc_xml = ET.tostring(record, encoding="UTF-8", xml_declaration=True).decode()
+                published_id = record.find('.//ns1:objectPublishedID', ns1).text
+                header = record.find('.//ns0:header', ns0)
+                header_datestamp = header.find('.//ns0:datestamp', ns0).text
 
-            if resumptionTag is not None:
-                resumptionToken = resumptionTag.text
-                total_records = int(resumptionTag.attrib['completeListSize'])
+                records.append({
+                    'published_id': published_id,
+                    'xml': vkc_xml,
+                    'datestamp': header_datestamp
+                })
 
-            for record in items:
-                if 'resumptionToken' not in record.tag:
-                    records.append(
-                        ET.tostring(record, encoding="UTF-8", xml_declaration=True).decode()
-                    )
+        resumptionTag = items.find('.//ns0:resumptionToken', ns0)
+        if resumptionTag is not None:
+            resumptionToken = resumptionTag.text
+            total_records = int(resumptionTag.attrib['completeListSize'])
         else:
-            print(f"WARNING: status code={res.status_code}", flush=True)
+            total_records = len(records)
 
         return records, resumptionToken, total_records

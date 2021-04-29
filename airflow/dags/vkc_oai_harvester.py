@@ -30,6 +30,7 @@ dag = DAG(
 
 
 def reset_table():
+    print("Clearing harvest_oai table")
     conn = PostgresHook(postgres_conn_id=DB_CONNECT_ID).get_conn()
     cursor = conn.cursor()
     cursor.execute( "TRUNCATE TABLE harvest_oai" )
@@ -43,8 +44,8 @@ def harvest_oai(**context):
 
     full_sync = context['full_sync']
     if full_sync:
-        print("Full sync requested, clearing harvest table")
-        # reset_table() #disable until rabbit publisher is completed
+        print("Full sync requested")
+        reset_table() #disable until rabbit publisher is completed
     else:
         print("Delta sync requested, todo: run query to get last_oai_datetime to pass into list_records")
 
@@ -60,10 +61,10 @@ def harvest_oai(**context):
         for record in records:
             cursor.execute(
                 """
-                INSERT INTO harvest_oai (data, mam_data, updated_at)
-                VALUES(%s, NULL, now())
+                INSERT INTO harvest_oai (published_id, vkc_xml, mam_xml, datestamp)
+                VALUES(%s, %s, NULL, %s)
                 """,
-                (record,)
+                (record['published_id'], record['xml'],record['datestamp'])
             )
         conn.commit()  # commit the insert otherwise its not stored
 
@@ -102,7 +103,7 @@ def transform_lido_to_mh(**context):
             uc.execute(
                 """
                 UPDATE harvest_oai
-                SET mam_data = %s,
+                SET mam_xml = %s,
                     updated_at = now()
                 WHERE id=%s
                 """,
