@@ -20,11 +20,7 @@ class MediahavenApi:
     )
     API_USER = os.environ.get('MEDIAHAVEN_USER', 'apiUser')
     API_PASSWORD = os.environ.get('MEDIAHAVEN_PASS', 'password')
-    DEPARTMENT_ID = os.environ.get(
-        'DEPARTMENT_ID',
-        'dd111b7a-efd0-44e3-8816-0905572421da'
-    )
-
+    
     def __init__(self, session=None):
         if session is None:
             self.session = Session()
@@ -36,9 +32,7 @@ class MediahavenApi:
         get_url = f"{self.API_SERVER}{api_route}"
         headers = {
             'Content-Type': 'application/json',
-            # TODO: currently this breaks calls, re-enable later
-            # for better compatibility with v2:
-            # 'Accept': 'application/vnd.mediahaven.v2+json'
+            'Accept': 'application/vnd.mediahaven.v2+json'
         }
 
         response = self.session.get(
@@ -47,7 +41,6 @@ class MediahavenApi:
             auth=(self.API_USER, self.API_PASSWORD)
         )
         assert response.status_code != 401
-
         return response.json()
 
     def list_objects(self, search='', offset=0, limit=25):
@@ -59,15 +52,11 @@ class MediahavenApi:
 
     def vkc_record_exists(self, work_id):
         try:
-            # example 1976.GRO0815.I, replace . with _ or find multiple ones
-            # resources/media/?q=%2B(dc_identifier_localid%3A%221976_GRO0815_I%22)
             # alternatief rechtstreeks met work_id maar dan heb je meer results:
             # https://archief.viaa.be/mediahaven-rest-api/resources/media/?q=%2B(%221976.GRO0815.I%22)
             localid = work_id.replace('.','_')
             search_matches = self.list_objects(search=f'+(dc_identifier_localid:{localid})')
-            print(f"check mam localid={localid} matches={search_matches}")
-
-            return len(search_matches)>=1
+            return search_matches['TotalNrOfResults']>=1
         except AssertionError:
             print("Warning 401 response from mediahaven api!")
             return False
