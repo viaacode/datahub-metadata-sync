@@ -46,6 +46,7 @@ class MediahavenApi:
             headers=headers,
             auth=(self.API_USER, self.API_PASSWORD)
         )
+        assert response.status_code != 401
 
         return response.json()
 
@@ -57,13 +58,18 @@ class MediahavenApi:
         return search_matches
 
     def vkc_record_exists(self, work_id):
-        # example 1976.GRO0815.I, replace . with _ or find multiple ones
-        # resources/media/?q=%2B(dc_identifier_localid%3A%221976_GRO0815_I%22)
-        # alternatief rechtstreeks met work_id maar dan heb je meer results:
-        # https://archief.viaa.be/mediahaven-rest-api/resources/media/?q=%2B(%221976.GRO0815.I%22)
-        localid = work_id.replace('.','_')
-        search_matches = self.list_objects(search=f'+(dc_identifier_localid:{localid})')
+        try:
+            # example 1976.GRO0815.I, replace . with _ or find multiple ones
+            # resources/media/?q=%2B(dc_identifier_localid%3A%221976_GRO0815_I%22)
+            # alternatief rechtstreeks met work_id maar dan heb je meer results:
+            # https://archief.viaa.be/mediahaven-rest-api/resources/media/?q=%2B(%221976.GRO0815.I%22)
+            localid = work_id.replace('.','_')
+            search_matches = self.list_objects(search=f'+(dc_identifier_localid:{localid})')
+            print(f"check mam localid={localid} matches={search_matches}")
 
-        return len(search_matches)>=1
+            return len(search_matches)>=1
+        except AssertionError:
+            print("Warning 401 response from mediahaven api!")
+            return False
 
 

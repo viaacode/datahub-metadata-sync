@@ -69,4 +69,8 @@ class HarvestTable:
             (converted_record, record_id)
         )
 
+    @staticmethod
+    def get_work_id(record):
+        work_id = record[3]
+        return work_id
 

@@ -9,6 +9,7 @@ from airflow.utils.dates import days_ago
 from task_services.vkc_api import VkcApi
 from task_services.xml_transformer import XmlTransformer
 from task_services.rabbit_publisher import RabbitPublisher
+from task_services.mediahaven_api import MediahavenApi
 from task_services.harvest_table import HarvestTable
 
 from airflow.providers.postgres.operators.postgres import PostgresOperator
@@ -86,10 +87,7 @@ def transform_lido_to_mh(**context):
         print(f"fetched {len(records)} records, now converting...", flush=True)
         uc = update_conn.cursor()
         for record in records:
-            work_id = record[3]
-            __import__('pdb').set_trace()
-
-            if mh_api.vkc_record_exists(work_id):
+            if mh_api.vkc_record_exists(HarvestTable.get_work_id(record)):
                 HarvestTable.set_synchronized(uc, record, True) 
             else:
                 converted_record = tr.convert(record[1]) 
