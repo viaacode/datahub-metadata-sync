@@ -13,21 +13,22 @@ class XmlTransformer:
     def __init__(self):
         """transforms VKC xml into MAM xml format using resources/lido_to_mam/main.xslt"""
         self.saxon_processor = saxonc.PySaxonProcessor(license=False)
+        self.xslt_path = self.__get_path_to_xslt('lido_to_mam')
+        self.xslt_proc = self.saxon_processor.new_xslt30_processor()
         print("XmlTransformer initialized")
+
+
+    def __del__(self):
         # https://github.com/rimmartin/saxon-node/issues/21
-        # should release this in the end, self.saxon_processor.release()
+        self.saxon_processor.release()
 
 
-    def convert(self, lido_xml):
-        # return 'TODO CONVERT TO MAM FORMAT:' + lido_xml
-        xslt_path = self.__get_path_to_xslt('lido_to_mam')
-        xslt_proc = self.saxon_processor.new_xslt30_processor()
-        # node = self.saxon_processor.parse_xml(xml_text=xml.decode("utf-8"))
-        node = self.saxon_processor.parse_xml(xml_text=lido_xml)
-        result = xslt_proc.transform_to_string(stylesheet_file=xslt_path, xdm_node=node)
-        
-        return result
-
+    def convert(self, vkc_xml):
+        vkc_root = self.saxon_processor.parse_xml(xml_text=vkc_xml)
+        return self.xslt_proc.transform_to_string(
+            stylesheet_file=self.xslt_path,
+            xdm_node=vkc_root
+        )
 
     def __get_path_to_xslt(self, transformation: str):
         # The xslt should exist in the resources folder.
