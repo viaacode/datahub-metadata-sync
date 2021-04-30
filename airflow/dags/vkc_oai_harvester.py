@@ -38,7 +38,6 @@ def harvest_vkc(**context):
     full_sync = context['full_sync']
     if full_sync:
         print("Full sync requested")
-        reset_table()
         HarvestTable.truncate( PostgresHook(postgres_conn_id=DB_CONNECT_ID).get_conn() )
     else:
         print("Delta sync requested, todo: run query to get datestamp to pass into list_records")
@@ -88,6 +87,7 @@ def transform_lido_to_mh(**context):
         uc = update_conn.cursor()
         for record in records:
             if mh_api.vkc_record_exists(HarvestTable.get_work_id(record)):
+                print(f"Skipping existing entry, work_id = {HarvestTable.get_work_id(record)}")
                 HarvestTable.set_synchronized(uc, record, True) 
             else:
                 converted_record = tr.convert(record[1]) 
