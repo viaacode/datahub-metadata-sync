@@ -39,19 +39,28 @@ class VkcApi:
                 vkc_xml = ET.tostring(record, encoding="UTF-8", xml_declaration=True).decode()
                 
                 header = record.find('.//ns0:header', self.ns0)
-                header_identifier = header.find('.//ns0:identifier', self.ns0).text
                 header_datestamp = header.find('.//ns0:datestamp', self.ns0).text
 
-                published_tag = record.find('.//ns1:objectPublishedID', self.ns1)
-                if published_tag is None:
-                    published_id = None
+                metadata = record.find('.//ns0:metadata', self.ns0)
+                work_tag = metadata.find(
+                    './/{}/{}/{}/{}/{}'.format( 
+                        'ns1:descriptiveMetadata',
+                        'ns1:objectIdentificationWrap',
+                        'ns1:repositoryWrap',
+                        'ns1:repositorySet',
+                        'ns1:workID'
+                    ), 
+                    self.ns1
+                )
+
+                if work_tag is None:
+                    work_id = None
                 else:
-                    published_id = published_tag.text
+                    work_id = work_tag.text
 
                 records.append({
                     'xml': vkc_xml,
-                    'identifier': header_identifier,
-                    'published_id': published_id,
+                    'work_id': work_id,
                     'datestamp': header_datestamp
                 })
 

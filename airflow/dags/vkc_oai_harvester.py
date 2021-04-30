@@ -61,10 +61,10 @@ def harvest_vkc(**context):
         for record in records:
             cursor.execute(
                 """
-                INSERT INTO harvest_vkc (identifier, published_id, vkc_xml, mam_xml, datestamp)
-                VALUES(%s, %s, %s, NULL, %s)
+                INSERT INTO harvest_vkc (work_id, vkc_xml, mam_xml, datestamp)
+                VALUES(%s, %s, NULL, %s)
                 """,
-                (record['identifier'], record['published_id'], record['xml'], record['datestamp'])
+                (record['work_id'], record['xml'], record['datestamp'])
             )
         conn.commit()  # commit the insert otherwise its not stored
 
