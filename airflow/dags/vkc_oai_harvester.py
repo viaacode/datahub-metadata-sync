@@ -9,9 +9,11 @@ from airflow.utils.dates import days_ago
 from task_services.vkc_api import VkcApi
 from task_services.xml_transformer import XmlTransformer
 from task_services.rabbit_publisher import RabbitPublisher
+from task_services.harvest_table import HarvestTable
 
 from airflow.providers.postgres.operators.postgres import PostgresOperator
 from airflow.providers.postgres.hooks.postgres import PostgresHook
+
 
 DB_CONNECT_ID = 'postgres_default'
 BATCH_SIZE = 100
@@ -29,16 +31,6 @@ dag = DAG(
 )
 
 
-def reset_table():
-    print("Clearing harvest_vkc table")
-    conn = PostgresHook(postgres_conn_id=DB_CONNECT_ID).get_conn()
-    cursor = conn.cursor()
-    cursor.execute( "TRUNCATE TABLE harvest_vkc" )
-    conn.commit()
-    cursor.close()
-    conn.close()
-
-
 def harvest_vkc(**context):
     print("context=",context)
 
@@ -46,6 +38,7 @@ def harvest_vkc(**context):
     if full_sync:
         print("Full sync requested")
         reset_table()
+        HarvestTable.truncate( PostgresHook(postgres_conn_id=DB_CONNECT_ID).get_conn() )
     else:
         print("Delta sync requested, todo: run query to get datestamp to pass into list_records")
 
@@ -57,19 +50,15 @@ def harvest_vkc(**context):
 
     while len(records)>0:
         progress = round((total_count/total)*100,1)
+        
         print(f"Saving {len(records)} of {total} records, progress is {progress} %", flush=True)
         for record in records:
-            cursor.execute(
-                """
-                INSERT INTO harvest_vkc (work_id, vkc_xml, mam_xml, datestamp)
-                VALUES(%s, %s, NULL, %s)
-                """,
-                (record['work_id'], record['xml'], record['datestamp'])
-            )
-        conn.commit()  # commit the insert otherwise its not stored
+            HarvestTable.insert(cursor, record)    
+
+        conn.commit()  # commit batch of inserts
 
         if total_count >= total:
-            break
+            break  # exit loop, we have all records from vkc
 
         # fetch next batch of records with api
         records, token, total = api.list_records(resumptionToken=token)
@@ -81,6 +70,7 @@ def harvest_vkc(**context):
 def transform_lido_to_mh(**context):
     print(f'transform_lido_to_mh called with context={context} transform xml format by iterating database')
     tr = XmlTransformer()
+    mh_api = MediahavenApi()
 
     # Notice: using server cursor, makes batches work
     # we open a second connection and cursor to do our update calls for eatch batch
@@ -88,7 +78,7 @@ def transform_lido_to_mh(**context):
     update_conn = PostgresHook(postgres_conn_id=DB_CONNECT_ID).get_conn()
 
     rc = read_conn.cursor('serverCursor')
-    rc.execute('select * from harvest_vkc where synchronized=false')
+    HarvestTable.batch_select_records(rc)
     while True:
         records = rc.fetchmany(size=BATCH_SIZE)
         if not records:
@@ -96,26 +86,15 @@ def transform_lido_to_mh(**context):
         print(f"fetched {len(records)} records, now converting...", flush=True)
         uc = update_conn.cursor()
         for record in records:
-            record_id = record[0]
-            # TODO check: moet de record gesynced worden? (bestaat de record bij meemoo?)
-            # gebruiken we hier identifier of published_id (tweede is niet altijd aanwezig)
-            # mam call nodig hier enzo. Alsook by full_sync toch update doen hier indien al aanwezig???
+            work_id = record[3]
+            __import__('pdb').set_trace()
 
-            to_be_synced = True
-            synchronized = not to_be_synced
-
-            converted_record = tr.convert(record[1]) 
-            uc.execute(
-                """
-                UPDATE harvest_vkc
-                SET mam_xml = %s,
-                    synchronized = %s,
-                    updated_at = now()
-                WHERE id=%s
-                """,
-                (converted_record, synchronized, record_id)
-            )
-    
+            if mh_api.vkc_record_exists(work_id):
+                HarvestTable.set_synchronized(uc, record, True) 
+            else:
+                converted_record = tr.convert(record[1]) 
+                HarvestTable.update_mam_xml(uc, record, converted_record)
+ 
         update_conn.commit()  # commit all updates current batch
         uc.close()
 
@@ -130,7 +109,7 @@ def publish_to_rabbitmq(**context):
     update_conn = PostgresHook(postgres_conn_id=DB_CONNECT_ID).get_conn()
 
     rc = read_conn.cursor('serverCursor')
-    rc.execute('select * from harvest_vkc where synchronized=false')
+    HarvestTable.batch_select_records(rc)
     while True:
         records = rc.fetchmany(size=BATCH_SIZE)
         if not records:
@@ -138,19 +117,8 @@ def publish_to_rabbitmq(**context):
         print(f"fetched {len(records)} records, pushing on rabbitmq...", flush=True)
         uc = update_conn.cursor()
         for record in records:
-            record_id = record[0]
             rp.publish(record)
-
-            # set synchronized flag to true
-            uc.execute(
-                """
-                UPDATE harvest_vkc
-                SET synchronized = 'true',
-                    updated_at = now()
-                WHERE id=%s
-                """,
-                (record_id,)
-            )
+            HarvestTable.set_synchronized(uc, record, True) 
     
         update_conn.commit()  # commit all updates current batch
         uc.close()
@@ -165,7 +133,7 @@ with dag:
     create_db_table = PostgresOperator(
       task_id="create_harvest_table",
       postgres_conn_id=DB_CONNECT_ID,
-      sql="sql/harvest_vkc_table.sql"
+      sql=HarvestTable.create_sql()
     )
 
     harvest_vkc_task = PythonOperator(
