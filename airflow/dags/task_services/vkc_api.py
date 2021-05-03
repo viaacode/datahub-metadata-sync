@@ -55,7 +55,7 @@ class VkcApi:
 
                 if work_tag is None:
                     identifier = header.find('.//ns0:identifier', self.ns0).text
-                    print("VKC record found without work_id, skipping, header identifier: {identifier}")
+                    print(f"VKC record found without work_id, skipping, header identifier: {identifier}")
                     work_id = None
                 else:
                     work_id = work_tag.text
