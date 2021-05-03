@@ -53,7 +53,9 @@ def harvest_vkc(**context):
         
         print(f"Saving {len(records)} of {total} records, progress is {progress} %", flush=True)
         for record in records:
-            HarvestTable.insert(cursor, record)    
+            # skip insertion of records where work_id is missing (17 out of 15k records have this)
+            if record['work_id'] is not None:
+                HarvestTable.insert(cursor, record)    
 
         conn.commit()  # commit batch of inserts
 

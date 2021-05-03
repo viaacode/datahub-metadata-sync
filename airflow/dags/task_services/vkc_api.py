@@ -54,8 +54,9 @@ class VkcApi:
                 )
 
                 if work_tag is None:
-                    # revert to using header/identifier as work_id instead
-                    work_id = header.find('.//ns0:identifier', self.ns0).text
+                    identifier = header.find('.//ns0:identifier', self.ns0).text
+                    print("VKC record found without work_id, skipping, header identifier: {identifier}")
+                    work_id = None
                 else:
                     work_id = work_tag.text
 
