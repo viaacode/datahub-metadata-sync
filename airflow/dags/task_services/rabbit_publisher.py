@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-
+from rabbit_client import RabbitClient
 
 class RabbitPublisher:
     def __init__(self):
         """connect to rabbitmq"""
         print("RabbitPublisher initialized")
+        self.rabbit_client = RabbitClient()
 
     def publish(self, record):
         """publish to rabbitmq"""
@@ -24,3 +25,21 @@ class RabbitPublisher:
 # 
 # Hier zat een python voorbeeldje, maar is ondertussen weg :wink:
 
+
+    def send_to_rabbit(self, record):
+        # 5. Update mediahaven fragement with received metadata
+        update_request = {
+            "correlation_id": uuid.uuid4().hex,
+            "fragment_id": fragment_id,
+            "cp_id": mtd_cfg["transformation"],
+            "data": transformation_response.text,
+        }
+
+        print(f"sending message to update service {update_request}")
+
+        self.rabbit_client.send_message(
+            routing_key=self.config["mam-update-service"]["queue"],
+            body=json.dumps(update_request),
+        )
+
+        channel.basic_ack(delivery_tag=method.delivery_tag)

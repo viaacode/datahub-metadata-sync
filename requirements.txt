@@ -4,3 +4,4 @@ requests==2.25.1
 apache-airflow-providers-postgres==1.0.1
 lxml==4.6.3
 cython==0.29.23
+pika==1.2.0
