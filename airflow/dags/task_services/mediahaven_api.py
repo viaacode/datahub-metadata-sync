@@ -50,15 +50,18 @@ class MediahavenApi:
         search_matches = self.list_objects(search=f"+({object_key}:{value})")
         return search_matches
 
-    def vkc_record_exists(self, work_id):
+    def find_vkc_fragment_id(self, work_id):
         try:
             # alternatief rechtstreeks met work_id maar dan heb je meer results:
             # https://archief.viaa.be/mediahaven-rest-api/resources/media/?q=%2B(%221976.GRO0815.I%22)
             localid = work_id.replace('.','_')
             search_matches = self.list_objects(search=f'+(dc_identifier_localid:{localid})')
-            return search_matches['TotalNrOfResults']>=1
+            if search_matches['TotalNrOfResults']>=1:
+                return search_matches['MediaDataList'][0]['Internal']['FragmentId']
+            else:
+                return None
         except AssertionError:
             print("Warning 401 response from mediahaven api!")
-            return False
+            return None
 
 

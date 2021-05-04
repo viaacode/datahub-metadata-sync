@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-from rabbit_client import RabbitClient
+from .rabbit import RabbitClient
 
 class RabbitPublisher:
     def __init__(self):

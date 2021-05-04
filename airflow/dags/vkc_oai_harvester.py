@@ -88,12 +88,18 @@ def transform_lido_to_mh(**context):
         print(f"fetched {len(records)} records, now converting...", flush=True)
         uc = update_conn.cursor()
         for record in records:
-            if mh_api.vkc_record_exists(HarvestTable.get_work_id(record)):
-                print(f"Skipping existing entry, work_id = {HarvestTable.get_work_id(record)}")
-                HarvestTable.set_synchronized(uc, record, True) 
-            else:
+            work_id = HarvestTable.get_work_id(record)
+            fragment_id = mh_api.find_vkc_fragment_id(work_id)
+            if fragment_id is not None:
+                print(f"Record with work_id={work_id} found in mam with fragment_id={fragment_id}")
                 converted_record = tr.convert(record[1]) 
-                HarvestTable.update_mam_xml(uc, record, converted_record)
+                HarvestTable.update_mam_xml(uc, record, converted_record, fragment_id)
+
+            # no need to convert it as we wont be sending it to rabbit anyway...
+            # else:
+            #    #HarvestTable.set_synchronized(uc, record, True) 
+            #    converted_record = tr.convert(record[1]) 
+            #    HarvestTable.update_mam_xml(uc, record, converted_record)
  
         update_conn.commit()  # commit all updates current batch
         uc.close()
@@ -109,7 +115,7 @@ def publish_to_rabbitmq(**context):
     update_conn = PostgresHook(postgres_conn_id=DB_CONNECT_ID).get_conn()
 
     rc = read_conn.cursor('serverCursor')
-    HarvestTable.batch_select_records(rc)
+    HarvestTable.batch_select_updateable_records(rc)
     while True:
         records = rc.fetchmany(size=BATCH_SIZE)
         if not records:
