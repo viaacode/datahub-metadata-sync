@@ -61,7 +61,10 @@ class MediahavenApi:
             else:
                 return None
         except AssertionError:
-            print("Warning 401 response from mediahaven api!")
+            print("WARNING: 401 response from mediahaven api!")
+            return None
+        except KeyError:
+            print(f"WARNING: find_vkc_fragment_id result missing TotalNrOfResults response={search_matches}")
             return None
 
 
