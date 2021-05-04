@@ -57,14 +57,17 @@ class MediahavenApi:
             localid = work_id.replace('.','_')
             search_matches = self.list_objects(search=f'+(dc_identifier_localid:{localid})')
             if search_matches['TotalNrOfResults']>=1:
-                return search_matches['MediaDataList'][0]['Internal']['FragmentId']
+                fragment_id = search_matches['MediaDataList'][0]['Internal']['FragmentId']
+                print(f"work_id={work_id} found fragment_id={fragment_id}")
+                return fragment_id 
             else:
+                print(f"work_id={work_id} not found in mam")
                 return None
         except AssertionError:
             print("WARNING: 401 response from mediahaven api!")
             return None
         except KeyError:
-            print(f"WARNING: find_vkc_fragment_id result missing TotalNrOfResults response={search_matches}")
+            print(f"WARNING: find_vkc_fragment_id {work_id} response = {search_matches}")
             return None
 
 
