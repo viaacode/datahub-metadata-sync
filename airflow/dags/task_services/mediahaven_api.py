@@ -54,13 +54,12 @@ class MediahavenApi:
         try:
             # alternatief rechtstreeks met work_id maar dan heb je meer results:
             # https://archief.viaa.be/mediahaven-rest-api/resources/media/?q=%2B(%221976.GRO0815.I%22)
-            localid = work_id.replace('.','_')
+            localid = work_id.replace('.','_').replace("/","\\/")
             search_matches = self.list_objects(search=f'+(dc_identifier_localid:"{localid}")')
             if search_matches['TotalNrOfResults']>=1:
                 fragment_id = search_matches['MediaDataList'][0]['Internal']['FragmentId']
                 return fragment_id 
             else:
-                # print(f"work_id={work_id} not found in mam")
                 return None
         except AssertionError:
             print("WARNING: 401 response from mediahaven api!")

@@ -94,12 +94,8 @@ def transform_lido_to_mh(**context):
                 print(f"Record with work_id={work_id} found in mam with fragment_id={fragment_id}")
                 converted_record = tr.convert(record[1]) 
                 HarvestTable.update_mam_xml(uc, record, converted_record, fragment_id)
-
-            # no need to convert it as we wont be sending it to rabbit anyway...
-            # else:
-            #    #HarvestTable.set_synchronized(uc, record, True) 
-            #    converted_record = tr.convert(record[1]) 
-            #    HarvestTable.update_mam_xml(uc, record, converted_record)
+            else:
+                print(f"Skipping record with work_id={work_id}")
  
         update_conn.commit()  # commit all updates current batch
         uc.close()
