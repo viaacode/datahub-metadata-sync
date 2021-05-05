@@ -12,9 +12,9 @@ class RabbitClient:
 
         self.RABBIT_USER = os.environ.get('RABBIT_USER', 'some_rmq_user')
         self.RABBIT_PASS = os.environ.get('RABBIT_PASS', 'some_rmq_passw')
-        self.RABBIT_HOST =os.environ.get('RABBIT_HOST', 'rmq_host_here')
+        self.RABBIT_HOST = os.environ.get('RABBIT_HOST', 'rmq_host_here')
         self.RABBIT_PORT = os.environ.get('RABBIT_USER', 'rmq_port_here')
-        self.RABBIT_QUEUE = os.environ.get('RABBIT_QUEUE', 'rmq_queue_name_here')
+        self.RABBIT_QUEUE = os.environ.get('RABBIT_QUEUE', 'mam-update-requests')
         self.prefetch_count = int(os.environ.get('RABBIT_PREFETCH', '1'))
 
         self.credentials = pika.PlainCredentials(

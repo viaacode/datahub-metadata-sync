@@ -15,19 +15,13 @@ class RabbitPublisher:
         print(f"push record with id={record_id} to rabbitmq mam_xml={mam_xml[0:20]}", flush=True)
 
 
-# inspiration for publishing on rmq with mam-update service, see slack comments rudolf here:
-# https://github.com/viaacode/mam-update-service
-# gewoon iets gelijk example 1 doen
-# 
-# of
-# 
-# https://github.com/viaacode/vrt-events-metadata/commit/e61e550aa572c707f418e7398e73cc70ea709321
-# 
-# Hier zat een python voorbeeldje, maar is ondertussen weg :wink:
-
-
+    # inspiration for publishing on rmq with mam-update service, see slack comments rudolf here:
+    # https://github.com/viaacode/mam-update-service
+    # gewoon iets gelijk example 1 doen
+    # of
+    # https://github.com/viaacode/vrt-events-metadata/commit/e61e550aa572c707f418e7398e73cc70ea709321
     def send_to_rabbit(self, record):
-        # 5. Update mediahaven fragement with received metadata
+        # 5. Update mediahaven fragment with received metadata
         update_request = {
             "correlation_id": uuid.uuid4().hex,
             "fragment_id": fragment_id,
