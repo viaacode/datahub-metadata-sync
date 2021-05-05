@@ -53,7 +53,8 @@ class MediahavenApi:
             # an alternative lookup with multiple results is:
             # https://archief.viaa.be/mediahaven-rest-api/resources/media/?q=%2B(%221976.GRO0815.I%22)
             localid = work_id.replace('.','_').replace("/","\\/")
-            search_matches = self.list_objects(search=f'+(dc_identifier_localid:"{localid}")')
+            # search_matches = self.list_objects(search=f'+(dc_identifier_localid:"{localid}")')
+            search_matches = self.list_objects(search=f'+(dc_identifier_localidsinventarisnummer:"{localid}")')
             if search_matches['TotalNrOfResults']>=1:
                 return search_matches['MediaDataList'][0]
             else:
