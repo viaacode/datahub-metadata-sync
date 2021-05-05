@@ -20,11 +20,10 @@ class RabbitPublisher:
         }
 
         print(
-            "publishing record with work_id={} fragment_id={} cp_id={} xml={}".format(
+            "publishing record with work_id={} fragment_id={} cp_id={}".format(
             record['work_id'],
             record['fragment_id'],
-            record['cp_id'],
-            record['mam_xml']
+            record['cp_id']
         ))
 
         self.rabbit_client.send_message(
@@ -32,9 +31,3 @@ class RabbitPublisher:
             body=json.dumps(update_request),
         )
 
-
-    # inspiration for publishing on rmq with mam-update service, see slack comments rudolf here:
-    # https://github.com/viaacode/mam-update-service
-    # gewoon iets gelijk example 1 doen
-    # of
-    # https://github.com/viaacode/vrt-events-metadata/commit/e61e550aa572c707f418e7398e73cc70ea709321
