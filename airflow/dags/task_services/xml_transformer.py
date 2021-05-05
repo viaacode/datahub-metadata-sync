@@ -6,7 +6,6 @@ from pathlib import Path
 # from typing import List
 
 # for saxonc on mac to work. run scripts/install_mac_saxon.sh and then
-# also do this:
 # export PYTHONPATH=$(pwd)/saxon/Saxon.C.API/python-saxon
 
 class XmlTransformer:
@@ -19,7 +18,7 @@ class XmlTransformer:
 
 
     def __del__(self):
-        # https://github.com/rimmartin/saxon-node/issues/21
+        # fixes warning dialog on mac: https://github.com/rimmartin/saxon-node/issues/21
         self.saxon_processor.release()
 
 

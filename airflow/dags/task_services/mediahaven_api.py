@@ -12,8 +12,6 @@ import os
 from requests import Session
 
 class MediahavenApi:
-    # Voor v2 is endpoint hier /mediahaven-rest-api/v2/resources/
-    # en met oauth ipv basic auth
     API_SERVER = os.environ.get(
         'MEDIAHAVEN_API',
         'https://archief-qas.viaa.be/mediahaven-rest-api'

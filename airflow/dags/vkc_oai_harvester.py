@@ -134,7 +134,8 @@ def publish_to_rabbitmq(**context):
 
 
 with dag:
-    # postgres_default is defined in the admin/connections (its just another entry in the airflow database).
+    # postgres_default is defined in the admin/connections 
+    # find+update the entry in the airflow database.
     create_db_table = PostgresOperator(
       task_id="create_harvest_table",
       postgres_conn_id=DB_CONNECT_ID,

@@ -36,8 +36,6 @@ class RabbitClient:
                 exchange=exchange, routing_key=routing_key, body=body,
             )
 
-            # ack does not work yet
-            # self.channel.basic_ack(delivery_tag=method.delivery_tag)
         except pika.exceptions.AMQPConnectionError as error:
             raise error
 
