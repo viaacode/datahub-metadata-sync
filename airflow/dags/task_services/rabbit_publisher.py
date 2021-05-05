@@ -20,10 +20,11 @@ class RabbitPublisher:
         }
 
         print(
-            "publishing record with work_id={} fragment_id={} cp_id={}".format(
+            "publishing record with work_id={} fragment_id={} cp_id={} xml={}".format(
             record['work_id'],
             record['fragment_id'],
-            record['cp_id']
+            record['cp_id'],
+            record['mam_xml']
         ))
 
         self.rabbit_client.send_message(
