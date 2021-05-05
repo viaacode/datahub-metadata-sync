@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 from .rabbit import RabbitClient
+import json
 
 class RabbitPublisher:
     def __init__(self):
@@ -19,7 +20,7 @@ class RabbitPublisher:
         }
 
         print(
-            "publishing record with work_id={} fragment_id={} cp_id={} data={}".format(
+            "publishing record with work_id={} fragment_id={} cp_id={}".format(
             record['work_id'],
             record['fragment_id'],
             record['cp_id']
@@ -30,7 +31,6 @@ class RabbitPublisher:
             body=json.dumps(update_request),
         )
 
-        channel.basic_ack(delivery_tag=method.delivery_tag)
 
     # inspiration for publishing on rmq with mam-update service, see slack comments rudolf here:
     # https://github.com/viaacode/mam-update-service

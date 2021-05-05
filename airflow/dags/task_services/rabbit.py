@@ -14,7 +14,6 @@ class RabbitClient:
         self.RABBIT_PASS = os.environ.get('RABBIT_PASS', 'pw')
 
         self.RABBIT_QUEUE = os.environ.get('RABBIT_QUEUE', 'mam-update-requests')
-        self.prefetch_count = int(os.environ.get('RABBIT_PREFETCH', '1'))
 
         self.credentials = pika.PlainCredentials(
             self.RABBIT_USER, self.RABBIT_PASS
@@ -29,12 +28,16 @@ class RabbitClient:
         )
 
         self.channel = self.connection.channel()
+        self.prefetch_count = int(os.environ.get('RABBIT_PREFETCH', '1'))
 
     def send_message(self, routing_key, body, exchange=""):
         try:
             self.channel.basic_publish(
                 exchange=exchange, routing_key=routing_key, body=body,
             )
+
+            # ack does not work yet
+            # self.channel.basic_ack(delivery_tag=method.delivery_tag)
         except pika.exceptions.AMQPConnectionError as error:
             raise error
 
