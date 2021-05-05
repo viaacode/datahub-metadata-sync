@@ -51,7 +51,6 @@ class HarvestTable:
 
     @staticmethod
     def set_synchronized(cursor, record, val):
-        record_id = record[0]
         cursor.execute(
             """
             UPDATE harvest_vkc
@@ -59,12 +58,11 @@ class HarvestTable:
                 updated_at = now()
             WHERE id=%s
             """,
-            (val, record_id)
+            (val, record['id'])
         )
 
     @staticmethod
     def update_mam_xml(cursor, record, converted_record, fragment_id=None, cp_id=None):
-        record_id = record[0]
         cursor.execute(
             """
             UPDATE harvest_vkc
@@ -75,11 +73,10 @@ class HarvestTable:
                 updated_at = now()
             WHERE id=%s
             """,
-            (converted_record, fragment_id, cp_id, record_id)
+            (converted_record, fragment_id, cp_id, record['id'])
         )
 
     @staticmethod
     def get_work_id(record):
-        work_id = record[3]
-        return work_id
+        return record['work_id']
 

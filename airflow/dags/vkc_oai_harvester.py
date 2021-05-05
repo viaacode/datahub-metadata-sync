@@ -15,6 +15,7 @@ from task_services.harvest_table import HarvestTable
 from airflow.providers.postgres.operators.postgres import PostgresOperator
 from airflow.providers.postgres.hooks.postgres import PostgresHook
 
+from psycopg2.extras import DictCursor
 
 DB_CONNECT_ID = 'postgres_default'
 BATCH_SIZE = 100
@@ -43,7 +44,7 @@ def harvest_vkc(**context):
         print("Delta sync requested, todo: run query to get datestamp to pass into list_records")
 
     conn = PostgresHook(postgres_conn_id=DB_CONNECT_ID).get_conn()
-    cursor = conn.cursor()
+    cursor = conn.cursor(cursor_factory=DictCursor)
     api = VkcApi()
     records, token, total = api.list_records()
     total_count=len(records)
@@ -79,14 +80,14 @@ def transform_lido_to_mh(**context):
     read_conn = PostgresHook(postgres_conn_id=DB_CONNECT_ID).get_conn()
     update_conn = PostgresHook(postgres_conn_id=DB_CONNECT_ID).get_conn()
 
-    rc = read_conn.cursor('serverCursor')
+    rc = read_conn.cursor('serverCursor', cursor_factory=DictCursor)
     HarvestTable.batch_select_records(rc)
     while True:
         records = rc.fetchmany(size=BATCH_SIZE)
         if not records:
             break
         print(f"fetched {len(records)} records, now converting...", flush=True)
-        uc = update_conn.cursor()
+        uc = update_conn.cursor(cursor_factory=DictCursor)
         for record in records:
             work_id = HarvestTable.get_work_id(record)
             mh_record = mh_api.find_vkc_record(work_id)
@@ -112,14 +113,14 @@ def publish_to_rabbitmq(**context):
     read_conn = PostgresHook(postgres_conn_id=DB_CONNECT_ID).get_conn()
     update_conn = PostgresHook(postgres_conn_id=DB_CONNECT_ID).get_conn()
 
-    rc = read_conn.cursor('serverCursor')
+    rc = read_conn.cursor('serverCursor', cursor_factory=DictCursor)
     HarvestTable.batch_select_updateable_records(rc)
     while True:
         records = rc.fetchmany(size=BATCH_SIZE)
         if not records:
             break
         print(f"fetched {len(records)} records, pushing on rabbitmq...", flush=True)
-        uc = update_conn.cursor()
+        uc = update_conn.cursor(cursor_factory=DictCursor)
         for record in records:
             rp.publish(record)
             HarvestTable.set_synchronized(uc, record, True) 
