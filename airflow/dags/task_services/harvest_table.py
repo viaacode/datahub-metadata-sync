@@ -13,6 +13,7 @@ class HarvestTable:
                 mam_xml VARCHAR,
                 work_id VARCHAR,
                 fragment_id VARCHAR,
+                cp_id VARCHAR,
                 datestamp timestamp with time zone,
                 synchronized BOOL DEFAULT 'false',
                 created_at timestamp with time zone NOT NULL DEFAULT now(),
@@ -62,18 +63,19 @@ class HarvestTable:
         )
 
     @staticmethod
-    def update_mam_xml(cursor, record, converted_record, fragment_id=None):
+    def update_mam_xml(cursor, record, converted_record, fragment_id=None, cp_id=None):
         record_id = record[0]
         cursor.execute(
             """
             UPDATE harvest_vkc
             SET mam_xml = %s,
                 fragment_id = %s,
+                cp_id = %s,
                 synchronized = 'false',
                 updated_at = now()
             WHERE id=%s
             """,
-            (converted_record, fragment_id, record_id)
+            (converted_record, fragment_id, cp_id, record_id)
         )
 
     @staticmethod

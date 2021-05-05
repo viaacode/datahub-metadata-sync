@@ -89,11 +89,13 @@ def transform_lido_to_mh(**context):
         uc = update_conn.cursor()
         for record in records:
             work_id = HarvestTable.get_work_id(record)
-            fragment_id = mh_api.find_vkc_fragment_id(work_id)
-            if fragment_id is not None:
-                print(f"Record with work_id={work_id} found in mam with fragment_id={fragment_id}")
+            mh_record = mh_api.find_vkc_record(work_id)
+            if mh_record is not None:
+                fragment_id = mh_record['Internal']['FragmentId']
+                cp_id = mh_record['Dynamic']['CP_id']
+                print(f"Record work_id={work_id} found, fragment_id={fragment_id} cp_id={cp_id}")
                 converted_record = tr.convert(record[1]) 
-                HarvestTable.update_mam_xml(uc, record, converted_record, fragment_id)
+                HarvestTable.update_mam_xml(uc, record, converted_record, fragment_id, cp_id)
             else:
                 print(f"Skipping record with work_id={work_id}")
  
