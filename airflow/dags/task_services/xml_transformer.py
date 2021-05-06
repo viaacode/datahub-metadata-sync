@@ -9,14 +9,16 @@ import saxonc
 
 class XmlTransformer:
     def __init__(self):
-        """transforms VKC xml into MAM xml format using resources/lido_to_mam/main.xslt"""
+        """ Transforms VKC xml into MAM xml format using
+            resources/lido_to_mam/main.xslt """
         self.saxon_processor = saxonc.PySaxonProcessor(license=False)
         self.xslt_path = self.__get_path_to_xslt('lido_to_mam')
         self.xslt_proc = self.saxon_processor.new_xslt30_processor()
         print("XmlTransformer initialized")
 
     def __del__(self):
-        # fixes warning dialog on mac: https://github.com/rimmartin/saxon-node/issues/21
+        # fixes warning dialog on mac:
+        # https://github.com/rimmartin/saxon-node/issues/21
         self.saxon_processor.release()
 
     def convert(self, vkc_xml):
@@ -30,5 +32,7 @@ class XmlTransformer:
         # The xslt should exist in the resources folder.
         base_dir = os.getcwd()
         xslt_path = os.path.join(
-            base_dir, "airflow", "dags", "resources", transformation, "main.xslt")
+            base_dir, "airflow", "dags", "resources",
+            transformation, "main.xslt"
+        )
         return xslt_path
