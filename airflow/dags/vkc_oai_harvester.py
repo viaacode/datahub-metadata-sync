@@ -1,9 +1,6 @@
 """DAG for harvesting and converting OAI data Vlaamse Kunst Collectie to target MAM."""
-import time
-from pprint import pprint
-
 from airflow import DAG
-from airflow.operators.python import PythonOperator, PythonVirtualenvOperator
+from airflow.operators.python import PythonOperator  # , PythonVirtualenvOperator
 from airflow.utils.dates import days_ago
 
 from task_services.vkc_api import VkcApi
@@ -14,8 +11,10 @@ from task_services.harvest_table import HarvestTable
 
 from airflow.providers.postgres.operators.postgres import PostgresOperator
 from airflow.providers.postgres.hooks.postgres import PostgresHook
-
 from psycopg2.extras import DictCursor
+# import time
+# from pprint import pprint
+
 
 DB_CONNECT_ID = 'postgres_default'
 BATCH_SIZE = 100
@@ -34,12 +33,13 @@ dag = DAG(
 
 
 def harvest_vkc(**context):
-    print("context=",context)
+    print("context=", context)
 
     full_sync = context['full_sync']
     if full_sync:
         print("Full sync requested")
-        HarvestTable.truncate( PostgresHook(postgres_conn_id=DB_CONNECT_ID).get_conn() )
+        HarvestTable.truncate(PostgresHook(
+            postgres_conn_id=DB_CONNECT_ID).get_conn())
     else:
         print("Delta sync requested, todo: run query to get datestamp to pass into list_records")
 
@@ -47,16 +47,17 @@ def harvest_vkc(**context):
     cursor = conn.cursor(cursor_factory=DictCursor)
     api = VkcApi()
     records, token, total = api.list_records()
-    total_count=len(records)
+    total_count = len(records)
 
-    while len(records)>0:
-        progress = round((total_count/total)*100,1)
-        
-        print(f"Saving {len(records)} of {total} records, progress is {progress} %", flush=True)
+    while len(records) > 0:
+        progress = round((total_count/total)*100, 1)
+
+        print(
+            f"Saving {len(records)} of {total} records, progress is {progress} %", flush=True)
         for record in records:
             # skip insertion of records where work_id is missing (17 out of 15k records have this)
             if record['work_id'] is not None:
-                HarvestTable.insert(cursor, record)    
+                HarvestTable.insert(cursor, record)
 
         conn.commit()  # commit batch of inserts
 
@@ -70,8 +71,10 @@ def harvest_vkc(**context):
     cursor.close()
     conn.close()
 
+
 def transform_lido_to_mh(**context):
-    print(f'transform_lido_to_mh called with context={context} transform xml format by iterating database')
+    print(
+        f'transform_lido_to_mh called with context={context} transform xml format by iterating database')
     tr = XmlTransformer()
     mh_api = MediahavenApi()
 
@@ -94,20 +97,24 @@ def transform_lido_to_mh(**context):
             if mh_record is not None:
                 fragment_id = mh_record['Internal']['FragmentId']
                 cp_id = mh_record['Dynamic']['CP_id']
-                print(f"Record work_id={work_id} found, fragment_id={fragment_id} cp_id={cp_id}")
-                converted_record = tr.convert(record[1]) 
-                HarvestTable.update_mam_xml(uc, record, converted_record, fragment_id, cp_id)
+                print(
+                    f"Record work_id={work_id} found, fragment_id={fragment_id} cp_id={cp_id}")
+                converted_record = tr.convert(record[1])
+                HarvestTable.update_mam_xml(
+                    uc, record, converted_record, fragment_id, cp_id)
             else:
                 print(f"Skipping record with work_id={work_id}")
- 
+
         update_conn.commit()  # commit all updates current batch
         uc.close()
 
     rc.close()
     read_conn.close()
 
+
 def publish_to_rabbitmq(**context):
-    print(f'publish_to_rabbitmq called with context={context} pushes data to rabbit mq')
+    print(
+        f'publish_to_rabbitmq called with context={context} pushes data to rabbit mq')
     rp = RabbitPublisher()
 
     read_conn = PostgresHook(postgres_conn_id=DB_CONNECT_ID).get_conn()
@@ -119,12 +126,13 @@ def publish_to_rabbitmq(**context):
         records = rc.fetchmany(size=BATCH_SIZE)
         if not records:
             break
-        print(f"fetched {len(records)} records, pushing on rabbitmq...", flush=True)
+        print(
+            f"fetched {len(records)} records, pushing on rabbitmq...", flush=True)
         uc = update_conn.cursor(cursor_factory=DictCursor)
         for record in records:
             rp.publish(record)
-            HarvestTable.set_synchronized(uc, record, True) 
-    
+            HarvestTable.set_synchronized(uc, record, True)
+
         update_conn.commit()  # commit all updates current batch
         uc.close()
 
@@ -132,14 +140,13 @@ def publish_to_rabbitmq(**context):
     read_conn.close()
 
 
-
 with dag:
-    # postgres_default is defined in the admin/connections 
+    # postgres_default is defined in the admin/connections
     # find+update the entry in the airflow database.
     create_db_table = PostgresOperator(
-      task_id="create_harvest_table",
-      postgres_conn_id=DB_CONNECT_ID,
-      sql=HarvestTable.create_sql()
+        task_id="create_harvest_table",
+        postgres_conn_id=DB_CONNECT_ID,
+        sql=HarvestTable.create_sql()
     )
 
     harvest_vkc_task = PythonOperator(
@@ -159,5 +166,3 @@ with dag:
     )
 
     create_db_table >> harvest_vkc_task >> transform_lido_task >> publish_to_rabbitmq_task
-
-

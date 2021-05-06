@@ -5,6 +5,7 @@ import time
 import pika
 import os
 
+
 class RabbitClient:
     def __init__(self):
         self.RABBIT_HOST = os.environ.get('RABBIT_HOST', 'url_here')
@@ -13,7 +14,8 @@ class RabbitClient:
         self.RABBIT_USER = os.environ.get('RABBIT_USER', 'user')
         self.RABBIT_PASS = os.environ.get('RABBIT_PASS', 'pw')
 
-        self.RABBIT_QUEUE = os.environ.get('RABBIT_QUEUE', 'mam-update-requests')
+        self.RABBIT_QUEUE = os.environ.get(
+            'RABBIT_QUEUE', 'mam-update-requests')
 
         self.credentials = pika.PlainCredentials(
             self.RABBIT_USER, self.RABBIT_PASS

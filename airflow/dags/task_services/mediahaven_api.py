@@ -11,6 +11,7 @@
 import os
 from requests import Session
 
+
 class MediahavenApi:
     API_SERVER = os.environ.get(
         'MEDIAHAVEN_API',
@@ -18,7 +19,7 @@ class MediahavenApi:
     )
     API_USER = os.environ.get('MEDIAHAVEN_USER', 'apiUser')
     API_PASSWORD = os.environ.get('MEDIAHAVEN_PASS', 'password')
-    
+
     def __init__(self, session=None):
         if session is None:
             self.session = Session()
@@ -50,9 +51,10 @@ class MediahavenApi:
 
     def find_vkc_record(self, work_id):
         try:
-            localid = work_id.replace('.','_').replace("/","\\/")
-            search_matches = self.list_objects(search=f'+(dc_identifier_localidsinventarisnummer:"{localid}")')
-            if search_matches['TotalNrOfResults']>=1:
+            localid = work_id.replace('.', '_').replace("/", "\\/")
+            search_matches = self.list_objects(
+                search=f'+(dc_identifier_localidsinventarisnummer:"{localid}")')
+            if search_matches['TotalNrOfResults'] >= 1:
                 return search_matches['MediaDataList'][0]
             else:
                 return None
@@ -60,7 +62,6 @@ class MediahavenApi:
             print("WARNING: 401 response from mediahaven api!")
             return None
         except KeyError:
-            print(f"WARNING: find_vkc_fragment_id {work_id} response = {search_matches}")
+            print(
+                f"WARNING: find_vkc_fragment_id {work_id} response = {search_matches}")
             return None
-
-

@@ -25,7 +25,7 @@ class HarvestTable:
     def truncate(conn):
         print("Clearing harvest_vkc table")
         cursor = conn.cursor()
-        cursor.execute( "TRUNCATE TABLE harvest_vkc" )
+        cursor.execute("TRUNCATE TABLE harvest_vkc")
         conn.commit()
         cursor.close()
         conn.close()
@@ -42,19 +42,20 @@ class HarvestTable:
 
     @staticmethod
     def batch_select_records(server_cursor):
-        server_cursor.execute('select * from harvest_vkc where synchronized=false')
+        server_cursor.execute(
+            'select * from harvest_vkc where synchronized=false')
 
     @staticmethod
     def batch_select_updateable_records(server_cursor):
-        server_cursor.execute('select * from harvest_vkc where synchronized=false and fragment_id IS NOT NULL')
-
+        server_cursor.execute(
+            'select * from harvest_vkc where synchronized=false and fragment_id IS NOT NULL')
 
     @staticmethod
     def set_synchronized(cursor, record, val):
         cursor.execute(
             """
             UPDATE harvest_vkc
-            SET synchronized = %s, 
+            SET synchronized = %s,
                 updated_at = now()
             WHERE id=%s
             """,
@@ -79,4 +80,3 @@ class HarvestTable:
     @staticmethod
     def get_work_id(record):
         return record['work_id']
-
