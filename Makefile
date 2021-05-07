@@ -63,7 +63,7 @@ dockertest:
 .PHONY: coverage
 coverage:
 	@. python_env/bin/activate; \
-	python -m pytest --cov-config=.coveragerc --cov . .  --cov-report html --cov-report term tests
+	python -m pytest --cov-config=.coveragerc --cov . .  --cov-report html --cov-report term --ignore saxon
 
 
 # todo the scheduler and webserver scripts should go here and deprecate them
