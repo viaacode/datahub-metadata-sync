@@ -15,8 +15,8 @@ help:
 	@echo "  test        run all the tests"
 	@echo "  dockertest  run all the tests in docker image like jenkins"
 	@echo "  coverage    run tests and generate coverage report"
-	@echo "  sync        start Teamleader sync directly"
-	@echo "  server      start uvicorn development server fast-api for synchronizing with ldap"
+	@echo "  server      start airflow webserver port 8080"
+	@echo "  scheduler   start airflow scheculer to run dags"
 	@echo ""
 
 
@@ -66,20 +66,19 @@ coverage:
 	python -m pytest --cov-config=.coveragerc --cov . .  --cov-report html --cov-report term --ignore saxon
 
 
-# todo the scheduler and webserver scripts should go here and deprecate them
-#.PHONY: sync 
-#sync:
-#	. python_env/bin/activate; \
-#	python -m app.app teamleader-sync
-#
-#.PHONY: code_callback_example
-#code_callback_example:
-#	curl "http://localhost:8080/sync/oauth?code=CODE_HERE&state=qas_secret_state"
-#
-#
-#.PHONY: server
-#server:
-#	. python_env/bin/activate; \
-#	uvicorn app.server:app --reload --port 8080
+.PHONY: server
+server:
+	. python_env/bin/activate; \
+	export AIRFLOW_HOME=$(PWD)/airflow; \
+	export PYTHONPATH=$(pwd)/saxon/Saxon.C.API/python-saxon; \
+	airflow webserver --port 8080
+
+
+.PHONY: scheduler 
+scheduler:
+	. python_env/bin/activate; \
+	export AIRFLOW_HOME=$(PWD)/airflow; \
+	export PYTHONPATH=$(pwd)/saxon/Saxon.C.API/python-saxon; \
+	airflow scheduler
 
 

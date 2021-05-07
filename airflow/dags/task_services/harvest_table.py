@@ -1,8 +1,15 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+#
+#  @Author: Walter Schreppers
+#
+#   airflow/dags/task_services/harvest_table.py
+#
+#   HarvestTable handles creation, truncating and updating
+#   records in the harvest_vkc table
+
 
 class HarvestTable:
-    """ HarvestTable handles creation, truncating and updating records in the harvest_vkc table """
 
     @staticmethod
     def create_sql():
@@ -76,7 +83,3 @@ class HarvestTable:
             """,
             (converted_record, fragment_id, cp_id, record['id'])
         )
-
-    @staticmethod
-    def get_work_id(record):
-        return record['work_id']

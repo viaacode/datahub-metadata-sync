@@ -1,6 +1,15 @@
-"""DAG for harvesting and converting OAI data Vlaamse Kunst Collectie to target MAM."""
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+#
+#  @Author: Walter Schreppers
+#
+#   airflow/dags/vkc_oai_harvester.py
+#
+#   DAG for harvesting and converting OAI data from
+#   Vlaamse Kunst Collectie to target MAM
+
 from airflow import DAG
-from airflow.operators.python import PythonOperator  # , PythonVirtualenvOperator
+from airflow.operators.python import PythonOperator
 from airflow.utils.dates import days_ago
 
 from task_services.vkc_api import VkcApi
@@ -12,8 +21,6 @@ from task_services.harvest_table import HarvestTable
 from airflow.providers.postgres.operators.postgres import PostgresOperator
 from airflow.providers.postgres.hooks.postgres import PostgresHook
 from psycopg2.extras import DictCursor
-# import time
-# from pprint import pprint
 
 
 DB_CONNECT_ID = 'postgres_default'
@@ -55,8 +62,8 @@ def harvest_vkc(**context):
         print(
             f"Saving {len(records)} of {total} records, progress is {progress} %", flush=True)
         for record in records:
-            # skip insertion of records where work_id is missing (17 out of 15k records have this)
             if record['work_id'] is not None:
+                # for a few records, work_id is missing, we omit these
                 HarvestTable.insert(cursor, record)
 
         conn.commit()  # commit batch of inserts
@@ -92,7 +99,7 @@ def transform_lido_to_mh(**context):
         print(f"fetched {len(records)} records, now converting...", flush=True)
         uc = update_conn.cursor(cursor_factory=DictCursor)
         for record in records:
-            work_id = HarvestTable.get_work_id(record)
+            work_id = record['work_id']
             mh_record = mh_api.find_vkc_record(work_id)
             if mh_record is not None:
                 fragment_id = mh_record['Internal']['FragmentId']

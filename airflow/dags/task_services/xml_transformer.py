@@ -1,10 +1,21 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+#
+#  @Authors: Maarten, Rudolf, Walter
+#
+#  airflow/dags/task_services/vkc_api.py
+#
+#   Transfor xml document from vkc format into
+#   mediahaven compatible format using an xslt and saxonc library.
+#   right now it resides in:
+#   resources/lido_to_mam/main.xslt but might be fetched
+#   using a request in the future. as TODO
+#
+#   for saxonc on mac to work. run scripts/install_mac_saxon.sh and then
+#   export PYTHONPATH=$(pwd)/saxon/Saxon.C.API/python-saxon
+#
 import os
 import saxonc
-
-# for saxonc on mac to work. run scripts/install_mac_saxon.sh and then
-# export PYTHONPATH=$(pwd)/saxon/Saxon.C.API/python-saxon
 
 
 class XmlTransformer:
@@ -17,7 +28,7 @@ class XmlTransformer:
         print("XmlTransformer initialized")
 
     def __del__(self):
-        # fixes warning dialog on mac:
+        # this destructor fixes warning dialog on mac. info:
         # https://github.com/rimmartin/saxon-node/issues/21
         self.saxon_processor.release()
 

@@ -1,5 +1,13 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+#
+#  @Authors: Rudolf, Matthias, Walter
+#
+#   airflow/dags/task_services/rabbit.py
+#
+#   Utility class that wraps pika and uses env vars to
+#   set rabbit mq host, port, user, pass, prefetch, queue_name
+#
 
 import time
 import pika

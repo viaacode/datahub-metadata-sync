@@ -1,5 +1,13 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+#
+#  @Author: Walter Schreppers
+#
+#  airflow/dags/task_services/vkc_api.py
+#
+#   Fetch xml records from datahub.vlaamsekunstcollectie.be
+#   we also handle pagination with resumptionToken here
+#
 
 import requests
 import xml.etree.ElementTree as ET
