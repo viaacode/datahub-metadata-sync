@@ -5,8 +5,8 @@
 #
 #   airflow/dags/vkc_oai_harvester.py
 #
-#   DAG for harvesting and converting OAI data from
-#   Vlaamse Kunst Collectie to target MAM
+#   DAG with tasks for harvesting and converting OAI data from
+#   Vlaamse Kunst Collectie to target MAM and publish via RabbitMQ
 
 from airflow import DAG
 from airflow.operators.python import PythonOperator
@@ -40,15 +40,13 @@ dag = DAG(
 
 
 def harvest_vkc(**context):
-    print("context=", context)
-
     full_sync = context['full_sync']
     if full_sync:
-        print("Full sync requested")
+        print(f"harvest_vkc called. Full sync context={context}")
         HarvestTable.truncate(PostgresHook(
             postgres_conn_id=DB_CONNECT_ID).get_conn())
     else:
-        print("Delta sync requested, todo: run query to get datestamp to pass into list_records")
+        print(f"harvest_vkc called. Delta sync context={context}")
 
     conn = PostgresHook(postgres_conn_id=DB_CONNECT_ID).get_conn()
     cursor = conn.cursor(cursor_factory=DictCursor)
@@ -60,7 +58,7 @@ def harvest_vkc(**context):
         progress = round((total_count/total)*100, 1)
 
         print(
-            f"Saving {len(records)} of {total} records, progress is {progress} %", flush=True)
+            f"Saving {len(records)} of {total} records, progress {progress} %", flush=True)
         for record in records:
             if record['work_id'] is not None:
                 # for a few records, work_id is missing, we omit these
@@ -80,8 +78,7 @@ def harvest_vkc(**context):
 
 
 def transform_lido_to_mh(**context):
-    print(
-        f'transform_lido_to_mh called with context={context} transform xml format by iterating database')
+    print(f'transform_lido_to_mh called, context={context}')
     tr = XmlTransformer()
     mh_api = MediahavenApi()
 
@@ -121,7 +118,7 @@ def transform_lido_to_mh(**context):
 
 def publish_to_rabbitmq(**context):
     print(
-        f'publish_to_rabbitmq called with context={context} pushes data to rabbit mq')
+        f'publish_to_rabbitmq called, context={context}')
     rp = RabbitPublisher()
 
     read_conn = PostgresHook(postgres_conn_id=DB_CONNECT_ID).get_conn()
