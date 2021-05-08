@@ -40,21 +40,26 @@ export AIRFLOW__CORE__SQL_ALCHEMY_CON=postgresql+psycopg2://postgres:postgres@lo
 
 
 Listing the tasks in this harvester:
-
 ```
-airflow tasks list vkc_oai_harvester
+$ airflow tasks list vkc_oai_harvester
 
-[2021-04-26 16:32:34,415] {dagbag.py:451} INFO - Filling up the DagBag from .../airflow/dags
-harvest_oai
+[2021-05-08 17:26:35,924] {dagbag.py:451} INFO - Filling up the DagBag from /Users/wschrep/FreelanceWork/VIAA/IIIF_newproject/datahub-metadata-sync/airflow/dags
+create_harvest_table
+harvest_vkc
 publish_to_rabbitmq
-transform_lido_to_mh
-
+transform_xml
 ```
+
+Run task to create the harvest table:
+```
+airflow tasks test vkc_oai_harvester create_harvest_table 2021-05-08
+```
+
+
 
 Testrun a task for instance harvest oai data to target database:
-
 ```
-airflow tasks test vkc_oai_harvester  harvest_oai 2015-06-01
+airflow tasks test vkc_oai_harvester harvest_vkc 2015-06-01
 [2021-04-27 19:22:11,352] {dagbag.py:451} INFO - Filling up the DagBag from /Users/wschrep/FreelanceWork/VIAA/IIIF_newproject/datahub-metadata-sync/airflow/dags
 [2021-04-27 19:22:11,381] {taskinstance.py:877} INFO - Dependencies all met for <TaskInstance: vkc_oai_harvester.harvest_oai 2015-06-01T00:00:00+00:00 [None]>
 [2021-04-27 19:22:11,390] {taskinstance.py:877} INFO - Dependencies all met for <TaskInstance: vkc_oai_harvester.harvest_oai 2015-06-01T00:00:00+00:00 [None]>
@@ -101,39 +106,60 @@ Saving 1 of 15901 records progress is 100.0 %
 ```
 
 
-Testrun a transformation after a harvest run.
-This shows we can do batch sized queries (configured with BATCH_SIZE at top of DAG file) and then update these batches in a single commit per batch.
-We use a second connection and a named cursor on the read connection to make this all work nicely.
+Run the xml transformation after a harvest run. This transforms all the vkc lido xml blobs into mediahaven compatible xml. It is stored in the coloumn
+mam_xml along with a call to mediahaven to get the fragment_id, cp_id based on the work_id saved in previous harvest job.
+
 
 ```
-airflow tasks test vkc_oai_harvester transform_lido_to_mh 2015-06-01
+airflow tasks test vkc_oai_harvester transform_xml 2015-06-01
 
-[2021-04-27 14:31:09,757] {dagbag.py:451} INFO - Filling up the DagBag from /Users/wschrep/FreelanceWork/VIAA/IIIF_newproject/datahub-metadata-sync/airflow/dags
-[2021-04-27 14:31:09,796] {taskinstance.py:877} INFO - Dependencies all met for <TaskInstance: vkc_oai_harvester.transform_lido_to_mh 2015-06-01T00:00:00+00:00 [None]>
-[2021-04-27 14:31:09,808] {taskinstance.py:877} INFO - Dependencies all met for <TaskInstance: vkc_oai_harvester.transform_lido_to_mh 2015-06-01T00:00:00+00:00 [None]>
-[2021-04-27 14:31:09,808] {taskinstance.py:1068} INFO -
+[2021-05-08 17:32:07,767] {dagbag.py:451} INFO - Filling up the DagBag from /Users/wschrep/FreelanceWork/VIAA/IIIF_newproject/datahub-metadata-sync/airflow/dags
+[2021-05-08 17:32:07,832] {taskinstance.py:877} INFO - Dependencies all met for <TaskInstance: vkc_oai_harvester.transform_xml 2015-06-01T00:00:00+00:00 [None]>
+[2021-05-08 17:32:07,840] {taskinstance.py:877} INFO - Dependencies all met for <TaskInstance: vkc_oai_harvester.transform_xml 2015-06-01T00:00:00+00:00 [None]>
+[2021-05-08 17:32:07,840] {taskinstance.py:1068} INFO -
 --------------------------------------------------------------------------------
-[2021-04-27 14:31:09,808] {taskinstance.py:1069} INFO - Starting attempt 1 of 1
-[2021-04-27 14:31:09,808] {taskinstance.py:1070} INFO -
+[2021-05-08 17:32:07,840] {taskinstance.py:1069} INFO - Starting attempt 1 of 1
+[2021-05-08 17:32:07,841] {taskinstance.py:1070} INFO -
 --------------------------------------------------------------------------------
-[2021-04-27 14:31:09,809] {taskinstance.py:1089} INFO - Executing <Task(PythonOperator): transform_lido_to_mh> on 2015-06-01T00:00:00+00:00
-[2021-04-27 14:31:09,900] {taskinstance.py:1281} INFO - Exporting the following env vars:
+[2021-05-08 17:32:07,841] {taskinstance.py:1089} INFO - Executing <Task(PythonOperator): transform_xml> on 2015-06-01T00:00:00+00:00
+[2021-05-08 17:32:07,919] {taskinstance.py:1281} INFO - Exporting the following env vars:
 AIRFLOW_CTX_DAG_OWNER=airflow
 AIRFLOW_CTX_DAG_ID=vkc_oai_harvester
-AIRFLOW_CTX_TASK_ID=transform_lido_to_mh
+AIRFLOW_CTX_TASK_ID=transform_xml
 AIRFLOW_CTX_EXECUTION_DATE=2015-06-01T00:00:00+00:00
-transform_lido_to_mh called with context={'conf': ...} transform xml format by iterating database
+transform_lido_to_mh called, ... 
 XmlTransformer initialized
-[2021-04-27 14:31:09,905] {base.py:69} INFO - Using connection to: id: postgres_default. Host: localhost, Port: 5432, Schema: airflow_development, Login: postgres, Password: XXXXXXXX, extra: None
-[2021-04-27 14:31:09,916] {base.py:69} INFO - Using connection to: id: postgres_default. Host: localhost, Port: 5432, Schema: airflow_development, Login: postgres, Password: XXXXXXXX, extra: None
-fetched 2 records, now converting...
-updating record id=4 mam_data=TODO CONVERT TO MAM FORMAT:some result xml document from OAI
-updating record id=2 mam_data=TODO CONVERT TO MAM FORMAT:some result xml document from OAI
-fetched 2 records, now converting...
-updating record id=3 mam_data=TODO CONVERT TO MAM FORMAT:some result xml document from OAI
-updating record id=5 mam_data=TODO CONVERT TO MAM FORMAT:some result xml document from OAI
-[2021-04-27 14:31:09,932] {python.py:118} INFO - Done. Returned value was: None
-[2021-04-27 14:31:09,938] {taskinstance.py:1185} INFO - Marking task as SUCCESS. dag_id=vkc_oai_harvester, task_id=transform_lido_to_mh, execution_date=20150601T000000, start_date=20210427T123109, end_date=20210427T123109
+[2021-05-08 17:32:08,126] {base.py:69} INFO - Using connection to: id: postgres_default. Host: localhost, Port: 5432, Schema: airflow_development, Login: postgres, Password: XXXXXXXX, extra: None
+[2021-05-08 17:32:08,136] {base.py:69} INFO - Using connection to: id: postgres_default. Host: localhost, Port: 5432, Schema: airflow_development, Login: postgres, Password: XXXXXXXX, extra: None
+fetched 100 records, now converting...
+Skipping record with work_id=0000.GRO1561.I
+Skipping record with work_id=0000.GRO1390.I
+Skipping record with work_id=0000.GRO0128.I
+Skipping record with work_id=0000.GRO1476.I
+Skipping record with work_id=0000.GRO0479.I
+Skipping record with work_id=0000.GRO1372.I
+Skipping record with work_id=0000.GRO1360.I
+Skipping record with work_id=0000.GRO1359.I
+Skipping record with work_id=0000.GRO0227.I
+Record work_id=0000.GRO1280.I found, fragment_id=7ba7f34a1d3b404590d7bcaa7f93687ce6e986214b8442cfb168d9fcf85b9194686ad969521f415c8a1bbbca34919135 cp_id=OR-x921j0n
+Skipping record with work_id=0000.GRO1243.I
+Skipping record with work_id=0000.GRO0299.I
+...
+
+```
+So when a record is found in mediahaven using the api then we convert the xml and fill in the fragment_id and cp_id needed for the last task, sending it with rabbitmq as
+a mam-update-request.
+
+
+
+To now send the records to be updated with a task we run the following (the date is not really used, instead we look at the synchronized boolean flag, all that are not set to true will be sent and then the flag is updated to true):
+
+To test a few records, just run this query:
+update harvest_vkc set synchronized=true;
+and then manually set a few records to synchronized=false and then run the publis_to_rabbitmq task so it sends the ones where the flag is false.
+
+```
+airflow tasks test vkc_oai_harvester publish_to_rabbitmq 2021-05-01
 ```
 
 
