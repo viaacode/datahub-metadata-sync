@@ -46,7 +46,8 @@ def harvest_vkc(**context):
         HarvestTable.truncate(PostgresHook(
             postgres_conn_id=DB_CONNECT_ID).get_conn())
     else:
-        print(f"harvest_vkc called. Delta sync context={context}")
+        print(f"harvest_vkc called. Delta sync context={context}. EXIT NOW!")
+        return None
 
     conn = PostgresHook(postgres_conn_id=DB_CONNECT_ID).get_conn()
     cursor = conn.cursor(cursor_factory=DictCursor)
