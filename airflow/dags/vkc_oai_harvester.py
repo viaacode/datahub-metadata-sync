@@ -21,7 +21,7 @@ from task_services.harvest_table import HarvestTable
 from airflow.providers.postgres.operators.postgres import PostgresOperator
 from airflow.providers.postgres.hooks.postgres import PostgresHook
 from psycopg2.extras import DictCursor
-from datetime import datetime, timezone
+from datetime import timezone
 
 
 DB_CONNECT_ID = 'postgres_default'
@@ -90,7 +90,7 @@ def vkc_delta_sync():
 
     print(f"VKC delta sync, last_synced={last_synced}")
 
-    # TODO: refactor out code duplication 
+    # TODO: refactor out code duplication
     api = VkcApi()
     records, token, total = api.list_records(from_filter=last_synced)
     total_count = len(records)
@@ -152,7 +152,8 @@ def transform_xml(**context):
             if mh_record is not None:
                 fragment_id = mh_record['Internal']['FragmentId']
                 cp_id = mh_record['Dynamic']['CP_id']
-                print(f"Record work_id={work_id} found, fragment_id={fragment_id} cp_id={cp_id}")
+                print(
+                    f"Record work_id={work_id} found, fragment_id={fragment_id} cp_id={cp_id}")
                 converted_record = tr.convert(record[1])
                 HarvestTable.update_mam_xml(
                     uc, record, converted_record, fragment_id, cp_id)

@@ -36,7 +36,7 @@ class HarvestTable:
     @staticmethod
     def get_max_datestamp(cursor):
         cursor.execute("""
-            SELECT max(datestamp) FROM harvest_vkc WHERE 
+            SELECT max(datestamp) FROM harvest_vkc WHERE
                 synchronized=true AND
                 mam_xml IS NOT NULL
         """)
