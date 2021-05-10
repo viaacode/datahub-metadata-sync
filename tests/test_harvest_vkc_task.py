@@ -1,5 +1,5 @@
 import unittest
-# from airflow.utils.state import State
+from airflow.utils.state import State
 from airflow import DAG
 from airflow.dags.vkc_oai_harvester import harvest_vkc
 from airflow.models.taskinstance import TaskInstance
@@ -27,12 +27,12 @@ class HarvestVkcTest(unittest.TestCase):
         )
         self.ti = TaskInstance(
             task=self.op,
-            execution_date=datetime.strptime(DEFAULT_DATE, '%Y-%m-%d'),
+            execution_date=datetime.strptime(DEFAULT_DATE, '%Y-%m-%d')
         )
 
     def test_execute_no_trigger(self):
         # this still errors out, maybe we can look here for inspiration on monday:
         # https://blog.usejournal.com/testing-in-airflow-part-1-dag-validation-tests-dag-definition-tests-and-unit-tests-2aa94970570c
         assert True
-        # self.ti.run(ignore_ti_state=True)
-        # assert self.ti.state == State.SUCCESS
+        self.ti.run(ignore_ti_state=True)
+        assert self.ti.state == State.SUCCESS

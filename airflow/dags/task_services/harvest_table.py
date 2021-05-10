@@ -29,13 +29,9 @@ class HarvestTable:
             """
 
     @staticmethod
-    def truncate(conn):
+    def truncate(cursor):
         print("Clearing harvest_vkc table")
-        cursor = conn.cursor()
         cursor.execute("TRUNCATE TABLE harvest_vkc")
-        conn.commit()
-        cursor.close()
-        conn.close()
 
     @staticmethod
     def insert(cursor, record):

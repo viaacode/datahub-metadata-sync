@@ -21,6 +21,7 @@ from task_services.harvest_table import HarvestTable
 from airflow.providers.postgres.operators.postgres import PostgresOperator
 from airflow.providers.postgres.hooks.postgres import PostgresHook
 from psycopg2.extras import DictCursor
+from datetime import datetime
 
 
 DB_CONNECT_ID = 'postgres_default'
@@ -39,18 +40,14 @@ dag = DAG(
 )
 
 
-def harvest_vkc(**context):
-    full_sync = context['full_sync']
-    if full_sync:
-        print(f"harvest_vkc called. Full sync context={context}")
-        HarvestTable.truncate(PostgresHook(
-            postgres_conn_id=DB_CONNECT_ID).get_conn())
-    else:
-        print(f"harvest_vkc called. Delta sync context={context}. EXIT NOW!")
-        return None
-
+def vkc_full_sync():
+    print("VKC full sync")
     conn = PostgresHook(postgres_conn_id=DB_CONNECT_ID).get_conn()
     cursor = conn.cursor(cursor_factory=DictCursor)
+
+    HarvestTable.truncate(cursor)
+    conn.commit()
+
     api = VkcApi()
     records, token, total = api.list_records()
     total_count = len(records)
@@ -58,7 +55,7 @@ def harvest_vkc(**context):
     while len(records) > 0:
         progress = round((total_count/total)*100, 1)
 
-        print(f"Saving {len(records)} of {total} records, progress {progress} %")
+        print(f"Saving {len(records)} of {total} records {progress} %")
         for record in records:
             if record['work_id'] is not None:
                 # for a few records, work_id is missing, we omit these
@@ -75,6 +72,20 @@ def harvest_vkc(**context):
 
     cursor.close()
     conn.close()
+
+
+def vkc_delta_sync(last_modified):
+    print("VKC delta sync, last_modified={last_modified}")
+    # todo implement delta here...
+
+
+def harvest_vkc(**context):
+    print(f"harvest_vkc called. context={context}")
+    full_sync = context['full_sync']
+    if full_sync:
+        vkc_full_sync()
+    else:
+        vkc_delta_sync(datetime.now())
 
 
 def transform_xml(**context):

@@ -70,7 +70,7 @@ coverage:
 server:
 	. python_env/bin/activate; \
 	export AIRFLOW_HOME=$(PWD)/airflow; \
-	export PYTHONPATH=$(pwd)/saxon/Saxon.C.API/python-saxon; \
+	export PYTHONPATH=$(PWD)/saxon/Saxon.C.API/python-saxon; \
 	airflow webserver --port 8080
 
 
@@ -78,7 +78,7 @@ server:
 scheduler:
 	. python_env/bin/activate; \
 	export AIRFLOW_HOME=$(PWD)/airflow; \
-	export PYTHONPATH=$(pwd)/saxon/Saxon.C.API/python-saxon; \
+	export PYTHONPATH=$(PWD)/saxon/Saxon.C.API/python-saxon; \
 	airflow scheduler
 
 

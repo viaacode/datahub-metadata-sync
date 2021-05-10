@@ -1,6 +1,10 @@
 source python_env/bin/activate
 export AIRFLOW_HOME=$(PWD)/airflow
-export AIRFLOW__CORE__SQL_ALCHEMY_CON=postgresql+psycopg2://postgres:postgres@localhost:5432/airflow_development
+
+# depending on what you need, run tests in sqlite, or have real postgres export these:
+export AIRFLOW__CORE__SQL_ALCHEMY_CONN=postgresql+psycopg2://postgres:postgres@localhost:5432/airflow_development
+#export AIRFLOW__CORE__SQL_ALCHEMY_CONN=sqlite:///airflow/airflow.db
+
 
 # initialize the database
 airflow db init

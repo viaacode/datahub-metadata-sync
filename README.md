@@ -34,7 +34,7 @@ This is defined in airflow/dags
 Before trying out below commands, have these exports in place:
 ```
 export AIRFLOW_HOME=$(PWD)/airflow
-export AIRFLOW__CORE__SQL_ALCHEMY_CON=postgresql+psycopg2://postgres:postgres@localhost:5432/airflow_development
+export AIRFLOW__CORE__SQL_ALCHEMY_CONN=postgresql+psycopg2://postgres:postgres@localhost:5432/airflow_development
 ```
 
 
