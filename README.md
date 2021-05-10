@@ -46,7 +46,7 @@ $ airflow tasks list vkc_oai_harvester
 [2021-05-08 17:26:35,924] {dagbag.py:451} INFO - Filling up the DagBag from /Users/wschrep/FreelanceWork/VIAA/IIIF_newproject/datahub-metadata-sync/airflow/dags
 create_harvest_table
 harvest_vkc
-publish_to_rabbitmq
+push_to_rabbitmq
 transform_xml
 ```
 
@@ -159,7 +159,7 @@ update harvest_vkc set synchronized=true;
 and then manually set a few records to synchronized=false and then run the publis_to_rabbitmq task so it sends the ones where the flag is false.
 
 ```
-airflow tasks test vkc_oai_harvester publish_to_rabbitmq 2021-05-01
+airflow tasks test vkc_oai_harvester push_to_rabbitmq 2021-05-01
 ```
 
 

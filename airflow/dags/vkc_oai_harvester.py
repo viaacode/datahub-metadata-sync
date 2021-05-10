@@ -58,8 +58,7 @@ def harvest_vkc(**context):
     while len(records) > 0:
         progress = round((total_count/total)*100, 1)
 
-        print(
-            f"Saving {len(records)} of {total} records, progress {progress} %", flush=True)
+        print(f"Saving {len(records)} of {total} records, progress {progress} %")
         for record in records:
             if record['work_id'] is not None:
                 # for a few records, work_id is missing, we omit these
@@ -78,8 +77,8 @@ def harvest_vkc(**context):
     conn.close()
 
 
-def transform_lido_to_mh(**context):
-    print(f'transform_lido_to_mh called, context={context}')
+def transform_xml(**context):
+    print(f'transform_xml called, context={context}')
     tr = XmlTransformer()
     mh_api = MediahavenApi()
 
@@ -102,8 +101,7 @@ def transform_lido_to_mh(**context):
             if mh_record is not None:
                 fragment_id = mh_record['Internal']['FragmentId']
                 cp_id = mh_record['Dynamic']['CP_id']
-                print(
-                    f"Record work_id={work_id} found, fragment_id={fragment_id} cp_id={cp_id}")
+                print(f"Record work_id={work_id} found, fragment_id={fragment_id} cp_id={cp_id}")
                 converted_record = tr.convert(record[1])
                 HarvestTable.update_mam_xml(
                     uc, record, converted_record, fragment_id, cp_id)
@@ -117,9 +115,8 @@ def transform_lido_to_mh(**context):
     read_conn.close()
 
 
-def publish_to_rabbitmq(**context):
-    print(
-        f'publish_to_rabbitmq called, context={context}')
+def push_to_rabbitmq(**context):
+    print(f'push_to_rabbitmq called, context={context}')
     rp = RabbitPublisher()
 
     read_conn = PostgresHook(postgres_conn_id=DB_CONNECT_ID).get_conn()
@@ -131,8 +128,7 @@ def publish_to_rabbitmq(**context):
         records = rc.fetchmany(size=BATCH_SIZE)
         if not records:
             break
-        print(
-            f"fetched {len(records)} records, pushing on rabbitmq...", flush=True)
+        print(f"fetched {len(records)} records, pushing on rabbitmq...")
         uc = update_conn.cursor(cursor_factory=DictCursor)
         for record in records:
             rp.publish(record)
@@ -160,14 +156,14 @@ with dag:
         op_kwargs={'full_sync': True}
     )
 
-    transform_lido_task = PythonOperator(
+    transform_xml_task = PythonOperator(
         task_id='transform_xml',
-        python_callable=transform_lido_to_mh,
+        python_callable=transform_xml,
     )
 
-    publish_to_rabbitmq_task = PythonOperator(
-        task_id='publish_to_rabbitmq',
-        python_callable=publish_to_rabbitmq,
+    push_to_rabbitmq_task = PythonOperator(
+        task_id='push_to_rabbitmq',
+        python_callable=push_to_rabbitmq,
     )
 
-    create_db_table >> harvest_vkc_task >> transform_lido_task >> publish_to_rabbitmq_task
+    create_db_table >> harvest_vkc_task >> transform_xml_task >> push_to_rabbitmq_task
