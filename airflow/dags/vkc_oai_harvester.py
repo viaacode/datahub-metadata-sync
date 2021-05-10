@@ -21,7 +21,7 @@ from task_services.harvest_table import HarvestTable
 from airflow.providers.postgres.operators.postgres import PostgresOperator
 from airflow.providers.postgres.hooks.postgres import PostgresHook
 from psycopg2.extras import DictCursor
-from datetime import datetime
+from datetime import datetime, timezone
 
 
 DB_CONNECT_ID = 'postgres_default'
@@ -74,18 +74,58 @@ def vkc_full_sync():
     conn.close()
 
 
-def vkc_delta_sync(last_modified):
-    print("VKC delta sync, last_modified={last_modified}")
-    # todo implement delta here...
+def vkc_delta_sync():
+    conn = PostgresHook(postgres_conn_id=DB_CONNECT_ID).get_conn()
+    cursor = conn.cursor(cursor_factory=DictCursor)
+    last_synced = HarvestTable.get_max_datestamp(cursor)
+
+    if last_synced is None:
+        vkc_full_sync()
+        return
+    else:
+        # the vkc api does not support +01:00 format, convert to utc:
+        last_synced = last_synced.astimezone(
+            tz=timezone.utc
+        ).isoformat().replace("+00:00", "Z")
+
+    print(f"VKC delta sync, last_synced={last_synced}")
+
+    # TODO: refactor out code duplication 
+    api = VkcApi()
+    records, token, total = api.list_records(from_filter=last_synced)
+    total_count = len(records)
+
+    while len(records) > 0:
+        progress = round((total_count/total)*100, 1)
+
+        print(f"Saving {len(records)} of {total} records {progress} %")
+        for record in records:
+            if record['work_id'] is not None:
+                # for a few records, work_id is missing, we omit these
+                HarvestTable.insert(cursor, record)
+
+        conn.commit()  # commit batch of inserts
+
+        if total_count >= total:
+            break  # exit loop, we have all records from vkc
+
+        # fetch next batch of records with api
+        records, token, total = api.list_records(resumptionToken=token)
+        total_count += len(records)
+
+    cursor.close()
+    conn.close()
 
 
 def harvest_vkc(**context):
     print(f"harvest_vkc called. context={context}")
-    full_sync = context['full_sync']
+    params = context.get('params', {})
+    full_sync = params.get('full_sync', False)
+
     if full_sync:
         vkc_full_sync()
     else:
-        vkc_delta_sync(datetime.now())
+        vkc_delta_sync()
 
 
 def transform_xml(**context):
@@ -164,7 +204,7 @@ with dag:
     harvest_vkc_task = PythonOperator(
         task_id='harvest_vkc',
         python_callable=harvest_vkc,
-        op_kwargs={'full_sync': True}
+        # op_kwargs={'full_sync': True}
     )
 
     transform_xml_task = PythonOperator(

@@ -57,7 +57,7 @@ airflow tasks test vkc_oai_harvester create_harvest_table 2021-05-08
 
 
 
-Testrun a task for instance harvest oai data to target database:
+Testrun a task for instance harvest oai data to target database, for first call even delta does full_sync as table is empty:
 ```
 airflow tasks test vkc_oai_harvester harvest_vkc 2015-06-01
 [2021-04-27 19:22:11,352] {dagbag.py:451} INFO - Filling up the DagBag from /Users/wschrep/FreelanceWork/VIAA/IIIF_newproject/datahub-metadata-sync/airflow/dags
@@ -106,8 +106,22 @@ Saving 1 of 15901 records progress is 100.0 %
 ```
 
 
-Run the xml transformation after a harvest run. This transforms all the vkc lido xml blobs into mediahaven compatible xml. It is stored in the coloumn
+Run the xml transformation after a harvest run. This transforms all the vkc lido xml blobs into mediahaven compatible xml. It is stored in the column
 mam_xml along with a call to mediahaven to get the fragment_id, cp_id based on the work_id saved in previous harvest job.
+
+
+To run a delta task, just pass full_sync is false as an argument example from cli (or omit it as this does delta also now):
+```
+airflow tasks test vkc_oai_harvester harvest_vkc 2015-06-01 -t '{"full_sync": false}'
+```
+
+To execute a full_sync we can pass this as follows :
+```
+airflow tasks test vkc_oai_harvester harvest_vkc 2015-06-01 -t '{"full_sync": true}'
+```
+This truncates the table, then does full sync.
+
+
 
 
 ```

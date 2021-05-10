@@ -34,6 +34,19 @@ class HarvestTable:
         cursor.execute("TRUNCATE TABLE harvest_vkc")
 
     @staticmethod
+    def get_max_datestamp(cursor):
+        cursor.execute("""
+            SELECT max(datestamp) FROM harvest_vkc WHERE 
+                synchronized=true AND
+                mam_xml IS NOT NULL
+        """)
+        result = cursor.fetchone()
+        if len(result) == 1:
+            return result[0]
+        else:
+            return None
+
+    @staticmethod
     def insert(cursor, record):
         cursor.execute(
             """

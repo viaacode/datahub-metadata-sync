@@ -36,11 +36,16 @@ class VkcApi:
         res = requests.get(path, params=params)
         if res.status_code != 200:
             print(
-                f"WARNING: status code={res.status_code} returning empty result", flush=True)
+                f"WARNING: status code={res.status_code} returning empty result",
+                flush=True
+            )
             return [], None, 0
 
         root = ET.fromstring(res.text)  # use res.content for bytes
         items = root.find('.//ns0:ListRecords', self.ns0)
+        if items is None:
+            return [], None, 0
+
         records = []
         for record in items:
             if 'resumptionToken' not in record.tag:
