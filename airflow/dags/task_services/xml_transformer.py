@@ -5,15 +5,15 @@
 #
 #  airflow/dags/task_services/vkc_api.py
 #
-#   Transfor xml document from vkc format into
-#   mediahaven compatible format using an xslt and saxonc library.
+#   Transform xml document from vkc format into mediahaven format
+#   using an xslt and saxonc library.
 #   right now it resides in:
 #   resources/lido_to_mam/main.xslt but might be fetched
-#   using a request in the future. as TODO
+#   using a request in the future.
 #
-#   for saxonc on mac to work. run scripts/install_mac_saxon.sh and then
+#   for saxonc on macOS to work. run scripts/install_mac_saxon.sh and then
 #   export PYTHONPATH=$(pwd)/saxon/Saxon.C.API/python-saxon
-#
+
 import os
 import saxonc
 

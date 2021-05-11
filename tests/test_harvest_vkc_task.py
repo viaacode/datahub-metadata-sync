@@ -1,6 +1,6 @@
 import unittest
 import pytest
-from airflow.utils.state import State
+# from airflow.utils.state import State
 from airflow import DAG
 from airflow.dags.vkc_oai_harvester import harvest_vkc
 from airflow.models.taskinstance import TaskInstance
