@@ -11,6 +11,7 @@
 
 import requests
 import xml.etree.ElementTree as ET
+from datetime import timezone
 
 
 class VkcApi:
@@ -21,11 +22,19 @@ class VkcApi:
         self.ns1 = {'ns1': 'http://www.lido-schema.org'}
         print("VkcApi initialized")
 
-    def list_records(self, from_filter='2011-06-01T00:00:00Z', prefix='oai_lido', resumptionToken=None):
+    def list_records(self, from_filter=None, prefix='oai_lido', resumptionToken=None):
         path = self.API_URL + '/oai/'
         params = {
             'verb': 'ListRecords',
         }
+
+        if from_filter is None:
+            from_filter = '2011-06-01T00:00:00Z'
+        else:
+            # the vkc api does not support +01:00 format, convert to utc:
+            from_filter = from_filter.astimezone(
+                tz=timezone.utc
+            ).isoformat().replace("+00:00", "Z")
 
         if not resumptionToken:
             params['from'] = from_filter

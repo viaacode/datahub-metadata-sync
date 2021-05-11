@@ -29,9 +29,13 @@ class HarvestTable:
             """
 
     @staticmethod
-    def truncate(cursor):
+    def truncate(connection):
         print("Clearing harvest_vkc table")
+        cursor = connection.cursor()
         cursor.execute("TRUNCATE TABLE harvest_vkc")
+        connection.commit()
+        cursor.close()
+        connection.close()
 
     @staticmethod
     def get_max_datestamp(cursor):
