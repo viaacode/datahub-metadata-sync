@@ -38,7 +38,7 @@ class VkcApi:
             )
             return [], None, 0
 
-        root = ET.fromstring(res.text)  # use res.content for bytes
+        root = ET.fromstring(res.text)
         items = root.find('.//ns0:ListRecords', self.ns0)
         if items is None:
             return [], None, 0
@@ -115,5 +115,3 @@ class VkcApi:
             return None
         else:
             return work_tag.text
-
-
