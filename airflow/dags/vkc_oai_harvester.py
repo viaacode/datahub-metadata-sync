@@ -92,17 +92,23 @@ def transform_xml(**context):
     mh_api = MediahavenApi()
 
     # Notice: using server cursor, makes batches work
-    # we open a second connection and cursor to do our update calls for eatch batch
+    # we open a second connection and cursor to do our update calls
     read_conn = PostgresHook(postgres_conn_id=DB_CONNECT_ID).get_conn()
     update_conn = PostgresHook(postgres_conn_id=DB_CONNECT_ID).get_conn()
+    transform_count = 0
+    transform_total = HarvestTable.transform_count(read_conn)
 
     rc = read_conn.cursor('serverCursor', cursor_factory=DictCursor)
-    HarvestTable.batch_select_records(rc)
+    HarvestTable.batch_select_transform_records(rc)
     while True:
         records = rc.fetchmany(size=BATCH_SIZE)
         if not records:
             break
-        print(f"fetched {len(records)} records, now converting...", flush=True)
+
+        transform_count += len(records)
+        progress = round((transform_count/transform_total)*100, 1)
+        skip_count = 0
+
         uc = update_conn.cursor(cursor_factory=DictCursor)
         for record in records:
             work_id = record['work_id']
@@ -110,16 +116,15 @@ def transform_xml(**context):
             if mh_record is not None:
                 fragment_id = mh_record['Internal']['FragmentId']
                 cp_id = mh_record['Dynamic']['CP_id']
-                print(
-                    f"Record work_id={work_id} found, fragment_id={fragment_id} cp_id={cp_id}")
                 converted_record = tr.convert(record[1])
                 HarvestTable.update_mam_xml(
                     uc, record, converted_record, fragment_id, cp_id)
             else:
-                print(f"Skipping record with work_id={work_id}")
+                skip_count += 1
 
         update_conn.commit()  # commit all updates current batch
         uc.close()
+        print(f"Processed {len(records)} records, {skip_count} skipped, progress {progress} %")
 
     rc.close()
     read_conn.close()
@@ -128,21 +133,27 @@ def transform_xml(**context):
 def push_to_rabbitmq(**context):
     print(f'push_to_rabbitmq called, context={context}')
     rp = RabbitPublisher()
-
     read_conn = PostgresHook(postgres_conn_id=DB_CONNECT_ID).get_conn()
     update_conn = PostgresHook(postgres_conn_id=DB_CONNECT_ID).get_conn()
+    publish_count = 0
+    publish_total = HarvestTable.publish_count(read_conn)
 
     rc = read_conn.cursor('serverCursor', cursor_factory=DictCursor)
-    HarvestTable.batch_select_updateable_records(rc)
+    HarvestTable.batch_select_publish_records(rc)
     while True:
         records = rc.fetchmany(size=BATCH_SIZE)
         if not records:
             break
-        print(f"fetched {len(records)} records, pushing on rabbitmq...")
+
+        print(f"Fetched {len(records)} records, pushing on rabbitmq...")
         uc = update_conn.cursor(cursor_factory=DictCursor)
         for record in records:
             rp.publish(record)
             HarvestTable.set_synchronized(uc, record, True)
+
+        publish_count += len(records)
+        progress = round((publish_count/publish_total)*100, 1)
+        print(f"Published {len(records)} records, progress {progress} %")
 
         update_conn.commit()  # commit all updates current batch
         uc.close()

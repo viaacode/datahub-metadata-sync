@@ -61,14 +61,49 @@ class HarvestTable:
         )
 
     @staticmethod
-    def batch_select_records(server_cursor):
-        server_cursor.execute(
-            'select * from harvest_vkc where synchronized=false')
+    def count_qry(connection, qry):
+        cursor = connection.cursor()
+        cursor.execute(qry)
+        result = cursor.fetchone()
+        cursor.close()
+
+        if len(result) == 1:
+            return result[0]
+        else:
+            return 0
 
     @staticmethod
-    def batch_select_updateable_records(server_cursor):
+    def transform_count(connection):
+        return HarvestTable.count_qry(
+            'SELECT count(*) FROM harvest_vkc WHERE synchronized=false'
+        )
+
+    @staticmethod
+    def batch_select_transform_records(server_cursor):
         server_cursor.execute(
-            'select * from harvest_vkc where synchronized=false and fragment_id IS NOT NULL')
+            'SELECT * FROM harvest_vkc WHERE synchronized=false'
+        )
+
+    @staticmethod
+    def publish_count(connection):
+        return HarvestTable.count_qry(
+            connection,
+            """
+            SELECT count(*) FROM harvest_vkc WHERE
+            synchronized=false AND
+            fragment_id IS NOT NULL
+            """
+        )
+
+    @staticmethod
+    def batch_select_publish_records(server_cursor):
+        server_cursor.execute(
+            """
+            SELECT * FROM harvest_vkc WHERE
+            synchronized=false AND
+            fragment_id IS NOT NULL
+            """
+        )
 
     @staticmethod
     def set_synchronized(cursor, record, val):
