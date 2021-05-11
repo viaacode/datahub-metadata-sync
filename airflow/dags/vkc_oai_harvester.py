@@ -43,7 +43,6 @@ def synchronize_vkc():
     conn = PostgresHook(postgres_conn_id=DB_CONNECT_ID).get_conn()
     cursor = conn.cursor(cursor_factory=DictCursor)
     last_synced = HarvestTable.get_max_datestamp(cursor)
-    print(f"synchronize_vkc with last_synced datetime = {last_synced}")
 
     api = VkcApi()
     records, token, total = api.list_records(from_filter=last_synced)
