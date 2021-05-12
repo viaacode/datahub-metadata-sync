@@ -116,7 +116,7 @@ def transform_xml(**context):
             if mh_record is not None:
                 fragment_id = mh_record['Internal']['FragmentId']
                 cp_id = mh_record['Dynamic']['CP_id']
-                converted_record = tr.convert(record[1])
+                converted_record = tr.convert(record['vkc_xml'])
                 print(f"found {fragment_id} for cp {cp_id}")
                 HarvestTable.update_mam_xml(
                     uc, record, converted_record, fragment_id, cp_id)
