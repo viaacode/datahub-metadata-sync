@@ -20,7 +20,7 @@ class RabbitPublisher:
         print("RabbitPublisher ready")
 
     def publish(self, record):
-        """publish to rabbitmq"""
+        """publish update request to rabbitmq"""
         update_request = {
             "correlation_id": record['work_id'],  # uuid.uuid4().hex,
             "fragment_id": record['fragment_id'],

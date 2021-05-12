@@ -120,6 +120,7 @@ def transform_xml(**context):
                 HarvestTable.update_mam_xml(
                     uc, record, converted_record, fragment_id, cp_id)
             else:
+                HarvestTable.set_mh_checked(uc, record, True)
                 skip_count += 1
 
         update_conn.commit()  # commit all updates current batch

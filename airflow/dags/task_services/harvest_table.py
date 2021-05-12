@@ -23,6 +23,7 @@ class HarvestTable:
                 cp_id VARCHAR,
                 datestamp timestamp with time zone,
                 synchronized BOOL DEFAULT 'false',
+                mh_checked BOOL DEFAULT 'false',
                 created_at timestamp with time zone NOT NULL DEFAULT now(),
                 updated_at timestamp with time zone NOT NULL DEFAULT now()
             );
@@ -41,7 +42,7 @@ class HarvestTable:
     def get_max_datestamp(cursor):
         cursor.execute("""
             SELECT max(datestamp) FROM harvest_vkc WHERE
-                synchronized=true AND
+                synchronized=TRUE AND
                 mam_xml IS NOT NULL
         """)
         result = cursor.fetchone()
@@ -75,13 +76,20 @@ class HarvestTable:
     @staticmethod
     def transform_count(connection):
         return HarvestTable.count_qry(
-            'SELECT count(*) FROM harvest_vkc WHERE synchronized=false'
+            connection,
+            """
+            SELECT count(*) FROM harvest_vkc WHERE
+            synchronized=FALSE AND mh_checked=FALSE
+            """
         )
 
     @staticmethod
     def batch_select_transform_records(server_cursor):
         server_cursor.execute(
-            'SELECT * FROM harvest_vkc WHERE synchronized=false'
+            """
+            SELECT * FROM harvest_vkc WHERE
+            synchronized=FALSE AND mh_checked=FALSE
+            """
         )
 
     @staticmethod
@@ -90,7 +98,7 @@ class HarvestTable:
             connection,
             """
             SELECT count(*) FROM harvest_vkc WHERE
-            synchronized=false AND
+            synchronized=FALSE AND
             fragment_id IS NOT NULL
             """
         )
@@ -100,7 +108,7 @@ class HarvestTable:
         server_cursor.execute(
             """
             SELECT * FROM harvest_vkc WHERE
-            synchronized=false AND
+            synchronized=FALSE AND
             fragment_id IS NOT NULL
             """
         )
@@ -118,6 +126,18 @@ class HarvestTable:
         )
 
     @staticmethod
+    def set_mh_checked(cursor, record, val):
+        cursor.execute(
+            """
+            UPDATE harvest_vkc
+            SET mh_checked = %s,
+                updated_at = now()
+            WHERE id=%s
+            """,
+            (val, record['id'])
+        )
+
+    @staticmethod
     def update_mam_xml(cursor, record, converted_record, fragment_id=None, cp_id=None):
         cursor.execute(
             """
@@ -125,7 +145,8 @@ class HarvestTable:
             SET mam_xml = %s,
                 fragment_id = %s,
                 cp_id = %s,
-                synchronized = 'false',
+                synchronized = FALSE,
+                mh_checked = TRUE,
                 updated_at = now()
             WHERE id=%s
             """,
