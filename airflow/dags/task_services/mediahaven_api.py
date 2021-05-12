@@ -20,6 +20,8 @@ class MediahavenApi:
     API_USER = os.environ.get('MEDIAHAVEN_USER', 'apiUser')
     API_PASSWORD = os.environ.get('MEDIAHAVEN_PASS', 'password')
 
+    ESCAPE_WORK_ID = os.environ.get('ESCAPE_WORK_ID', 'false')
+
     def __init__(self, session=None):
         if session is None:
             self.session = Session()
@@ -43,7 +45,9 @@ class MediahavenApi:
         return response.json()
 
     def list_objects(self, search='', offset=0, limit=25):
-        return self.get_proxy(f"/resources/media?q={search}&startIndex={offset}&nrOfResults={limit}")
+        return self.get_proxy(
+            f"/resources/media/?q={search}&startIndex={offset}&nrOfResults={limit}"
+        )
 
     def find_by(self, object_key, value):
         search_matches = self.list_objects(search=f"+({object_key}:{value})")
@@ -51,9 +55,16 @@ class MediahavenApi:
 
     def find_vkc_record(self, work_id):
         try:
-            localid = work_id.replace('.', '_').replace("/", "\\/")
+            if self.ESCAPE_WORK_ID == 'true':
+                # this working on production:
+                localid = work_id.replace('.', '_').replace("/", "\\/")
+            else:
+                # for qas we skip the replace of .
+                localid = work_id.replace("/", "\\/")
+
             search_matches = self.list_objects(
-                search=f'+(dc_identifier_localidsinventarisnummer:"{localid}")')
+                search=f'%2B(dc_identifier_localidsinventarisnummer:"{localid}")'
+            )
             if search_matches['TotalNrOfResults'] >= 1:
                 return search_matches['MediaDataList'][0]
             else:
@@ -65,3 +76,15 @@ class MediahavenApi:
             print(
                 f"WARNING: find_vkc_fragment_id {work_id} response = {search_matches}")
             return None
+
+    def list_inventaris(self, offset=0, limit=20):
+        # TODO: build lookup table with this search:
+        search_matches = self.list_objects(
+            search='%2B(Type:image)%2B(dc_identifier_localidsinventarisnummer:*)',
+            limit=limit,
+            offset=offset
+        )
+
+        print(f"found {search_matches['TotalNrOfResults']} matches")
+
+        return search_matches

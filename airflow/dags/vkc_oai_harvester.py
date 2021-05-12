@@ -117,10 +117,12 @@ def transform_xml(**context):
                 fragment_id = mh_record['Internal']['FragmentId']
                 cp_id = mh_record['Dynamic']['CP_id']
                 converted_record = tr.convert(record[1])
+                print(f"found {fragment_id} for cp {cp_id}")
                 HarvestTable.update_mam_xml(
                     uc, record, converted_record, fragment_id, cp_id)
             else:
                 HarvestTable.set_mh_checked(uc, record, True)
+                print(f"skipped {record['work_id']}")
                 skip_count += 1
 
         update_conn.commit()  # commit all updates current batch
