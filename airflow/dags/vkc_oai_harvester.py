@@ -17,6 +17,7 @@ from task_services.xml_transformer import XmlTransformer
 from task_services.rabbit_publisher import RabbitPublisher
 from task_services.mediahaven_api import MediahavenApi
 from task_services.harvest_table import HarvestTable
+from task_services.mapping_table import MappingTable
 
 from airflow.providers.postgres.operators.postgres import PostgresOperator
 from airflow.providers.postgres.hooks.postgres import PostgresHook
@@ -91,15 +92,17 @@ def transform_xml(**context):
     tr = XmlTransformer()
     mh_api = MediahavenApi()
 
-    # find all possible images with inventaris nr's and store in hashtable:
-    mh_api.build_lookup_table()
-
     # Notice: using server cursor, makes batches work
     # we open a second connection and cursor to do our update calls
     read_conn = PostgresHook(postgres_conn_id=DB_CONNECT_ID).get_conn()
     update_conn = PostgresHook(postgres_conn_id=DB_CONNECT_ID).get_conn()
     transform_count = 0
     transform_total = HarvestTable.transform_count(read_conn)
+
+    # find all possible images with inventaris nr's and store in hashtable:
+    mh_api.build_lookup_table(update_conn)
+
+    print("lookup table done and saved in database as vkc_mapping")
 
     rc = read_conn.cursor('serverCursor', cursor_factory=DictCursor)
     HarvestTable.batch_select_transform_records(rc)
@@ -138,6 +141,7 @@ def transform_xml(**context):
 
     rc.close()
     read_conn.close()
+    update_conn.close()
 
 
 def push_to_rabbitmq(**context):
@@ -175,10 +179,16 @@ def push_to_rabbitmq(**context):
 with dag:
     # postgres_default is defined in the admin/connections
     # find+update the entry in the airflow database.
-    create_db_table = PostgresOperator(
+    create_harvest_table = PostgresOperator(
         task_id="create_harvest_table",
         postgres_conn_id=DB_CONNECT_ID,
         sql=HarvestTable.create_sql()
+    )
+
+    create_mapping_table = PostgresOperator(
+        task_id="create_mapping_table",
+        postgres_conn_id=DB_CONNECT_ID,
+        sql=MappingTable.create_sql()
     )
 
     harvest_vkc_task = PythonOperator(
@@ -197,4 +207,6 @@ with dag:
         python_callable=push_to_rabbitmq,
     )
 
-    create_db_table >> harvest_vkc_task >> transform_xml_task >> push_to_rabbitmq_task
+    create_harvest_table >> create_mapping_table >> \
+        harvest_vkc_task >> transform_xml_task >> \
+        push_to_rabbitmq_task

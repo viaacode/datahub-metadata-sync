@@ -9,6 +9,7 @@
 #   it replaces the hashmap we first used and allows for multiple matches
 #   for a single work_id (it might have multiple fragment_id's due to different
 #   versions of the same artwork that is stored in mediahaven).
+from psycopg2.extras import DictCursor
 
 
 class MappingTable:
@@ -34,21 +35,11 @@ class MappingTable:
         cursor.execute("TRUNCATE TABLE mapping_vkc")
         connection.commit()
         cursor.close()
-        connection.close()
+        # connection.close() connection is not closed here we use it later on.
 
     @staticmethod
-    def get_max_datestamp(cursor):
-        cursor.execute("""
-            SELECT max(updated_at) FROM mapping_vkc
-        """)
-        result = cursor.fetchone()
-        if len(result) == 1:
-            return result[0]
-        else:
-            return None
-
-    @staticmethod
-    def insert(cursor, record):
+    def insert(connection, record):
+        cursor = connection.cursor(cursor_factory=DictCursor)
         cursor.execute(
             """
             INSERT INTO mapping_vkc
@@ -62,6 +53,24 @@ class MappingTable:
                 record['cp_id'],
             )
         )
+
+        connection.commit()
+        cursor.close()
+
+    # not used yet, might be useful for some kind of delta later on
+
+    @staticmethod
+    def get_max_datestamp(cursor):
+        cursor.execute("""
+            SELECT max(updated_at) FROM mapping_vkc
+        """)
+        result = cursor.fetchone()
+        if len(result) == 1:
+            return result[0]
+        else:
+            return None
+
+    # NOT USED YET for performance we'll do a join with harvest table instead
 
     @staticmethod
     def find_work_id(cursor, work_id):

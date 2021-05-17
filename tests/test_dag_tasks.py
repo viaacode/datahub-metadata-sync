@@ -19,7 +19,8 @@ class testClass(unittest.TestCase):
         dag = self.dagbag.get_dag(dag_id='vkc_oai_harvester')
 
         self.assertDagDictEqual({
-            "create_harvest_table": ["harvest_vkc"],
+            "create_harvest_table": ["create_mapping_table"],
+            "create_mapping_table": ["harvest_vkc"],
             "harvest_vkc": ["transform_xml"],
             "transform_xml": ["push_to_rabbitmq"],
             "push_to_rabbitmq": []

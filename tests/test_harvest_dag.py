@@ -11,4 +11,4 @@ class TestHarvestDAG(unittest.TestCase):
         dag = self.dagbag.get_dag(dag_id='vkc_oai_harvester')
         assert self.dagbag.import_errors == {}
         assert dag is not None
-        assert len(dag.tasks) == 4
+        assert len(dag.tasks) == 5
