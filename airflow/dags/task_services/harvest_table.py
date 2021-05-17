@@ -86,10 +86,22 @@ class HarvestTable:
 
     @staticmethod
     def batch_select_transform_records(server_cursor):
+        # deprecated qry was:
+        # SELECT * FROM harvest_vkc WHERE
+        #    synchronized=FALSE AND mh_checked=FALSE
+
+        # we do a join with our new mapping_vkc table instead:
         server_cursor.execute(
             """
-            SELECT * FROM harvest_vkc WHERE
-            synchronized=FALSE AND mh_checked=FALSE
+            SELECT harvest_vkc.mam_xml, harvest_vkc.vkc_xml,
+                harvest_vkc.work_id, harvest_vkc.datestamp,
+                harvest_vkc.synchronized, harvest_vkc.mh_checked,
+                mapping_vkc.fragment_id, mapping_vkc.cp_id, mapping_vkc.external_id
+            FROM harvest_vkc INNER JOIN mapping_vkc ON
+            (harvest_vkc.work_id = mapping_vkc.work_id)
+            WHERE
+            harvest_vkc.synchronized=FALSE AND harvest_vkc.mh_checked=FALSE
+            ORDER BY work_id
             """
         )
 

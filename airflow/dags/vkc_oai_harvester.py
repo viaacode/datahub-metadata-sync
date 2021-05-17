@@ -102,8 +102,6 @@ def transform_xml(**context):
     # find all possible images with inventaris nr's and store in hashtable:
     mh_api.build_lookup_table(update_conn)
 
-    print("lookup table done and saved in database as vkc_mapping")
-
     rc = read_conn.cursor('serverCursor', cursor_factory=DictCursor)
     HarvestTable.batch_select_transform_records(rc)
     while True:

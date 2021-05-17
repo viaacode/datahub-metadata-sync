@@ -72,17 +72,24 @@ class MediahavenApi:
         )
 
     def build_lookup_table(self, db_connection):
-        print("Building lookup table...")
         BATCH_SIZE = 500
         offset = 0
         result = self.list_inventaris(offset, BATCH_SIZE)
-        self.lookup_table = {}  # TODO: deprecate soon when MappingTable join is done
-        MappingTable.truncate(db_connection)
-
         total_records = result['TotalNrOfResults']
         records = result['MediaDataList']
-        print(f"found {total_records} matches")
         processed_records = 0
+
+        self.lookup_table = {}  # TODO: deprecate soon when MappingTable join is done
+        mapping_count = MappingTable.count(db_connection)
+
+        print(f"Found {total_records} inventarisnummers.")
+        if mapping_count == total_records:
+            print("Using existing lookup table mapping_vkc.")
+            return
+
+        # rebuild table from scratch
+        print("Building new mapping_vkc lookup table...")
+        MappingTable.truncate(db_connection)
 
         while(processed_records < total_records and len(records) > 0):
             for mh_record in records:

@@ -59,6 +59,18 @@ class MappingTable:
         connection.commit()
         cursor.close()
 
+    @staticmethod
+    def count(connection):
+        cursor = connection.cursor()
+        cursor.execute("SELECT count(*) from mapping_vkc")
+        result = cursor.fetchone()
+        cursor.close()
+
+        if len(result) == 1:
+            return result[0]
+        else:
+            return 0
+
     # not used yet, might be useful for some kind of delta later on
 
     @staticmethod
