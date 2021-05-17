@@ -50,11 +50,7 @@ class MediahavenApi:
             f"/resources/media/?q={search}&startIndex={offset}&nrOfResults={limit}"
         )
 
-    def find_by(self, object_key, value):
-        search_matches = self.list_objects(search=f"+({object_key}:{value})")
-        return search_matches
-
-    def mh_result(self, mh_record):
+    def mh_mapping(self, mh_record):
         # other possible field combos to investigate:
         # object_number, object_nummer, objectNumber, objectnummer
         return {
@@ -65,31 +61,6 @@ class MediahavenApi:
             # has underscores (but matched less on prd)
             'work_id_alternate': mh_record['Dynamic']['dc_identifier_localid']
         }
-
-    def find_vkc_record(self, work_id):
-        try:
-            if self.ESCAPE_WORK_ID == 'true':
-                # this working on production:
-                localid = work_id.replace('.', '_').replace("/", "\\/")
-            else:
-                # for qas we skip the replace of .
-                localid = work_id.replace("/", "\\/")
-
-            search_matches = self.list_objects(
-                search=f'%2B(dc_identifier_localidsinventarisnummer:"{localid}")'
-            )
-            if search_matches['TotalNrOfResults'] >= 1:
-                mh_record = search_matches['MediaDataList'][0]
-                return self.mh_result(mh_record)
-            else:
-                return None
-        except AssertionError:
-            print("WARNING: 401 response from mediahaven api!")
-            return None
-        except KeyError:
-            print(
-                f"WARNING: find_vkc_fragment_id {work_id} response = {search_matches}")
-            return None
 
     def list_inventaris(self, offset=0, limit=20):
         return self.list_objects(
@@ -112,8 +83,8 @@ class MediahavenApi:
 
         while(processed_records < total_records and len(records) > 0):
             for mh_record in records:
-                mh_res = self.mh_result(mh_record)
-                self.lookup_table[mh_res['work_id']] = mh_res
+                mapped_ids = self.mh_mapping(mh_record)
+                self.lookup_table[mapped_ids['work_id']] = mapped_ids
                 processed_records += 1
 
             print(f"processed {len(records)} records, offset={offset}")
@@ -126,3 +97,29 @@ class MediahavenApi:
 
     def lookup_vkc_record(self, work_id):
         return self.lookup_table.get(work_id, None)
+
+    # this method is not used for full sync's anymore. it might stay usefull for a delta however.
+    def find_vkc_record(self, work_id):
+        try:
+            if self.ESCAPE_WORK_ID == 'true':
+                # this working on production:
+                localid = work_id.replace('.', '_').replace("/", "\\/")
+            else:
+                # for qas we skip the replace of .
+                localid = work_id.replace("/", "\\/")
+
+            search_matches = self.list_objects(
+                search=f'%2B(dc_identifier_localidsinventarisnummer:"{localid}")'
+            )
+            if search_matches['TotalNrOfResults'] >= 1:
+                mh_record = search_matches['MediaDataList'][0]
+                return self.mh_mapping(mh_record)
+            else:
+                return None
+        except AssertionError:
+            print("WARNING: 401 response from mediahaven api!")
+            return None
+        except KeyError:
+            print(
+                f"WARNING: find_vkc_fragment_id {work_id} response = {search_matches}")
+            return None
