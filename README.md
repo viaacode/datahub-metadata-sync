@@ -45,6 +45,7 @@ $ airflow tasks list vkc_oai_harvester
 
 [2021-05-08 17:26:35,924] {dagbag.py:451} INFO - Filling up the DagBag from /Users/wschrep/FreelanceWork/VIAA/IIIF_newproject/datahub-metadata-sync/airflow/dags
 create_harvest_table
+create_mapping_table
 harvest_vkc
 push_to_rabbitmq
 transform_xml
@@ -54,6 +55,12 @@ Run task to create the harvest table:
 ```
 airflow tasks test vkc_oai_harvester create_harvest_table 2021-05-08
 ```
+
+Run task to create the work_id mapping table:
+```
+airflow tasks test vkc_oai_harvester create_mapping_table 2021-05-08
+```
+
 
 
 
