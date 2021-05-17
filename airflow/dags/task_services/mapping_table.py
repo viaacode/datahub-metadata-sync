@@ -22,6 +22,7 @@ class MappingTable:
                 work_id VARCHAR,
                 work_id_alternate VARCHAR,
                 fragment_id VARCHAR,
+                external_id VARCHAR,
                 cp_id VARCHAR,
                 created_at timestamp with time zone NOT NULL DEFAULT now(),
                 updated_at timestamp with time zone NOT NULL DEFAULT now()
@@ -43,13 +44,14 @@ class MappingTable:
         cursor.execute(
             """
             INSERT INTO mapping_vkc
-            (work_id, work_id_alternate, fragment_id, cp_id)
-            VALUES(%s, %s, %s, %s)
+            (work_id, work_id_alternate, fragment_id, external_id, cp_id)
+            VALUES(%s, %s, %s, %s, %s)
             """,
             (
                 record['work_id'],
                 record['work_id_alternate'],
                 record['fragment_id'],
+                record['external_id'],
                 record['cp_id'],
             )
         )

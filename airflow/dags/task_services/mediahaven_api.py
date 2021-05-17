@@ -57,11 +57,10 @@ class MediahavenApi:
         # other possible field combos to investigate:
         # object_number, object_nummer, objectNumber, objectnummer
         return {
+            'external_id': mh_record['Administrative']['ExternalId'],
             'fragment_id': mh_record['Internal']['FragmentId'],
             'cp_id': mh_record['Dynamic']['CP_id'],
             'work_id': mh_record['Dynamic']['dc_identifier_localids']['Inventarisnummer'][0],
-
-            # has underscores (but matched less on prd)
             'work_id_alternate': mh_record['Dynamic']['dc_identifier_localid']
         }
 
