@@ -90,6 +90,8 @@ def transform_xml(**context):
     print(f'transform_xml called, context={context}')
     tr = XmlTransformer()
     mh_api = MediahavenApi()
+
+    # find all possible images with inventaris nr's and store in hashtable:
     mh_api.build_lookup_table()
 
     # Notice: using server cursor, makes batches work
@@ -113,9 +115,8 @@ def transform_xml(**context):
         uc = update_conn.cursor(cursor_factory=DictCursor)
         for record in records:
             work_id = record['work_id']
-            # make api call for each record:
+            # original version, make api call for each record:
             # mh_record = mh_api.find_vkc_record(work_id)
-            # use lookup table instead:
             mh_record = mh_api.lookup_vkc_record(work_id)
 
             if mh_record is not None:
