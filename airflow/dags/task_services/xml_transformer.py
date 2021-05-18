@@ -17,6 +17,8 @@
 #   aha and I see Rudolf also shows this on an example https://github.com/RudolfDG/saxon-flask-api
 #   and asks about the same issue on stackoverflow ;)
 #   https://stackoverflow.com/questions/66693687/how-to-prevent-saxon-c-python-bindings-from-trying-to-start-a-new-java-vm-when-a
+#
+# => as workaround we spawn new process for each batch by using methods in transformer_process.py
 import os
 import saxonc
 
@@ -34,17 +36,6 @@ class XmlTransformer:
         # this destructor fixes warning dialog on mac. info:
         # https://github.com/rimmartin/saxon-node/issues/21
         self.saxon_processor.release()
-
-    # try re-creating and releasing processor between batches to solve memleak
-    # this doesnt work though, memory growth issue remains:
-    # import gc
-    # import time
-    # def release_processor_memory(self):
-    #     self.saxon_processor.__exit__()
-    #     self.saxon_processor = saxonc.PySaxonProcessor(license=False)
-    #     self.xslt_proc = self.saxon_processor.new_xslt30_processor()
-    #     gc.collect()
-    #     time.sleep(0.1)
 
     def convert(self, vkc_xml):
         self.xslt_proc = self.saxon_processor.new_xslt30_processor()

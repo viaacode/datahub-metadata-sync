@@ -13,18 +13,20 @@ from airflow.operators.python import PythonOperator
 from airflow.utils.dates import days_ago
 
 from task_services.vkc_api import VkcApi
-from task_services.xml_transformer import XmlTransformer
 from task_services.rabbit_publisher import RabbitPublisher
 from task_services.mediahaven_api import MediahavenApi
 from task_services.harvest_table import HarvestTable
 from task_services.mapping_table import MappingTable
+
+# from task_services.xml_transformer import XmlTransformer
+from task_services.transformer_process import xml_convert
 
 from airflow.providers.postgres.operators.postgres import PostgresOperator
 from airflow.providers.postgres.hooks.postgres import PostgresHook
 from psycopg2.extras import DictCursor
 
 DB_CONNECT_ID = 'postgres_default'
-BATCH_SIZE = 100
+BATCH_SIZE = 200
 
 args = {
     'owner': 'airflow',
@@ -89,7 +91,7 @@ def harvest_vkc(**context):
 def transform_xml(**context):
     print(f'transform_xml called, context={context}')
     mh_api = MediahavenApi()
-    tr = XmlTransformer()
+    # tr = XmlTransformer()
 
     # Notice: using server cursor, makes batches work
     # we open a second connection and cursor to do our update calls
@@ -113,19 +115,26 @@ def transform_xml(**context):
         transform_count += len(records)
         progress = round((transform_count/transform_total)*100, 1)
         uc = update_conn.cursor(cursor_factory=DictCursor)
+
+        # use forked process to convert a whole batch of records
+        xpos = 0
+        vkc_xml_batch = [record['vkc_xml'] for record in records]
+        mam_xml_batch = xml_convert(vkc_xml_batch)
+
         for record in records:
-            mam_xml = tr.convert(record['vkc_xml'])
+            # mam_xml = tr.convert(record['vkc_xml'])
+            mam_xml = mam_xml_batch[xpos]
             print("updating xml for work_id {}, fragment_id {}, cp_id {}".format(
                 record['work_id'],
                 record['fragment_id'],
                 record['cp_id']
             ))
             HarvestTable.update_mam_xml(uc, record, mam_xml)
+            xpos += 1
 
         update_conn.commit()  # commit all updates current batch
         uc.close()
         print(f"Processed {len(records)} records, progress {progress} %")
-        # tr.release_processor_memory()
 
     rc.close()
     read_conn.close()
