@@ -24,7 +24,6 @@ class MediahavenApi:
     ESCAPE_WORK_ID = os.environ.get('ESCAPE_WORK_ID', 'false')
 
     def __init__(self, session=None):
-        self.lookup_table = {}
         if session is None:
             self.session = Session()
         else:
@@ -78,8 +77,6 @@ class MediahavenApi:
         total_records = result['TotalNrOfResults']
         records = result['MediaDataList']
         processed_records = 0
-
-        self.lookup_table = {}  # TODO: deprecate soon when MappingTable join is done
         mapping_count = MappingTable.count(db_connection)
 
         print(f"Found {total_records} inventarisnummers.")
@@ -94,11 +91,6 @@ class MediahavenApi:
         while(processed_records < total_records and len(records) > 0):
             for mh_record in records:
                 mapped_ids = self.mh_mapping(mh_record)
-
-                # TODO: deprecate dictionary lookup_table set here:
-                self.lookup_table[mapped_ids['work_id']] = mapped_ids
-
-                # new version uses table in postgres with db_connection
                 MappingTable.insert(db_connection, mapped_ids)
                 processed_records += 1
 
@@ -108,33 +100,29 @@ class MediahavenApi:
             result = self.list_inventaris(offset, BATCH_SIZE)
             records = result['MediaDataList']
 
-    def lookup_vkc_record(self, work_id):
-        return self.lookup_table.get(work_id, None)
-        # TODO: MappingTable.find(db_connection, work_id)
+    # this is now deprecated, we use mapping_vkc table and a join with
+    # harvest_vkc table instead
+    # def find_vkc_record(self, work_id):
+    #     try:
+    #         if self.ESCAPE_WORK_ID == 'true':
+    #             # this working on production:
+    #             localid = work_id.replace('.', '_').replace("/", "\\/")
+    #         else:
+    #             # for qas we skip the replace of .
+    #             localid = work_id.replace("/", "\\/")
 
-    # find_vkc_record is not used for full sync's anymore.
-
-    def find_vkc_record(self, work_id):
-        try:
-            if self.ESCAPE_WORK_ID == 'true':
-                # this working on production:
-                localid = work_id.replace('.', '_').replace("/", "\\/")
-            else:
-                # for qas we skip the replace of .
-                localid = work_id.replace("/", "\\/")
-
-            search_matches = self.list_objects(
-                search=f'%2B(dc_identifier_localidsinventarisnummer:"{localid}")'
-            )
-            if search_matches['TotalNrOfResults'] >= 1:
-                mh_record = search_matches['MediaDataList'][0]
-                return self.mh_mapping(mh_record)
-            else:
-                return None
-        except AssertionError:
-            print("WARNING: 401 response from mediahaven api!")
-            return None
-        except KeyError:
-            print(
-                f"WARNING: find_vkc_fragment_id {work_id} response = {search_matches}")
-            return None
+    #         search_matches = self.list_objects(
+    #             search=f'%2B(dc_identifier_localidsinventarisnummer:"{localid}")'
+    #         )
+    #         if search_matches['TotalNrOfResults'] >= 1:
+    #             mh_record = search_matches['MediaDataList'][0]
+    #             return self.mh_mapping(mh_record)
+    #         else:
+    #             return None
+    #     except AssertionError:
+    #         print("WARNING: 401 response from mediahaven api!")
+    #         return None
+    #     except KeyError:
+    #         print(
+    #             f"WARNING: find_vkc_fragment_id {work_id} response = {search_matches}")
+    #         return None

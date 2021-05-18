@@ -28,12 +28,11 @@ class RabbitPublisher:
             "data": record['mam_xml']
         }
 
-        print(
-            "publishing record with work_id={} fragment_id={} cp_id={}".format(
-                record['work_id'],
-                record['fragment_id'],
-                record['cp_id']
-            ))
+        print("publishing update: correlation_id {} fragment_id {} cp_id {}".format(
+            update_request['correlation_id'],
+            update_request['fragment_id'],
+            update_request['cp_id']
+        ))
 
         self.rabbit_client.send_message(
             routing_key='mam-update-requests',

@@ -23,7 +23,6 @@ from airflow.providers.postgres.operators.postgres import PostgresOperator
 from airflow.providers.postgres.hooks.postgres import PostgresHook
 from psycopg2.extras import DictCursor
 
-
 DB_CONNECT_ID = 'postgres_default'
 BATCH_SIZE = 100
 
@@ -89,18 +88,20 @@ def harvest_vkc(**context):
 
 def transform_xml(**context):
     print(f'transform_xml called, context={context}')
-    tr = XmlTransformer()
     mh_api = MediahavenApi()
+    tr = XmlTransformer()
 
     # Notice: using server cursor, makes batches work
     # we open a second connection and cursor to do our update calls
     read_conn = PostgresHook(postgres_conn_id=DB_CONNECT_ID).get_conn()
     update_conn = PostgresHook(postgres_conn_id=DB_CONNECT_ID).get_conn()
-    transform_count = 0
-    transform_total = HarvestTable.transform_count(read_conn)
 
     # find all possible images with inventaris nr's and store in hashtable:
     mh_api.build_lookup_table(update_conn)
+
+    transform_count = 0
+    transform_total = HarvestTable.transform_count(read_conn)
+    print(f"Now transforming {transform_total} xml records...")
 
     rc = read_conn.cursor('serverCursor', cursor_factory=DictCursor)
     HarvestTable.batch_select_transform_records(rc)
@@ -111,31 +112,20 @@ def transform_xml(**context):
 
         transform_count += len(records)
         progress = round((transform_count/transform_total)*100, 1)
-        skip_count = 0
-
         uc = update_conn.cursor(cursor_factory=DictCursor)
         for record in records:
-            work_id = record['work_id']
-            # original version, make api call for each record:
-            # mh_record = mh_api.find_vkc_record(work_id)
-            mh_record = mh_api.lookup_vkc_record(work_id)
-
-            if mh_record is not None:
-                converted_record = tr.convert(record['vkc_xml'])
-                print(f"found {mh_record['fragment_id']} for cp {mh_record['cp_id']}")
-                HarvestTable.update_mam_xml(
-                    uc, record, converted_record,
-                    mh_record['fragment_id'],
-                    mh_record['cp_id']
-                )
-            else:
-                HarvestTable.set_mh_checked(uc, record, True)
-                print(f"skipped {record['work_id']}")
-                skip_count += 1
+            mam_xml = tr.convert(record['vkc_xml'])
+            print("updating xml for work_id {}, fragment_id {}, cp_id {}".format(
+                record['work_id'],
+                record['fragment_id'],
+                record['cp_id']
+            ))
+            HarvestTable.update_mam_xml(uc, record, mam_xml)
 
         update_conn.commit()  # commit all updates current batch
         uc.close()
-        print(f"Processed {len(records)} records, {skip_count} skipped, progress {progress} %")
+        print(f"Processed {len(records)} records, progress {progress} %")
+        # tr.release_processor_memory()
 
     rc.close()
     read_conn.close()
@@ -147,8 +137,10 @@ def push_to_rabbitmq(**context):
     rp = RabbitPublisher()
     read_conn = PostgresHook(postgres_conn_id=DB_CONNECT_ID).get_conn()
     update_conn = PostgresHook(postgres_conn_id=DB_CONNECT_ID).get_conn()
+
     publish_count = 0
     publish_total = HarvestTable.publish_count(read_conn)
+    print(f"Now sending {publish_total} mam xml records...")
 
     rc = read_conn.cursor('serverCursor', cursor_factory=DictCursor)
     HarvestTable.batch_select_publish_records(rc)

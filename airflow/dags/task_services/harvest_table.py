@@ -19,11 +19,9 @@ class HarvestTable:
                 vkc_xml VARCHAR,
                 mam_xml VARCHAR,
                 work_id VARCHAR,
-                fragment_id VARCHAR,
-                cp_id VARCHAR,
                 datestamp timestamp with time zone,
                 synchronized BOOL DEFAULT 'false',
-                mh_checked BOOL DEFAULT 'false',
+                xml_converted BOOL DEFAULT 'false',
                 created_at timestamp with time zone NOT NULL DEFAULT now(),
                 updated_at timestamp with time zone NOT NULL DEFAULT now()
             );
@@ -40,11 +38,6 @@ class HarvestTable:
 
     @staticmethod
     def get_max_datestamp(cursor):
-        # cursor.execute("""
-        #     SELECT max(datestamp) FROM harvest_vkc WHERE
-        #         synchronized=TRUE AND
-        #         mam_xml IS NOT NULL
-        # """)
         cursor.execute("SELECT max(datestamp) FROM harvest_vkc")
         result = cursor.fetchone()
         if len(result) == 1:
@@ -79,28 +72,27 @@ class HarvestTable:
         return HarvestTable.count_qry(
             connection,
             """
-            SELECT count(*) FROM harvest_vkc WHERE
-            synchronized=FALSE AND mh_checked=FALSE
+            SELECT count(*)
+            FROM harvest_vkc JOIN mapping_vkc ON
+            (harvest_vkc.work_id = mapping_vkc.work_id)
+            WHERE
+            harvest_vkc.xml_converted=FALSE
             """
         )
 
     @staticmethod
     def batch_select_transform_records(server_cursor):
-        # deprecated qry was:
-        # SELECT * FROM harvest_vkc WHERE
-        #    synchronized=FALSE AND mh_checked=FALSE
-
         # we do a join with our new mapping_vkc table instead:
         server_cursor.execute(
             """
-            SELECT harvest_vkc.mam_xml, harvest_vkc.vkc_xml,
+            SELECT harvest_vkc.id, harvest_vkc.mam_xml, harvest_vkc.vkc_xml,
                 harvest_vkc.work_id, harvest_vkc.datestamp,
-                harvest_vkc.synchronized, harvest_vkc.mh_checked,
+                harvest_vkc.synchronized, harvest_vkc.xml_converted,
                 mapping_vkc.fragment_id, mapping_vkc.cp_id, mapping_vkc.external_id
-            FROM harvest_vkc INNER JOIN mapping_vkc ON
+            FROM harvest_vkc JOIN mapping_vkc ON
             (harvest_vkc.work_id = mapping_vkc.work_id)
             WHERE
-            harvest_vkc.synchronized=FALSE AND harvest_vkc.mh_checked=FALSE
+            harvest_vkc.xml_converted=FALSE
             ORDER BY work_id
             """
         )
@@ -110,9 +102,11 @@ class HarvestTable:
         return HarvestTable.count_qry(
             connection,
             """
-            SELECT count(*) FROM harvest_vkc WHERE
-            synchronized=FALSE AND
-            fragment_id IS NOT NULL
+            SELECT count(*)
+            FROM harvest_vkc JOIN mapping_vkc ON
+            (harvest_vkc.work_id = mapping_vkc.work_id)
+            WHERE
+            harvest_vkc.synchronized=FALSE AND harvest_vkc.xml_converted=TRUE
             """
         )
 
@@ -120,9 +114,15 @@ class HarvestTable:
     def batch_select_publish_records(server_cursor):
         server_cursor.execute(
             """
-            SELECT * FROM harvest_vkc WHERE
-            synchronized=FALSE AND
-            fragment_id IS NOT NULL
+            SELECT harvest_vkc.id, harvest_vkc.mam_xml, harvest_vkc.vkc_xml,
+                harvest_vkc.work_id, harvest_vkc.datestamp,
+                harvest_vkc.synchronized, harvest_vkc.xml_converted,
+                mapping_vkc.fragment_id, mapping_vkc.cp_id, mapping_vkc.external_id
+            FROM harvest_vkc JOIN mapping_vkc ON
+            (harvest_vkc.work_id = mapping_vkc.work_id)
+            WHERE
+            harvest_vkc.synchronized=FALSE AND harvest_vkc.xml_converted=TRUE
+            ORDER BY work_id
             """
         )
 
@@ -139,11 +139,11 @@ class HarvestTable:
         )
 
     @staticmethod
-    def set_mh_checked(cursor, record, val):
+    def set_xml_converted(cursor, record, val):
         cursor.execute(
             """
             UPDATE harvest_vkc
-            SET mh_checked = %s,
+            SET xml_converted = %s,
                 updated_at = now()
             WHERE id=%s
             """,
@@ -151,17 +151,15 @@ class HarvestTable:
         )
 
     @staticmethod
-    def update_mam_xml(cursor, record, converted_record, fragment_id=None, cp_id=None):
+    def update_mam_xml(cursor, record, mam_xml):
         cursor.execute(
             """
             UPDATE harvest_vkc
             SET mam_xml = %s,
-                fragment_id = %s,
-                cp_id = %s,
                 synchronized = FALSE,
-                mh_checked = TRUE,
+                xml_converted = TRUE,
                 updated_at = now()
             WHERE id=%s
             """,
-            (converted_record, fragment_id, cp_id, record['id'])
+            (mam_xml, record['id'])
         )
