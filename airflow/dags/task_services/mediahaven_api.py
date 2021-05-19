@@ -59,7 +59,7 @@ class MediahavenApi:
         )
 
     def mh_mapping(self, mh_record):
-        # other possible field combos to investigate:
+        # other possible fields to investigate:
         # object_number, object_nummer, objectNumber, objectnummer
         return {
             'external_id': mh_record['Administrative']['ExternalId'],

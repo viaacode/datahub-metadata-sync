@@ -38,7 +38,6 @@ class MappingTable:
         cursor.execute("TRUNCATE TABLE mapping_vkc")
         connection.commit()
         cursor.close()
-        # connection.close() connection is not closed here we use it later on.
 
     @staticmethod
     def insert(connection, record):
@@ -85,22 +84,3 @@ class MappingTable:
             return result[0]
         else:
             return None
-
-    # NOT USED YET for performance we'll do a join with harvest table instead
-
-    @staticmethod
-    def find_work_id(cursor, work_id):
-        # TODO: also add underscore variants here?
-        # work_id_esc = work_id.replace(".", "_")
-        cursor.execute(
-            """
-            SELECT * FROM mapping_vkc WHERE
-            work_id=%s OR work_id_alternate=%s
-            """,
-            (work_id, work_id)
-        )
-        result = cursor.fetchall()
-        return result
-
-    # TODO: make a join qry in harvest_table...
-    # this will avoid n+1 qry issue here.
