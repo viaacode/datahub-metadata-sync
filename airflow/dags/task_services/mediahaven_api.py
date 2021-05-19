@@ -6,8 +6,12 @@
 #  airflow/dags/task_services/mediahaven_api.py
 #
 #   Make api calls to hetarchief/mediahaven
-#   used for checking if VKC OAI record was already synced before
-
+#   used for building a lookup table that
+#   matches VKC OAI workID with a record in MAM
+#   we only update existing mam records that have a match
+#   by joining with mapping_vkc table on work_id we get a corresponding
+#   fragment_id and cp_id for each vkc entry. One work_id can have multiple
+#   fragment_id's associated and in this case we update all associated fragments.
 import os
 from requests import Session
 from task_services.mapping_table import MappingTable

@@ -18,6 +18,8 @@ from task_services.mediahaven_api import MediahavenApi
 from task_services.harvest_table import HarvestTable
 from task_services.mapping_table import MappingTable
 
+# instead of using our xmltransformer directly we use the
+# transformer_process wrapper to workaround a memleak in saxonc
 # from task_services.xml_transformer import XmlTransformer
 from task_services.transformer_process import xml_convert
 
@@ -117,6 +119,9 @@ def transform_xml(**context):
         uc = update_conn.cursor(cursor_factory=DictCursor)
 
         # use forked process to convert a whole batch of records
+        # we can revert to using tr.convert once the saxonc memory leak
+        # is fixed. For now converting a batch and then closing the forked
+        # process and starting a new one seems to work well
         xpos = 0
         vkc_xml_batch = [record['vkc_xml'] for record in records]
         mam_xml_batch = xml_convert(vkc_xml_batch)

@@ -13,12 +13,9 @@
 #
 #   for saxonc on macOS to work. run scripts/install_mac_saxon.sh and then
 #   export PYTHONPATH=$(pwd)/saxon/Saxon.C.API/python-saxon
-#   memory leak issue here, its explained here : https://saxonica.plan.io/issues/4942
-#   aha and I see Rudolf also shows this on an example https://github.com/RudolfDG/saxon-flask-api
-#   and asks about the same issue on stackoverflow ;)
-#   https://stackoverflow.com/questions/66693687/how-to-prevent-saxon-c-python-bindings-from-trying-to-start-a-new-java-vm-when-a
 #
-# => as workaround we spawn new process for each batch by using methods in transformer_process.py
+#   WARNING: memory leak issue here see task_services/transformer_process.py
+#   for a workaround/fix.
 import os
 import saxonc
 
