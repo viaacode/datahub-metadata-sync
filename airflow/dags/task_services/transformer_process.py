@@ -18,6 +18,7 @@
 #     and asks about the same issue on stackoverflow
 # https://stackoverflow.com/questions/66693687/how-to-prevent-saxon-c-python-bindings-from-trying-to-start-a-new-java-vm-when-a
 #
+
 from multiprocessing import Process, Queue
 from task_services.xml_transformer import XmlTransformer
 

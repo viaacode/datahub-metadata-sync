@@ -14,8 +14,10 @@
 #   for saxonc on macOS to work. run scripts/install_mac_saxon.sh and then
 #   export PYTHONPATH=$(pwd)/saxon/Saxon.C.API/python-saxon
 #
-#   WARNING: memory leak issue here see task_services/transformer_process.py
-#   for a workaround/fix.
+#   WARNING: memory leak issue in saxonc.
+#   Look at task_services/transformer_process.py for a workaround/fix.
+#
+
 import os
 import saxonc
 

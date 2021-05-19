@@ -7,7 +7,7 @@
 #
 #   HarvestTable handles creation, truncating and updating
 #   records in the harvest_vkc table
-
+#
 
 class HarvestTable:
 

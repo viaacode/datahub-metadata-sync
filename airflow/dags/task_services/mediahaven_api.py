@@ -12,6 +12,8 @@
 #   by joining with mapping_vkc table on work_id we get a corresponding
 #   fragment_id and cp_id for each vkc entry. One work_id can have multiple
 #   fragment_id's associated and in this case we update all associated fragments.
+#
+
 import os
 from requests import Session
 from task_services.mapping_table import MappingTable

@@ -7,6 +7,7 @@
 #
 #   Publish a record with converted xml to the mam-update-requests
 #   queue using the rabbit client
+#
 
 from task_services.rabbit import RabbitClient
 import json

@@ -7,6 +7,7 @@
 #
 #   DAG with tasks for harvesting and converting OAI data from
 #   Vlaamse Kunst Collectie to target MAM and publish via RabbitMQ
+#
 
 from airflow import DAG
 from airflow.operators.python import PythonOperator
