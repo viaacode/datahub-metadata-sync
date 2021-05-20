@@ -10,7 +10,7 @@ def check_external_id(cursor, row):
     )
 
     result = cursor.fetchone()
-    if result and len(result) == 1:
+    if result and len(result) >= 1:
         print(f"{external_id} MATCHED")
     else:
         print(f"{external_id} NOT FOUND: row={row}")
