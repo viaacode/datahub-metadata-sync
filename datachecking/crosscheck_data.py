@@ -3,10 +3,10 @@ import csv
 import psycopg2
 
 
-def check_external_id(cursor, row): 
+def check_external_id(cursor, row):
     external_id = row[0]
     cursor.execute(
-        "SELECT * from mapping_vkc where external_id=%s", 
+        "SELECT * from mapping_vkc where external_id=%s",
         (external_id,)
     )
 
@@ -20,7 +20,7 @@ def check_external_id(cursor, row):
 def check_fragment(cursor, row):
     fragment_id = row[1]
     cursor.execute(
-        "SELECT * from mapping_vkc where fragment_id=%s", 
+        "SELECT * from mapping_vkc where fragment_id=%s",
         (fragment_id,)
     )
 
@@ -33,7 +33,7 @@ def check_fragment(cursor, row):
 
 if __name__ == '__main__':
 
-    if len(sys.argv)<2:
+    if len(sys.argv) < 2:
         print(f"USAGE: python {sys.argv[0]} <csv file to check>")
         sys.exit(1)
 
@@ -53,10 +53,8 @@ if __name__ == '__main__':
     with open(csv_file, newline='') as csvfile:
         csvdata = csv.reader(csvfile, delimiter=';', quotechar='"')
         for row in csvdata:
-            #check_external_id(cursor, row)
+            # check_external_id(cursor, row)
             check_fragment(cursor, row)
-
 
     cursor.close()
     database.close()
-
