@@ -99,7 +99,7 @@ def harvest_mapping(**context):
     # find all possible images with inventaris nr's and store in hashtable:
     params = context.get('params', {})
     full_sync = params.get('full_sync', False)
-    mh_api.build_lookup_table(db_connection, full_sync)
+    mh_api.build_mapping_table(db_connection, full_sync)
 
     db_connection.commit()
     db_connection.close()
