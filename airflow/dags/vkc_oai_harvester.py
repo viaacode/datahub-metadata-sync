@@ -140,11 +140,6 @@ def transform_xml(**context):
         for record in records:
             # mam_xml = tr.convert(record['vkc_xml'])
             mam_xml = mam_xml_batch[xpos]
-            print("updating xml for work_id {}, fragment_id {}, cp_id {}".format(
-                record['work_id'],
-                record['fragment_id'],
-                record['cp_id']
-            ))
             HarvestTable.update_mam_xml(uc, record, mam_xml)
             xpos += 1
 
