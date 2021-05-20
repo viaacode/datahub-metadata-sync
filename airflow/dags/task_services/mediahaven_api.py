@@ -76,7 +76,7 @@ class MediahavenApi:
             offset=offset
         )
 
-    def build_lookup_table(self, db_connection):
+    def build_mapping_table(self, db_connection, full_sync=False):
         BATCH_SIZE = 500
         offset = 0
         result = self.list_inventaris(offset, BATCH_SIZE)
@@ -86,12 +86,12 @@ class MediahavenApi:
         mapping_count = MappingTable.count(db_connection)
 
         print(f"Found {total_records} inventarisnummers.")
-        if mapping_count == total_records:
-            print("Using existing lookup table mapping_vkc.")
+        if not full_sync and (mapping_count == total_records):
+            print("Using existing mapping table mapping_vkc.")
             return
 
         # rebuild table from scratch
-        print("Building new mapping_vkc lookup table...")
+        print("Building new mapping_vkc mapping table...")
         MappingTable.truncate(db_connection)
 
         while(processed_records < total_records and len(records) > 0):

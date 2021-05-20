@@ -21,7 +21,8 @@ class testClass(unittest.TestCase):
         self.assertDagDictEqual({
             "create_harvest_table": ["create_mapping_table"],
             "create_mapping_table": ["harvest_vkc"],
-            "harvest_vkc": ["transform_xml"],
+            "harvest_vkc": ["harvest_mapping"],
+            "harvest_mapping": ["transform_xml"],
             "transform_xml": ["push_to_rabbitmq"],
             "push_to_rabbitmq": []
         }, dag)

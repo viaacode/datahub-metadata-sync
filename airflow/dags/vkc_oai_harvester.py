@@ -91,18 +91,28 @@ def harvest_vkc(**context):
     synchronize_vkc()
 
 
+def harvest_mapping(**context):
+    print(f'harvest_mapping called, context={context}')
+    mh_api = MediahavenApi()
+    db_connection = PostgresHook(postgres_conn_id=DB_CONNECT_ID).get_conn()
+
+    # find all possible images with inventaris nr's and store in hashtable:
+    params = context.get('params', {})
+    full_sync = params.get('full_sync', False)
+    mh_api.build_lookup_table(db_connection, full_sync)
+
+    db_connection.commit()
+    db_connection.close()
+
+
 def transform_xml(**context):
     print(f'transform_xml called, context={context}')
-    mh_api = MediahavenApi()
     # tr = XmlTransformer()
 
     # Notice: using server cursor, makes batches work
     # we open a second connection and cursor to do our update calls
     read_conn = PostgresHook(postgres_conn_id=DB_CONNECT_ID).get_conn()
     update_conn = PostgresHook(postgres_conn_id=DB_CONNECT_ID).get_conn()
-
-    # find all possible images with inventaris nr's and store in hashtable:
-    mh_api.build_lookup_table(update_conn)
 
     transform_count = 0
     transform_total = HarvestTable.transform_count(read_conn)
@@ -202,6 +212,11 @@ with dag:
         # op_kwargs={'full_sync': True}
     )
 
+    harvest_mapping_task = PythonOperator(
+        task_id='harvest_mapping',
+        python_callable=harvest_mapping,
+    )
+
     transform_xml_task = PythonOperator(
         task_id='transform_xml',
         python_callable=transform_xml,
@@ -213,5 +228,5 @@ with dag:
     )
 
     create_harvest_table >> create_mapping_table >> \
-        harvest_vkc_task >> transform_xml_task >> \
-        push_to_rabbitmq_task
+        harvest_vkc_task >> harvest_mapping_task >> \
+        transform_xml_task >> push_to_rabbitmq_task
