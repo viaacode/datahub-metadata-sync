@@ -35,7 +35,7 @@ class MediahavenApi:
         else:
             self.session = session
 
-        print(f"Mediahaven initialised user = {self.API_USER}")
+        print(f"Mediahaven initialised user = {self.API_USER} SERVER = {self.API_SERVER}")
 
     # generic get request to mediahaven api
     def get_proxy(self, api_route):
