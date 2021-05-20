@@ -29,11 +29,13 @@ class RabbitPublisher:
             "data": record['mam_xml']
         }
 
-        print("publishing update: correlation_id {} fragment_id {} cp_id {}".format(
-            update_request['correlation_id'],
-            update_request['fragment_id'],
-            update_request['cp_id']
-        ))
+        # good for debug, but when publishing 12k records the log page of task
+        # becomes too large.
+        # print("publishing update: correlation_id {} fragment_id {} cp_id {}".format(
+        #     update_request['correlation_id'],
+        #     update_request['fragment_id'],
+        #     update_request['cp_id']
+        # ))
 
         self.rabbit_client.send_message(
             routing_key='mam-update-requests',

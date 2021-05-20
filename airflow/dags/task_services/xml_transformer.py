@@ -29,7 +29,6 @@ class XmlTransformer:
         XSLT_NAME = os.environ.get('XSLT_NAME', 'lido_to_mam')
         self.xslt_path = self.__get_path_to_xslt(XSLT_NAME)
         self.saxon_processor = saxonc.PySaxonProcessor(license=False)
-        print("XmlTransformer initialized")
 
     def __del__(self):
         # this destructor fixes warning dialog on mac. info:
