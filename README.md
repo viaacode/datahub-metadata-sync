@@ -4,29 +4,55 @@ Synchronisatie van metadata tussen meemoo en de datahub van VKC.
 
 # Installation
 
-A makefile is in progress that will replace most of the following scripts, just execute make and see available tasks.
+Just run make install to install python virtual env and install the packages
+in requirements.txt:
+```
+$ make install
+```
 
-Install pip packages and create python virtual env
-```
-scripts/install_airflow.sh
-```
+Migrate the initial database only needs to be done once and uses following script:
 
 Then migrate/create the database tables using:
 ```
-scripts/migrate_database.sh
+$ scripts/migrate_database.sh
+```
+Here you also need to enter an admin user and password (keep these as you need them later to
+login when starting the webserver with the airflow interface)
+
+
+
+# Running the server and scheduler
+
+A makefile is provided and when you run make without arguments you see the available commands:
+```
+$ make
+Available make commands:
+
+  install     install packages and prepare environment
+  clean       remove all temporary files
+  lint        run the code linters
+  format      reformat code
+  test        run all the tests
+  dockertest  run all the tests in docker image like jenkins
+  coverage    run tests and generate coverage report
+  server      start airflow webserver port 8080
+  scheduler   start airflow scheculer to run dags
 ```
 
-Finally start the scheduler like so:
+
+Start the scheduler like so:
 ```
-scripts/start_schedular.sh
+$ make scheduler
 ```
 
 And in seperate window start the webserver:
 ```
-scripts/start_webserver.sh
+$ make server
 ```
 
-... (todo need to add pip install apache-airflow['cncf.kubernetes'] or fix config so we dont have warnings about missing this package)
+Now just open a browser window to http://localhost:8080 to see the airflow interface.
+There is only one dag defined/available and you can run it from there.
+
 
 
 # VKC OAI Harvester
