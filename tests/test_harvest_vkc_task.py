@@ -1,17 +1,21 @@
 import unittest
 import pytest
-# from airflow.utils.state import State
+from airflow.utils.state import State
 from airflow import DAG
 from airflow.dags.vkc_oai_harvester import harvest_vkc
 from airflow.models.taskinstance import TaskInstance
 from airflow.operators.python import PythonOperator
 from datetime import datetime
+from airflow.models import DagBag
+
 
 DEFAULT_DATE = '2021-05-01'
 TEST_DAG_ID = 'vkc_oai_harvester'
 
 
 class HarvestVkcTest(unittest.TestCase):
+
+    LOAD_SECOND_THRESHOLD = 2
 
     def setUp(self):
         self.dag = DAG(
@@ -31,10 +35,7 @@ class HarvestVkcTest(unittest.TestCase):
             execution_date=datetime.strptime(DEFAULT_DATE, '%Y-%m-%d')
         )
 
-    @pytest.mark.skip(reason='runstate gives failure because of internal noresultfound')
     def test_execute_no_trigger(self):
-        # this still errors out, maybe we can look here for inspiration on monday:
-        # https://blog.usejournal.com/testing-in-airflow-part-1-dag-validation-tests-dag-definition-tests-and-unit-tests-2aa94970570c
-        assert True
-        # self.ti.run(ignore_ti_state=True)
-        # assert self.ti.state == State.SUCCESS
+        context = self.ti.get_template_context()
+        self.op.prepare_for_execution().execute(context)
+
