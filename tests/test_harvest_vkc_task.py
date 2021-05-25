@@ -15,8 +15,6 @@ TEST_DAG_ID = 'vkc_oai_harvester'
 
 class HarvestVkcTest(unittest.TestCase):
 
-    LOAD_SECOND_THRESHOLD = 2
-
     def setUp(self):
         self.dag = DAG(
             TEST_DAG_ID,
@@ -35,7 +33,9 @@ class HarvestVkcTest(unittest.TestCase):
             execution_date=datetime.strptime(DEFAULT_DATE, '%Y-%m-%d')
         )
 
-    def test_execute_no_trigger(self):
+    # TODO: mock vkc retrieval (currently makes real connection)
+    # TODO: mock out database connection
+    def test_harvest_execution(self):
         context = self.ti.get_template_context()
         self.op.prepare_for_execution().execute(context)
 
