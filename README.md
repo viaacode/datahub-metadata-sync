@@ -43,9 +43,10 @@ Listing the tasks in this harvester:
 ```
 $ airflow tasks list vkc_oai_harvester
 
-[2021-05-08 17:26:35,924] {dagbag.py:451} INFO - Filling up the DagBag from /Users/wschrep/FreelanceWork/VIAA/IIIF_newproject/datahub-metadata-sync/airflow/dags
+[2021-05-25 12:08:23,255] {dagbag.py:451} INFO - Filling up the DagBag from /Users/wschrep/FreelanceWork/VIAA/IIIF_newproject/datahub-metadata-sync/airflow/dags
 create_harvest_table
 create_mapping_table
+harvest_mapping
 harvest_vkc
 push_to_rabbitmq
 transform_xml
@@ -53,20 +54,34 @@ transform_xml
 
 Run task to create the harvest table:
 ```
-airflow tasks test vkc_oai_harvester create_harvest_table 2021-05-08
+$ airflow tasks test vkc_oai_harvester create_harvest_table 2021-05-08
 ```
 
 Run task to create the work_id mapping table:
 ```
-airflow tasks test vkc_oai_harvester create_mapping_table 2021-05-08
+$ airflow tasks test vkc_oai_harvester create_mapping_table 2021-05-08
 ```
 
+
+First populate the mapping table, this maps work_id's to the fragment_ids and is used in later tasks by joining the
+harvest_vkc table on mapping_vkc by matching work_id.
+Once the table is populated it won't do a full run unless the number of results of the mam qry changes.
+(unless when passing in full_sync=True, then this is done always and the old mapping is truncated)
+
+```
+$ airflow tasks test vkc_oai_harvester harvest_mapping 2015-06-01
+
+...
+Found 32743 inventarisnummers.
+Using existing mapping table mapping_vkc.
+```
 
 
 
 Testrun a task for instance harvest oai data to target database, for first call even delta does full_sync as table is empty:
 ```
-airflow tasks test vkc_oai_harvester harvest_vkc 2015-06-01
+$ airflow tasks test vkc_oai_harvester harvest_vkc 2015-06-01
+
 [2021-04-27 19:22:11,352] {dagbag.py:451} INFO - Filling up the DagBag from /Users/wschrep/FreelanceWork/VIAA/IIIF_newproject/datahub-metadata-sync/airflow/dags
 [2021-04-27 19:22:11,381] {taskinstance.py:877} INFO - Dependencies all met for <TaskInstance: vkc_oai_harvester.harvest_oai 2015-06-01T00:00:00+00:00 [None]>
 [2021-04-27 19:22:11,390] {taskinstance.py:877} INFO - Dependencies all met for <TaskInstance: vkc_oai_harvester.harvest_oai 2015-06-01T00:00:00+00:00 [None]>
@@ -119,12 +134,12 @@ mam_xml along with a call to mediahaven to get the fragment_id, cp_id based on t
 
 To run a delta task, just pass full_sync is false as an argument example from cli (or omit it as this does delta also now):
 ```
-airflow tasks test vkc_oai_harvester harvest_vkc 2015-06-01 -t '{"full_sync": false}'
+$ airflow tasks test vkc_oai_harvester harvest_vkc 2015-06-01 -t '{"full_sync": false}'
 ```
 
 To execute a full_sync we can pass this as follows :
 ```
-airflow tasks test vkc_oai_harvester harvest_vkc 2015-06-01 -t '{"full_sync": true}'
+$ airflow tasks test vkc_oai_harvester harvest_vkc 2015-06-01 -t '{"full_sync": true}'
 ```
 This truncates the table, then does full sync.
 
@@ -132,7 +147,7 @@ This truncates the table, then does full sync.
 
 
 ```
-airflow tasks test vkc_oai_harvester transform_xml 2015-06-01
+$ airflow tasks test vkc_oai_harvester transform_xml 2015-06-01
 
 [2021-05-08 17:32:07,767] {dagbag.py:451} INFO - Filling up the DagBag from /Users/wschrep/FreelanceWork/VIAA/IIIF_newproject/datahub-metadata-sync/airflow/dags
 [2021-05-08 17:32:07,832] {taskinstance.py:877} INFO - Dependencies all met for <TaskInstance: vkc_oai_harvester.transform_xml 2015-06-01T00:00:00+00:00 [None]>
@@ -180,7 +195,8 @@ update harvest_vkc set synchronized=true;
 and then manually set a few records to synchronized=false and then run the publis_to_rabbitmq task so it sends the ones where the flag is false.
 
 ```
-airflow tasks test vkc_oai_harvester push_to_rabbitmq 2021-05-01
+$ airflow tasks test vkc_oai_harvester push_to_rabbitmq 2021-05-01
+...
 ```
 
 
@@ -190,33 +206,42 @@ Using the makefile you can generate a test coverage report
 
 ```
 $ make coverage
-================================= test session starts =================================
+================================== test session starts ==================================
 platform darwin -- Python 3.8.5, pytest-5.3.5, py-1.10.0, pluggy-0.13.1
 rootdir: /Users/wschrep/FreelanceWork/VIAA/IIIF_newproject/datahub-metadata-sync
 plugins: cov-2.8.1, mock-3.5.1
-collected 2 items
+collected 6 items
 
-tests/test_dag_tasks.py .                                                       [ 50%]
-tests/test_harvest_dag.py .                                                     [100%]
+tests/test_dag_tasks.py .                                                         [ 16%]
+tests/test_harvest_dag.py .                                                       [ 33%]
+tests/test_harvest_mapping_task.py .                                              [ 50%]
+tests/test_harvest_vkc_task.py .                                                  [ 66%]
+tests/test_push_to_rabbit_task.py s                                               [ 83%]
+tests/test_transform_xml_task.py .                                                [100%]
 
 ---------- coverage: platform darwin, python 3.8.5-final-0 -----------
-Name                                             Stmts   Miss  Cover
---------------------------------------------------------------------
-airflow/dags/task_services/__init__.py               0      0   100%
-airflow/dags/task_services/harvest_table.py         30     12    60%
-airflow/dags/task_services/mediahaven_api.py        34     23    32%
-airflow/dags/task_services/rabbit.py                40     33    18%
-airflow/dags/task_services/rabbit_publisher.py      11      6    45%
-airflow/dags/task_services/vkc_api.py               41     36    12%
-airflow/dags/task_services/xml_transformer.py       17     10    41%
-airflow/dags/vkc_oai_harvester.py                   92     68    26%
---------------------------------------------------------------------
-TOTAL                                              265    188    29%
+Name                                                Stmts   Miss  Cover
+-----------------------------------------------------------------------
+airflow/dags/task_services/__init__.py                  0      0   100%
+airflow/dags/task_services/harvest_table.py            52     12    77%
+airflow/dags/task_services/mapping_table.py            34     15    56%
+airflow/dags/task_services/mediahaven_api.py           48     13    73%
+airflow/dags/task_services/rabbit.py                   40     33    18%
+airflow/dags/task_services/rabbit_publisher.py         10      5    50%
+airflow/dags/task_services/transformer_process.py      19      0   100%
+airflow/dags/task_services/vkc_api.py                  52      9    83%
+airflow/dags/task_services/xml_transformer.py          17      0   100%
+airflow/dags/vkc_oai_harvester.py                     115     28    76%
+-----------------------------------------------------------------------
+TOTAL                                                 387    115    70%
 Coverage HTML written to dir htmlcov
 
 
-================================== 2 passed in 1.58s ==================================
+============================= 5 passed, 1 skipped in 4.94s ==============================
 ```
-In next days we will be improving testing coverage.
+
+
+Further improving coverage and mocking db and api connections is work in progress now...
+
 
 
