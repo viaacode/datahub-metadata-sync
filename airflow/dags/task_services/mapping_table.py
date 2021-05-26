@@ -26,6 +26,9 @@ class MappingTable:
                 fragment_id VARCHAR,
                 external_id VARCHAR,
                 cp_id VARCHAR,
+                mimetype VARCHAR,
+                width_px INTEGER,
+                height_px INTEGER,
                 created_at timestamp with time zone NOT NULL DEFAULT now(),
                 updated_at timestamp with time zone NOT NULL DEFAULT now()
             );
@@ -45,8 +48,9 @@ class MappingTable:
         cursor.execute(
             """
             INSERT INTO mapping_vkc
-            (work_id, work_id_alternate, fragment_id, external_id, cp_id)
-            VALUES(%s, %s, %s, %s, %s)
+            (work_id, work_id_alternate, fragment_id, external_id,
+            cp_id, mimetype, width_px, height_px)
+            VALUES(%s, %s, %s, %s, %s, %s, %s, %s)
             """,
             (
                 record['work_id'],
@@ -54,6 +58,9 @@ class MappingTable:
                 record['fragment_id'],
                 record['external_id'],
                 record['cp_id'],
+                record['mimetype'],
+                record['width_px'],
+                record['height_px'],
             )
         )
 

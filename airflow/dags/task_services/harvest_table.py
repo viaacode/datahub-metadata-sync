@@ -22,6 +22,9 @@ class HarvestTable:
                 datestamp timestamp with time zone,
                 synchronized BOOL DEFAULT 'false',
                 xml_converted BOOL DEFAULT 'false',
+                aanbieder VARCHAR,
+                breedte_cm INTEGER,
+                breedte_met_lijst_cm INTEGER,
                 created_at timestamp with time zone NOT NULL DEFAULT now(),
                 updated_at timestamp with time zone NOT NULL DEFAULT now()
             );
@@ -49,10 +52,17 @@ class HarvestTable:
     def insert(cursor, record):
         cursor.execute(
             """
-            INSERT INTO harvest_vkc (work_id, vkc_xml, mam_xml, datestamp)
-            VALUES(%s, %s, NULL, %s)
+            INSERT INTO harvest_vkc (
+                work_id, vkc_xml, mam_xml, datestamp,
+                aanbieder, breedte_cm, breedte_met_lijst_cm
+            )
+            VALUES(%s, %s, NULL, %s, %s, %s, %s)
             """,
-            (record['work_id'], record['xml'], record['datestamp'])
+            (
+                record['work_id'], record['xml'], record['datestamp'],
+                record['aanbieder'], record['breedte_cm'],
+                record['breedte_met_lijst_cm']
+            )
         )
 
     @staticmethod

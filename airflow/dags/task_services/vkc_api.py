@@ -55,11 +55,15 @@ class VkcApi:
                 header = record.find('.//ns0:header', self.ns0)
                 header_datestamp = header.find('.//ns0:datestamp', self.ns0).text
                 work_id = self._get_work_id(record, header)
+                w, w_lijst = self._get_widths(record)
 
                 records.append({
                     'xml': vkc_xml,
                     'work_id': work_id,
-                    'datestamp': header_datestamp
+                    'datestamp': header_datestamp,
+                    'aanbieder': self._get_aanbieder(record),
+                    'breedte_cm': w,
+                    'breedte_met_lijst_cm': w_lijst
                 })
 
         resumptionTag = items.find('.//ns0:resumptionToken', self.ns0)
@@ -93,6 +97,22 @@ class VkcApi:
         print(f"VkcApi::list_records params = {params}")
 
         return params
+
+    def _get_widths(self, record):
+        # TODO: get from record
+
+        metadata = record.find('.//ns0:metadata', self.ns0)
+        breedte_cm = 0
+        breedte_met_lijst_cm = 0
+
+        return breedte_cm, breedte_met_lijst_cm
+
+    def _get_aanbieder(self, record):
+        # kmska, groeninge, ...
+        # TODO: get from record
+        aanbieder = 'groeningen'
+
+        return aanbieder
 
     def _get_work_id(self, record, header):
         metadata = record.find('.//ns0:metadata', self.ns0)
