@@ -49,6 +49,8 @@ def synchronize_vkc():
     cursor = conn.cursor(cursor_factory=DictCursor)
     last_synced = HarvestTable.get_max_datestamp(cursor)
 
+    __import__('pdb').set_trace()
+
     api = VkcApi()
     records, token, total = api.list_records(from_filter=last_synced)
     total_count = len(records)
