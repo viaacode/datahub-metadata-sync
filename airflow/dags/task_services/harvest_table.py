@@ -23,8 +23,8 @@ class HarvestTable:
                 synchronized BOOL DEFAULT 'false',
                 xml_converted BOOL DEFAULT 'false',
                 aanbieder VARCHAR,
-                breedte_cm INTEGER,
-                breedte_met_lijst_cm INTEGER,
+                min_breedte_cm DECIMAL,
+                max_breedte_cm DECIMAL,
                 created_at timestamp with time zone NOT NULL DEFAULT now(),
                 updated_at timestamp with time zone NOT NULL DEFAULT now()
             );
@@ -54,14 +54,14 @@ class HarvestTable:
             """
             INSERT INTO harvest_vkc (
                 work_id, vkc_xml, mam_xml, datestamp,
-                aanbieder, breedte_cm, breedte_met_lijst_cm
+                aanbieder, min_breedte_cm, max_breedte_cm
             )
             VALUES(%s, %s, NULL, %s, %s, %s, %s)
             """,
             (
                 record['work_id'], record['xml'], record['datestamp'],
-                record['aanbieder'], record['breedte_cm'],
-                record['breedte_met_lijst_cm']
+                record['aanbieder'], record['min_breedte_cm'],
+                record['max_breedte_cm']
             )
         )
 
