@@ -270,4 +270,24 @@ Coverage HTML written to dir htmlcov
 Further improving coverage and mocking db and api connections is work in progress now...
 
 
+# Docker container build
+
+
+Build a container with saxonc for xml transformer and complete airflow installation.
+
+```
+$ scripts/docker_build.sh
+```
+
+
+Run webserver and scheduler inside docker container:
+```
+$ scripts/docker_run.sh
+```
+
+
+For debugging the container, theres a helper login script:
+```
+$ scripts/docker_login.sh
+```
 
