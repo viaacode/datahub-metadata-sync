@@ -66,7 +66,10 @@ class MediahavenApi:
             'fragment_id': mh_record['Internal']['FragmentId'],
             'cp_id': mh_record['Dynamic']['CP_id'],
             'work_id': mh_record['Dynamic']['dc_identifier_localids']['Inventarisnummer'][0],
-            'work_id_alternate': mh_record['Dynamic']['dc_identifier_localid']
+            'work_id_alternate': mh_record['Dynamic']['dc_identifier_localid'],
+            'mimetype': mh_record['Technical']['MimeType'],
+            'width_px': mh_record['Technical']['Width'],
+            'height_px': mh_record['Technical']['Height']
         }
 
     def list_inventaris(self, offset=0, limit=20):

@@ -55,11 +55,15 @@ class VkcApi:
                 header = record.find('.//ns0:header', self.ns0)
                 header_datestamp = header.find('.//ns0:datestamp', self.ns0).text
                 work_id = self._get_work_id(record, header)
+                min_w, max_w = self._get_widths(record)
 
                 records.append({
                     'xml': vkc_xml,
                     'work_id': work_id,
-                    'datestamp': header_datestamp
+                    'datestamp': header_datestamp,
+                    'aanbieder': self._get_aanbieder(record),
+                    'min_breedte_cm': min_w,
+                    'max_breedte_cm': max_w
                 })
 
         resumptionTag = items.find('.//ns0:resumptionToken', self.ns0)
@@ -90,9 +94,63 @@ class VkcApi:
         else:
             params['resumptionToken'] = resumptionToken
 
-        print(f"VkcApi::list_records params = {params}")
+        # print(f"VkcApi::list_records params = {params}")
 
         return params
+
+    def _get_widths(self, record):
+        metadata = record.find('.//ns0:metadata', self.ns0)
+        measurements = metadata.findall('.//{}/{}/{}/{}'.format(
+                'ns1:descriptiveMetadata',
+                'ns1:objectIdentificationWrap',
+                'ns1:objectMeasurementsWrap',
+                'ns1:objectMeasurementsSet',
+            ),
+            self.ns1
+        )
+
+        min_breedte = 0
+        max_breedte = 0
+        breedte = 0
+
+        for m in measurements:
+            mset = m.find('.//ns1:objectMeasurements/ns1:measurementsSet', self.ns1)
+            #  mextent is inconsistent to determine we use min/max instead
+            #  mextent = m.find('.//ns1:objectMeasurements/ns1:extentMeasurements', self.ns1)
+
+            if mset is not None and len(mset) > 0 and (
+                mset[0].text == 'Breedte' or mset[0].text == 'breedte'
+            ):
+                try:
+                    breedte = float(mset[2].text)
+                except ValueError:
+                    breedte = 0
+                    print(f'warning could not parse breedte = {mset[2].text}, using 0 as value')
+                except TypeError:
+                    breedte = 0
+
+            if breedte <= min_breedte or min_breedte == 0:
+                min_breedte = breedte
+
+            if breedte >= max_breedte:
+                max_breedte = breedte
+
+        return min_breedte, max_breedte
+
+    def _get_aanbieder(self, record):
+        metadata = record.find('.//ns0:metadata', self.ns0)
+        legal_appelation = metadata.find('.//{}/{}/{}/{}/{}'.format(
+                'ns1:administrativeMetadata',
+                'ns1:recordWrap',
+                'ns1:recordSource',
+                'ns1:legalBodyName',
+                'ns1:appellationValue'
+            ),
+            self.ns1
+        )
+        aanbieder = legal_appelation.text
+
+        return aanbieder
 
     def _get_work_id(self, record, header):
         metadata = record.find('.//ns0:metadata', self.ns0)

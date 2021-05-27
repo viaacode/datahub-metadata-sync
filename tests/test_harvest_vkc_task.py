@@ -1,14 +1,46 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
 import unittest
 import pytest
-# from airflow.utils.state import State
+# from unittest.mock import patch, Mock, MagicMock
 from airflow import DAG
 from airflow.dags.vkc_oai_harvester import harvest_vkc
 from airflow.models.taskinstance import TaskInstance
 from airflow.operators.python import PythonOperator
 from datetime import datetime
+from os import path
+
+# attempt at mocking postgres. TODO: further tweak this for our setup...
+# this uses a seperate docker for postgres queries
+from collections import namedtuple
+from pytest_docker_tools import container, fetch
+
 
 DEFAULT_DATE = '2021-05-01'
 TEST_DAG_ID = 'vkc_oai_harvester'
+
+
+@pytest.fixture(scope="module")
+def postgres_credentials():
+    PostgresCredentials = namedtuple("PostgresCredentials", ["username", "password"])
+    return PostgresCredentials("testuser", "testpass")
+
+
+postgres_image = fetch(repository="postgres:11.1-alpine")
+postgres = container(
+    image="{postgres_image.id}",
+    environment={
+        "POSTGRES_USER": "{postgres_credentials.username}",
+        "POSTGRES_PASSWORD": "{postgres_credentials.password}",
+    },
+    ports={"5432/tcp": None},
+    volumes={
+        path.join(path.dirname(__file__), "postgres-init.sql"): {
+            "bind": "/docker-entrypoint-initdb.d/postgres-init.sql"
+        }
+    },
+)
 
 
 class HarvestVkcTest(unittest.TestCase):
@@ -31,10 +63,11 @@ class HarvestVkcTest(unittest.TestCase):
             execution_date=datetime.strptime(DEFAULT_DATE, '%Y-%m-%d')
         )
 
-    @pytest.mark.skip(reason='runstate gives failure because of internal noresultfound')
-    def test_execute_no_trigger(self):
-        # this still errors out, maybe we can look here for inspiration on monday:
-        # https://blog.usejournal.com/testing-in-airflow-part-1-dag-validation-tests-dag-definition-tests-and-unit-tests-2aa94970570c
-        assert True
-        # self.ti.run(ignore_ti_state=True)
-        # assert self.ti.state == State.SUCCESS
+    # TODO: mock vkc retrieval (currently makes real connection)
+    # TODO: mock out database connection
+    def test_harvest_execution(self):
+        context = self.ti.get_template_context()
+        self.op.prepare_for_execution().execute(context)
+
+        assert self.op.retries == 0
+        assert not self.op.op_kwargs['full_sync']
