@@ -14,6 +14,7 @@ WORKDIR /app
 
 # Let the appuser own the files so he can rwx during runtime.
 COPY . .
+RUN cp /app/airflow/airflow.cfg.linux /app/airflow/airflow.cfg && mkdir -p /app/airflow/logs
 RUN chown -R appuser:appgroup /app
 
 # Install gcc and libc6-dev to be able to compile uWSGI
