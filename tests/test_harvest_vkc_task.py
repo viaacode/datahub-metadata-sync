@@ -2,27 +2,30 @@
 # -*- coding: utf-8 -*-
 
 import unittest
-from unittest.mock import patch, Mock, MagicMock
+import pytest
+# from unittest.mock import patch, Mock, MagicMock
 from airflow import DAG
 from airflow.dags.vkc_oai_harvester import harvest_vkc
 from airflow.models.taskinstance import TaskInstance
 from airflow.operators.python import PythonOperator
 from datetime import datetime
-
-   
-
-DEFAULT_DATE = '2021-05-01'
-TEST_DAG_ID = 'vkc_oai_harvester'
+from os import path
 
 # attempt at mocking postgres. TODO: further tweak this for our setup...
 # this uses a seperate docker for postgres queries
 from collections import namedtuple
 from pytest_docker_tools import container, fetch
 
+
+DEFAULT_DATE = '2021-05-01'
+TEST_DAG_ID = 'vkc_oai_harvester'
+
+
 @pytest.fixture(scope="module")
 def postgres_credentials():
     PostgresCredentials = namedtuple("PostgresCredentials", ["username", "password"])
     return PostgresCredentials("testuser", "testpass")
+
 
 postgres_image = fetch(repository="postgres:11.1-alpine")
 postgres = container(
@@ -38,6 +41,7 @@ postgres = container(
         }
     },
 )
+
 
 class HarvestVkcTest(unittest.TestCase):
 
