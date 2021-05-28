@@ -1,2 +1,2 @@
-docker exec -it --user root vkc_test /bin/sh
+docker exec -it --user appuser vkc_test /bin/sh
 
