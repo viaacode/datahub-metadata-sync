@@ -16,6 +16,7 @@ WORKDIR /app
 COPY . .
 RUN cp /app/airflow/airflow.cfg.linux /app/airflow/airflow.cfg && mkdir -p /app/airflow/logs
 RUN chown -R appuser:appgroup /app
+RUN chown -R appuser:appgroup /tmp
 
 # Install gcc and libc6-dev to be able to compile uWSGI
 RUN apt-get update && \
