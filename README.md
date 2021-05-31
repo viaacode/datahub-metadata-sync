@@ -291,3 +291,22 @@ For debugging the container, theres a helper login script:
 $ scripts/docker_login.sh
 ```
 
+
+# Mocking/testing airflow
+
+This seems quite challenging. I got quickly to a point where we can call tasks from within our tests. But mocking the database and api calls
+seems a bit harder inside the airflow tests. Problem is we're not directly calling a method but using .execute. Mocking in this case is
+harder to do. We might need to refactor some more stuff in order to be able to automate testing code.
+
+Right now if the database and api calls are available the tests do a full sync and this takes a long time it does however result in 70% code coverage.
+However we need to mock it to make tests run faster and more reliably.
+
+Current research/links we have found regarding testing airflow tasks:
+
+* https://airflowsummit.org/slides/j2-Ensuring-your-DAGs-work-before-going-to-production.pdf
+* https://godatadriven.com/blog/testing-and-debugging-apache-airflow/
+* https://medium.com/wbaa/datas-inferno-7-circles-of-data-testing-hell-with-airflow-cef4adff58d8
+* https://airflow.apache.org/docs/apache-airflow/stable/best-practices.html
+
+However up to now we need some further trial/error to get something that works nicely in our setup.
+
