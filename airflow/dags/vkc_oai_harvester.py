@@ -61,6 +61,8 @@ def synchronize_vkc():
             if record['work_id'] is not None:
                 # for a few records, work_id is missing, we omit these
                 HarvestTable.insert(cursor, record)
+            else:
+                print(f"Skipping record with empty work_id record={record}", flush=True)
 
         conn.commit()  # commit batch of inserts
 
