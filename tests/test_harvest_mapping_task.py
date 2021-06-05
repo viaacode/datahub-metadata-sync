@@ -1,12 +1,12 @@
 import unittest
 from airflow import DAG
 from airflow.dags.vkc_oai_harvester import harvest_mapping
-from airflow.dags.task_services.mapping_table import MappingTable
+# from airflow.dags.task_services.mapping_table import MappingTable
 
 from airflow.models.taskinstance import TaskInstance
 from airflow.operators.python import PythonOperator
-#from airflow.providers.postgres.operators.postgres import PostgresOperator
-from airflow.providers.sqlite.operators.sqlite import SqliteOperator 
+# from airflow.providers.postgres.operators.postgres import PostgresOperator
+from airflow.providers.sqlite.operators.sqlite import SqliteOperator
 
 from datetime import datetime
 # from airflow.models import DagBag
@@ -30,6 +30,11 @@ class HarvestMappingTest(unittest.TestCase):
             dag=self.dag,
             task_id='create_mapping_table',
             sqlite_conn_id='postgres_default',  # DB_CONNECT_ID
+
+            # the only way we can get this to work for now,
+            # we skipped the created_at, updated_at to see if
+            # this properly creates our db and further executes our dag task.
+
             # sql=MappingTable.create_sql()
             # CREATE TABLE IF NOT EXISTS mapping_vkc(
             # created_at INTEGER DEFAULT datetime('now','unixepoch'),
@@ -67,9 +72,11 @@ class HarvestMappingTest(unittest.TestCase):
     # TODO: stub out the mh_api call for list and return smaller subset.
     # database is now airflow/airflow.db sqlite for testing
     def test_harvest_mapping_execution(self):
+        # create our mapping_vkc table in the airflow/airflow.db sqlite3 db
         context = self.ti_table.get_template_context()
         self.create_mapping_op.prepare_for_execution().execute(context)
- 
+
+        # TODO: mock the postgres connect somehow to work on sqlite also here
         context = self.ti.get_template_context()
         self.mapping_op.prepare_for_execution().execute(context)
         # assert self.ti.state == State.SUCCESS
