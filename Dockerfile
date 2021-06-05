@@ -20,7 +20,7 @@ RUN chown -R appuser:appgroup /tmp
 
 # Install gcc and libc6-dev to be able to compile uWSGI
 RUN apt-get update && \
-    apt-get install --no-install-recommends -y unzip curl gcc g++ libc6-dev procps && \
+    apt-get install --no-install-recommends -y unzip curl gcc g++ libc6-dev procps sqlite3 && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Download saxon

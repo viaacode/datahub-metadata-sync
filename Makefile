@@ -55,7 +55,12 @@ format:
 
 .PHONY: test
 test:
-	@. python_env/bin/activate; \
+	@. python_env/bin/activate && \
+	export AIRFLOW_HOME=$(PWD)/airflow && \
+	export PYTHONPATH=$(PWD)/saxon/Saxon.C.API/python-saxon && \
+	unset AIRFLOW__CORE__SQL_ALCHEMY_CONN && \
+	airflow db init && \
+	sqlite3 airflow/airflow.db "update connection set conn_type='sqlite', host='${PWD}/airflow/airflow.db', schema=NULL, login=NULL, password=NULL, port=NULL, extra=NULL, is_encrypted=0, is_extra_encrypted=0 where conn_id='postgres_default';" ".exit" && \
 	python -m pytest tests
 
 
