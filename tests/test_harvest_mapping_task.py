@@ -12,6 +12,8 @@ from datetime import datetime
 # from airflow.models import DagBag
 # from airflow.utils.state import State
 
+from unittest import mock
+
 
 DEFAULT_DATE = '2021-05-01'
 TEST_DAG_ID = 'vkc_oai_harvester'
@@ -36,11 +38,10 @@ class HarvestMappingTest(unittest.TestCase):
             # this properly creates our db and further executes our dag task.
 
             # sql=MappingTable.create_sql()
-            # CREATE TABLE IF NOT EXISTS mapping_vkc(
             # created_at INTEGER DEFAULT datetime('now','unixepoch'),
             # updated_at INTEGER DEFAULT datetime('now','unixepoch')
             sql="""
-            CREATE TABLE mapping_vkc (
+            CREATE TABLE IF NOT EXISTS mapping_vkc(
                 id INTEGER PRIMARY KEY,
                 work_id TEXT,
                 work_id_alternate TEXT,
@@ -83,8 +84,61 @@ class HarvestMappingTest(unittest.TestCase):
         assert self.mapping_op.retries == 0
         assert not self.mapping_op.op_kwargs['full_sync']
 
+    @mock.patch('airflow.providers.postgres.hooks.postgres.PostgresHook')
+    def test_mock_hook(self, mock_postgres):
+        mock_postgres().__enter__().cursor().__enter__().fetchall.return_value = ['Walter']
 
-#   def test_execute_no_trigger(self):
-#       self.ti.run(ignore_ti_state=True)
-#       assert self.ti.state == State.SUCCESS
-#       # Assert something related to tasks results
+        # now call our harvest_vkc method with mocked mapping.
+        context = self.ti.get_template_context()
+        self.mapping_op.prepare_for_execution().execute(context)
+
+        record = {
+            'work_id': 12,
+            'xml': '<xml></xml>',
+            'datestamp': datetime.now(),
+            'aanbieder': 'aanbieder hier',
+            'min_breedte_cm': '233',
+            'max_breedte_cm': '244'
+        }
+
+        # __import__('pdb').set_trace()
+        # mock_postgres().cursor().execute.assert_called_with(
+        mock_postgres().__enter__().cursor().__enter__().execute.assert_called_with(
+            """
+            INSERT INTO harvest_vkc (
+                work_id, vkc_xml, mam_xml, datestamp,
+                aanbieder, min_breedte_cm, max_breedte_cm
+            )
+            VALUES(%s, %s, NULL, %s, %s, %s, %s)
+            """,
+            (
+                record['work_id'], record['xml'], record['datestamp'],
+                record['aanbieder'], record['min_breedte_cm'],
+                record['max_breedte_cm']
+            )
+        )
+
+
+
+# here we now see we need our wrapper instead of directly using
+# postgreshooks in our dag code
+#     def test_execute_no_trigger(self):
+#         self.ti.run(ignore_ti_state=True)
+#         assert self.ti.state == State.SUCCESS
+#         # Assert something related to tasks results
+
+
+
+
+# in harvest mapping insert this to debug above mocking...
+#     record = {
+#             'work_id': 12,
+#             'xml': '<xml></xml>',
+#             'datestamp': datetime.now(),
+#             'aanbieder': 'aanbieder hier',
+#             'min_breedte_cm': '233',
+#             'max_breedte_cm': '244'
+#     }
+#     HarvestTable.insert(cursor, record)
+
+
