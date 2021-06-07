@@ -37,7 +37,6 @@ class HarvestTable:
         cursor.execute("TRUNCATE TABLE harvest_vkc")
         connection.commit()
         cursor.close()
-        connection.close()
 
     @staticmethod
     def get_max_datestamp(cursor):

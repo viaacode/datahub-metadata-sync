@@ -20,13 +20,11 @@ class TestPatchConn(unittest.TestCase):
     def test_with_context(self, mock_connect):
         mock_connect().__enter__().cursor().__enter__().fetchall.return_value = ['Walter']
         response = select_user(self.user_id)
-        mock_connect().__enter__().cursor().__enter__().execute.assert_called_with('SELECT name FROM users WHERE id = %s', (self.user_id, ))
+        mock_connect().__enter__().cursor().__enter__().execute.assert_called_with(
+            'SELECT name FROM users WHERE id = %s', (self.user_id, )
+        )
         assert response == ['Walter']
-
 
 
 if __name__ == '__main__':
     unittest.main()
-
-
-

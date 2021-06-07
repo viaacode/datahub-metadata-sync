@@ -119,16 +119,12 @@ class HarvestMappingTest(unittest.TestCase):
         )
 
 
-
 # here we now see we need our wrapper instead of directly using
 # postgreshooks in our dag code
 #     def test_execute_no_trigger(self):
 #         self.ti.run(ignore_ti_state=True)
 #         assert self.ti.state == State.SUCCESS
 #         # Assert something related to tasks results
-
-
-
 
 # in harvest mapping insert this to debug above mocking...
 #     record = {
@@ -140,5 +136,3 @@ class HarvestMappingTest(unittest.TestCase):
 #             'max_breedte_cm': '244'
 #     }
 #     HarvestTable.insert(cursor, record)
-
-
