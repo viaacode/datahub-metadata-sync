@@ -68,7 +68,7 @@ def insert_statement_fixture():
     )
 
 
-@pytest.mark.skip(reason="we need valid xml data in above fixture")
+# @pytest.mark.skip(reason="we need valid xml data in above fixture")
 @mock.patch('airflow.dags.task_services.transform_xml_job.BATCH_SIZE', 3)
 def test_xml_transformations():
     # set up mocked database connection with fixture data
@@ -81,6 +81,9 @@ def test_xml_transformations():
     assert update_conn.close_count == 1
 
     assert read_conn.commit_count == 0
-    assert update_conn.commit_count == 5
-    assert 'TRUNCATE TABLE harvest_vkc' in update_conn.qry_history()
-    # TODO: more asserts here!
+    assert update_conn.commit_count == 1
+
+    # __import__('pdb').set_trace()
+    # TODO: further test the converted mam_xml is actually inserted here!
+    assert 'UPDATE harvest_vkc' in update_conn.qry_history()[0]
+    assert 'UPDATE harvest_vkc' in update_conn.qry_history()[1]
