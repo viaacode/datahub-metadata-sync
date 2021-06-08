@@ -1,11 +1,19 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+#
+#  @Author: Walter Schreppers
+#
+#  tests/test_harvest_vkc_job.py
+#
+#   This runs the harvest_vkc task both in full_sync True and False.
+#   We supply some fixture data to our MockDatabase.
+#
+
 import pytest
 from airflow.dags.task_services.harvest_vkc_job import harvest_vkc_job
 from datetime import datetime
 from mock_database import MockDatabase
 
-# TODO: with these fixtures we can now use request recording
-# the database stuff is ok, now we want to also mock responses
-# from the vkc_api
 def harvest_vkc_delta_fixture():
     return [
         {
@@ -24,7 +32,7 @@ def harvest_vkc_full_fixture():
     return [
         {
             'qry': 'SELECT count(*)',
-            'rows': [2]
+            'rows': [0]
         },
         {
             'qry': 'SELECT max(datestamp)',

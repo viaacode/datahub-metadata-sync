@@ -1,3 +1,16 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+#
+#  @Author: Walter Schreppers
+#
+#  tests/test_dag_tasks.py
+#
+#   This tests our dag file and validates the structure
+#   of the various tasks, create_mapping, harvest_vkc etc.
+#   It works on a sqlite database that is created+migrated in the makefile
+#   when you run 'make test'
+#
+
 import unittest
 from airflow.models import DagBag
 

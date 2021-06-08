@@ -1,3 +1,19 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+#
+#  @Author: Walter Schreppers
+#
+#  tests/mock_database.py
+#
+#   MockDatabase and MockCursor classes that fake out the
+#   database connection used in our tasks.
+#   By supplying a fixture_data it matches the query requested
+#   and returns a fixed/static response from the fixture data.
+#   This makes it possible for our dag tasks to run isolated without
+#   an actual postgres database. See test_harvest_vkc_job and other
+#   tests for usage.
+#
+
 class MockCursor:
     def __init__(self):
         self.queries = []
