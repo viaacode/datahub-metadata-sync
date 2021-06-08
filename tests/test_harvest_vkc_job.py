@@ -17,33 +17,39 @@ from mock_database import MockDatabase
 
 
 def harvest_vkc_delta_fixture():
-    return [
-        {
-            'qry': 'SELECT count(*)',
-            'rows': [2]
-        },
-        {
-            'qry': 'SELECT max(datestamp)',
-            'rows': [datetime(2021, 5, 26, 23, 18, 22)]  # 1 last vkc entry
-            # 'rows': [datetime(2021, 5, 26, 23, 18, 12)]  # gives back 3 results
-        }
-    ]
+    return {
+        'fetchone': [
+            {
+                'qry': 'SELECT count(*)',
+                'rows': [2]
+            },
+            {
+                'qry': 'SELECT max(datestamp)',
+                'rows': [datetime(2021, 5, 26, 23, 18, 22)]  # 1 last vkc entry
+                # 'rows': [datetime(2021, 5, 26, 23, 18, 12)]  # gives back 3 results
+            }
+        ],
+        'fetchmany': []
+    }
 
 
 def harvest_vkc_full_fixture():
-    return [
-        {
-            'qry': 'SELECT count(*)',
-            'rows': [0]
-        },
-        {
-            'qry': 'SELECT max(datestamp)',
-            'rows': []  # return empty datestamp for full sync
-            # in test_harvest_job_fullsync.yaml this is
-            # using from_filter = '2011-06-01T00:00:00Z'
-            # 'rows': [datetime(2021, 5, 26, 23, 18, 1)]  # gives back +-12 results
-        }
-    ]
+    return {
+        'fetchone': [
+            {
+                'qry': 'SELECT count(*)',
+                'rows': [0]
+            },
+            {
+                'qry': 'SELECT max(datestamp)',
+                'rows': []  # return empty datestamp for full sync
+                # in test_harvest_job_fullsync.yaml this is
+                # using from_filter = '2011-06-01T00:00:00Z'
+                # 'rows': [datetime(2021, 5, 26, 23, 18, 1)]  # gives back +-12 results
+            }
+        ],
+        'fetchmany': []
+    }
 
 
 pytestmark = [pytest.mark.vcr(ignore_localhost=True)]

@@ -21,11 +21,17 @@ class MockCursor:
     def __init__(self):
         self.queries = []
         self.create_params = []
-        self.fixture_data = []
+        self.fetchmany_history = {}
+        self.fixture_data = {
+            'fetchmany': [],    # entries used with cursor.fetchmany
+            'fetchone': []      # entries used with cursor.fetchone
+        }
+        self.name = 'default'
 
-    def create(self, cursor_factory):
-        print(f"cursor create factory={cursor_factory}", flush=True)
+    def create(self, name='default', cursor_factory=None):
+        print(f"cursor create name={name}, cursor_factory={cursor_factory}", flush=True)
         self.create_params.append(cursor_factory)
+        self.name = name
 
     def execute(self, qry, params=None):
         if params:
@@ -33,12 +39,28 @@ class MockCursor:
         else:
             self.queries.append(qry)
 
-        print(f"execute called queries=={self.queries}", flush=True)
+        print(f"execute called qry={qry}", flush=True)
 
     def fetchone(self):
-        for entry in self.fixture_data:
+        print(f'fetchone called qry={self._last_qry()}', flush=True)
+        for entry in self.fixture_data['fetchone']:
             if entry['qry'] in self._last_qry():
                 return entry.get('rows', [])
+
+        return None
+
+    def fetchmany(self, size=1):
+        last_qry = self._last_qry()
+        print(f'fetchmany called qry={last_qry}', flush=True)
+        for entry in self.fixture_data['fetchmany']:
+            if entry['qry'] in last_qry:
+                # avoid infinite loops, if a fetchmany has returned
+                # data, second time make it return None
+                if self.fetchmany_history.get(last_qry, 0) > 0:
+                    return None
+                else:
+                    self.fetchmany_history[last_qry] = 1
+                    return entry.get('rows', [])
 
         return None
 
@@ -56,7 +78,12 @@ class MockCursor:
 
 
 class MockDatabase:
-    def __init__(self, fixture_data=[]):
+    def __init__(self, fixture_data=None):
+        if fixture_data is None:
+            fixture_data = {
+                'fetchmany': [],
+                'fetchone': []
+            }
         self.mock_cursor = MockCursor()
         self.mock_cursor._store_fixture_data(fixture_data)
         self._init_counters()
@@ -72,8 +99,8 @@ class MockDatabase:
     def qry_history(self):
         return self.mock_cursor.queries
 
-    def cursor(self, cursor_factory=None):
-        self.mock_cursor.create(cursor_factory)
+    def cursor(self, name='default', cursor_factory=None):
+        self.mock_cursor.create(name, cursor_factory)
         return self.mock_cursor
 
     def commit(self):

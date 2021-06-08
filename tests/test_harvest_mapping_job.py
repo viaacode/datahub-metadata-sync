@@ -24,30 +24,36 @@ pytestmark = [pytest.mark.vcr(ignore_localhost=True)]
 
 
 def mapping_delta_fixture():
-    return [
-        {
-            'qry': 'SELECT count(*)',
-            'rows': [180]
-        },
-        {
-            'qry': 'SELECT max(datestamp)',
-            'rows': [datetime(2021, 5, 26, 23, 18, 22)]     # 1 last vkc entry
-            # 'rows': [datetime(2021, 5, 26, 23, 18, 12)]   # gives back 3 results
-        }
-    ]
+    return {
+        'fetchone': [
+            {
+                'qry': 'SELECT count(*)',
+                'rows': [180]
+            },
+            {
+                'qry': 'SELECT max(datestamp)',
+                'rows': [datetime(2021, 5, 26, 23, 18, 22)]     # 1 last vkc entry
+                # 'rows': [datetime(2021, 5, 26, 23, 18, 12)]   # gives back 3 results
+            }
+        ],
+        'fetchmany': []
+    }
 
 
 def mapping_full_fixture():
-    return [
-        {
-            'qry': 'SELECT count(*)',
-            'rows': [0]
-        },
-        {
-            'qry': 'SELECT max(datestamp)',
-            'rows': []  # real full sync returns no datestamp
-        }
-    ]
+    return {
+        'fetchone': [
+            {
+                'qry': 'SELECT count(*)',
+                'rows': [0]
+            },
+            {
+                'qry': 'SELECT max(datestamp)',
+                'rows': []  # real full sync returns no datestamp
+            }
+        ],
+        'fetchmany': []
+    }
 
 
 def insert_statement_fixture():
