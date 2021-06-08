@@ -40,14 +40,15 @@ class MockDatabase:
     def __init__(self, fixture_data=[]):
         self.mock_cursor = MockCursor()
         self.mock_cursor._store_fixture_data(fixture_data)
-
-    def reset_counters(self):
-        self.commit_count = 0
-        self.close_count = 0
+        self._init_counters()
 
     def set_fixtures(self, fixture_data):
         self.mock_cursor._store_fixture_data(fixture_data)
-        self.reset_counters()
+        self._init_counters()
+
+    def _init_counters(self):
+        self.commit_count = 0
+        self.close_count = 0
 
     def qry_history(self):
         return self.mock_cursor.queries

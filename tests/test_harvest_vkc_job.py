@@ -1,4 +1,4 @@
-import unittest
+import pytest
 from airflow.dags.task_services.harvest_vkc_job import harvest_vkc_job
 from datetime import datetime
 from mock_database import MockDatabase
@@ -14,8 +14,8 @@ def harvest_vkc_delta_fixture():
         },
         {
             'qry': 'SELECT max(datestamp)',
-            'rows': [datetime(2021, 5, 26, 23, 18, 12)]  # gives back 3 results
-            # [datetime(2021, 5, 26, 23, 18, 22)] # returns 1 last vkc entry
+            'rows': [datetime(2021, 5, 26, 23, 18, 22)]  # 1 last vkc entry
+            # 'rows': [datetime(2021, 5, 26, 23, 18, 12)]  # gives back 3 results
         }
     ]
 
@@ -28,30 +28,48 @@ def harvest_vkc_full_fixture():
         },
         {
             'qry': 'SELECT max(datestamp)',
-            'rows': [datetime(2021, 5, 26, 23, 18, 22)]  # 1 last vkc entry
-            # [] for full sync (but we will first do the vcr recording)
+            'rows': [] # real full sync returns no datestamp
+            # in our yaml file this is using from_filter = '2011-06-01T00:00:00Z'
+            # 'rows': [datetime(2021, 5, 26, 23, 18, 1)]  # gives back +-12 results
         }
     ]
 
 
-class TestHarvestVkcJob(unittest.TestCase):
-
-    @classmethod
-    def setUpClass(cls):
-        cls.testdb = MockDatabase()
-
-    def test_harvest_job_fullsync(self):
-        self.testdb.set_fixtures(harvest_vkc_full_fixture())
-        harvest_vkc_job(self.testdb, True)
-        assert 'TRUNCATE TABLE harvest_vkc' in self.testdb.qry_history()
-        assert self.testdb.close_count == 1
-        assert self.testdb.commit_count == 2 
-
-    def test_harvest_job_delta(self):
-        self.testdb.set_fixtures(harvest_vkc_delta_fixture())
-        harvest_vkc_job(self.testdb, False)
-        assert 'TRUNCATE TABLE harvest_vkc' not in self.testdb.qry_history()
-        assert self.testdb.close_count == 1
-        assert self.testdb.commit_count == 1
+pytestmark = [pytest.mark.vcr(ignore_localhost=True)]
 
 
+@pytest.fixture(scope="module")
+def vcr_config():
+    # important to add the filter_headers here to avoid exposing credentials
+    # in tests/cassettes!
+    return {
+        "record_mode": "once",
+        "decode_compressed_response": True,
+        "filter_headers": ["authorization"]
+    }
+
+
+@pytest.mark.vcr
+def test_harvest_job_fullsync():
+    # set up mocked database connection with fixture data
+    testdb = MockDatabase(harvest_vkc_full_fixture())
+
+    # run harvest_vkc_job full sync
+    harvest_vkc_job(testdb, True)
+
+    assert 'TRUNCATE TABLE harvest_vkc' in testdb.qry_history()
+    assert testdb.close_count == 1
+    assert testdb.commit_count == 2
+
+
+@pytest.mark.vcr
+def test_harvest_job_delta():
+    # set up mocked database connection with fixture data
+    testdb = MockDatabase(harvest_vkc_delta_fixture())
+
+    # run delta sync
+    harvest_vkc_job(testdb, False)
+
+    assert 'TRUNCATE TABLE harvest_vkc' not in testdb.qry_history()
+    assert testdb.close_count == 1
+    assert testdb.commit_count == 1

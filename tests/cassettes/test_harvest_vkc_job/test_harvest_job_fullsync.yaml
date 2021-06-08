@@ -1,0 +1,1474 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.25.1
+    method: GET
+    uri: http://datahub.vlaamsekunstcollectie.be/oai/?verb=ListRecords&from=2011-06-01T00%3A00%3A00Z&metadataPrefix=oai_lido
+  response:
+    body:
+      string: "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<OAI-PMH xmlns=\"http://www.openarchives.org/OAI/2.0/\"
+        xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.openarchives.org/OAI/2.0/
+        http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd\">\n  <responseDate>2021-06-08T14:28:49Z</responseDate>\n
+        \ <request verb=\"ListRecords\" from=\"2021-05-26T21:18:01Z\" metadataPrefix=\"oai_lido\">http://datahub.vlaamsekunstcollectie.be</request>\n
+        \ <ListRecords>\n    <record>\n      <header>\n        <identifier>oai:datahub.vlaamsekunstcollectie.be:(not
+        assigned)</identifier>\n        <datestamp>2021-05-26T21:18:22Z</datestamp>\n
+        \     </header>\n      <metadata>\n        <lido:lido xmlns:gml=\"http://www.opengis.net/gml\"
+        xmlns:lido=\"http://www.lido-schema.org\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n
+        \ <lido:lidoRecID lido:pref=\"alternate\" lido:type=\"purl\" lido:source=\"Koninklijk
+        Museum voor Schone Kunsten Antwerpen\" lido:label=\"dataPID\">(not assigned)</lido:lidoRecID>\n
+        \ <lido:lidoRecID lido:pref=\"preferred\" lido:type=\"urn\" lido:source=\"Vlaamse
+        Kunstcollectie - Arthub Flanders\" lido:label=\"dataPID\">oai:datahub.vlaamsekunstcollectie.be:(not
+        assigned)</lido:lidoRecID>\n  <lido:objectPublishedID lido:type=\"purl\" lido:source=\"Koninklijk
+        Museum voor Schone Kunsten Antwerpen\" lido:label=\"workPID\">(not assigned)</lido:objectPublishedID>\n
+        \ <lido:category>\n    <lido:conceptID lido:type=\"purl\" lido:source=\"cidoc-crm\">http://www.cidoc-crm.org/Entity/e22-man-made-object/version-6.1</lido:conceptID>\n
+        \   <lido:term>Man-Made Object</lido:term>\n  </lido:category>\n  <lido:descriptiveMetadata
+        xml:lang=\"nl\">\n    <lido:objectClassificationWrap>\n      <lido:objectWorkTypeWrap>\n
+        \       <lido:objectWorkType>\n          <lido:term/>\n        </lido:objectWorkType>\n
+        \     </lido:objectWorkTypeWrap>\n      <lido:classificationWrap>\n        <lido:classification
+        lido:type=\"object-category\">\n          <lido:conceptID lido:pref=\"preferred\"
+        lido:type=\"local\" lido:source=\"TMS\">12</lido:conceptID>\n          <lido:term
+        lido:pref=\"preferred\" xml:lang=\"nl\">schilderij</lido:term>\n        </lido:classification>\n
+        \     </lido:classificationWrap>\n    </lido:objectClassificationWrap>\n    <lido:objectIdentificationWrap>\n
+        \     <lido:titleWrap>\n        <lido:titleSet>\n          <lido:appellationValue
+        lido:pref=\"preferred\" xml:lang=\"en\">Head of a Man in Profile</lido:appellationValue>\n
+        \         <lido:sourceAppellation xml:lang=\"en\">56297</lido:sourceAppellation>\n
+        \       </lido:titleSet>\n      </lido:titleWrap>\n      <lido:repositoryWrap>\n
+        \       <lido:repositorySet>\n          <lido:repositoryName>\n            <lido:legalBodyID
+        lido:type=\"local\" lido:source=\"TMS\">15</lido:legalBodyID>\n            <lido:legalBodyName>\n
+        \             <lido:appellationValue>Tentoonstellingen</lido:appellationValue>\n
+        \           </lido:legalBodyName>\n          </lido:repositoryName>\n          <lido:workID
+        lido:type=\"object-number\">T2023.065-1</lido:workID>\n        </lido:repositorySet>\n
+        \     </lido:repositoryWrap>\n      <lido:objectMeasurementsWrap>\n        <lido:objectMeasurementsSet>\n
+        \         <lido:displayObjectMeasurements>49,1 \xD7 37,2 cm</lido:displayObjectMeasurements>\n
+        \         <lido:objectMeasurements>\n            <lido:measurementsSet>\n
+        \             <lido:measurementType>Hoogte</lido:measurementType>\n              <lido:measurementUnit>Centimeters</lido:measurementUnit>\n
+        \             <lido:measurementValue>49.1</lido:measurementValue>\n            </lido:measurementsSet>\n
+        \           <lido:extentMeasurements>Volledig</lido:extentMeasurements>\n
+        \         </lido:objectMeasurements>\n        </lido:objectMeasurementsSet>\n
+        \       <lido:objectMeasurementsSet>\n          <lido:displayObjectMeasurements>49,1
+        \xD7 37,2 cm</lido:displayObjectMeasurements>\n          <lido:objectMeasurements>\n
+        \           <lido:measurementsSet>\n              <lido:measurementType>Breedte</lido:measurementType>\n
+        \             <lido:measurementUnit>Centimeters</lido:measurementUnit>\n              <lido:measurementValue>37.2</lido:measurementValue>\n
+        \           </lido:measurementsSet>\n            <lido:extentMeasurements>Volledig</lido:extentMeasurements>\n
+        \         </lido:objectMeasurements>\n        </lido:objectMeasurementsSet>\n
+        \       <lido:objectMeasurementsSet>\n          <lido:displayObjectMeasurements>49,1
+        \xD7 37,2 cm</lido:displayObjectMeasurements>\n          <lido:objectMeasurements>\n
+        \           <lido:measurementsSet>\n              <lido:measurementType>Diepte</lido:measurementType>\n
+        \             <lido:measurementUnit>Centimeters</lido:measurementUnit>\n              <lido:measurementValue>0</lido:measurementValue>\n
+        \           </lido:measurementsSet>\n            <lido:extentMeasurements>Volledig</lido:extentMeasurements>\n
+        \         </lido:objectMeasurements>\n        </lido:objectMeasurementsSet>\n
+        \       <lido:objectMeasurementsSet>\n          <lido:displayObjectMeasurements>49,1
+        \xD7 37,2 cm</lido:displayObjectMeasurements>\n          <lido:objectMeasurements>\n
+        \           <lido:measurementsSet>\n              <lido:measurementType>Diameter</lido:measurementType>\n
+        \             <lido:measurementUnit>Centimeters</lido:measurementUnit>\n              <lido:measurementValue>0</lido:measurementValue>\n
+        \           </lido:measurementsSet>\n            <lido:extentMeasurements>Volledig</lido:extentMeasurements>\n
+        \         </lido:objectMeasurements>\n        </lido:objectMeasurementsSet>\n
+        \     </lido:objectMeasurementsWrap>\n    </lido:objectIdentificationWrap>\n
+        \   <lido:eventWrap>\n      <lido:eventSet>\n        <lido:event>\n          <lido:eventType>\n
+        \           <lido:term>production</lido:term>\n          </lido:eventType>\n
+        \         <lido:eventActor>\n            <lido:actorInRole>\n              <lido:actor>\n
+        \               <lido:actorID lido:type=\"local\" lido:source=\"TMS\">2469</lido:actorID>\n
+        \               <lido:actorID lido:type=\"purl\" lido:source=\"VIAF\">http://viaf.org/viaf/56647196</lido:actorID>\n
+        \               <lido:actorID lido:type=\"purl\" lido:source=\"RKD\">https://rkd.nl/explore/artists/68737</lido:actorID>\n
+        \               <lido:actorID lido:type=\"purl\" lido:source=\"Wikidata\">http://www.wikidata.org/wiki/Q5599</lido:actorID>\n
+        \               <lido:nameActorSet>\n                  <lido:appellationValue
+        lido:pref=\"preferred\">Peter Paul Rubens</lido:appellationValue>\n                  <lido:appellationValue
+        lido:pref=\"alternate\">Peter Paul Rubens</lido:appellationValue>\n                </lido:nameActorSet>\n
+        \               <lido:vitalDatesActor>\n                  <lido:earliestDate>1577</lido:earliestDate>\n
+        \                 <lido:latestDate>1640</lido:latestDate>\n                </lido:vitalDatesActor>\n
+        \             </lido:actor>\n              <lido:roleActor>\n                <lido:term>schilder</lido:term>\n
+        \             </lido:roleActor>\n            </lido:actorInRole>\n          </lido:eventActor>\n
+        \         <lido:periodName>\n            <lido:term xml:lang=\"nl\"/>\n          </lido:periodName>\n
+        \         <lido:eventMaterialsTech>\n            <lido:displayMaterialsTech>olieverf
+        op paneel</lido:displayMaterialsTech>\n          </lido:eventMaterialsTech>\n
+        \       </lido:event>\n      </lido:eventSet>\n    </lido:eventWrap>\n  </lido:descriptiveMetadata>\n
+        \ <lido:administrativeMetadata xml:lang=\"nl\">\n    <lido:rightsWorkWrap>\n
+        \     <lido:rightsWorkSet>\n        <lido:rightsType>\n          <lido:conceptID
+        lido:type=\"purl\" lido:source=\"Creative Commons\">https://creativecommons.org/publicdomain/zero/1.0/</lido:conceptID>\n
+        \         <lido:term>CC0</lido:term>\n        </lido:rightsType>\n        <lido:creditLine>CC0</lido:creditLine>\n
+        \     </lido:rightsWorkSet>\n    </lido:rightsWorkWrap>\n    <lido:recordWrap>\n
+        \     <lido:recordID lido:type=\"global\">(not assigned)</lido:recordID>\n
+        \     <lido:recordID lido:type=\"local\">23865</lido:recordID>\n      <lido:recordType>\n
+        \       <lido:conceptID lido:type=\"local\" lido:source=\"AAT\">http://vocab.getty.edu/aat/300133025</lido:conceptID>\n
+        \       <lido:term>Item</lido:term>\n      </lido:recordType>\n      <lido:recordSource>\n
+        \       <lido:legalBodyID lido:type=\"local\" lido:source=\"TMS\">15</lido:legalBodyID>\n
+        \       <lido:legalBodyName>\n          <lido:appellationValue>Tentoonstellingen</lido:appellationValue>\n
+        \       </lido:legalBodyName>\n        <lido:legalBodyWeblink>http://kmska.be</lido:legalBodyWeblink>\n
+        \     </lido:recordSource>\n    </lido:recordWrap>\n    <lido:resourceWrap>\n
+        \     <lido:resourceSet>\n        <lido:resourceID lido:type=\"purl\" lido:label=\"representationPID\">(not
+        assigned)</lido:resourceID>\n        <lido:resourceRepresentation>\n          <lido:linkResource>(not
+        assigned)</lido:linkResource>\n        </lido:resourceRepresentation>\n      </lido:resourceSet>\n
+        \   </lido:resourceWrap>\n  </lido:administrativeMetadata>\n</lido:lido>\n
+        \     </metadata>\n    </record>\n    <record>\n      <header>\n        <identifier>oai:datahub.vlaamsekunstcollectie.be:kmska.be:fvo6g7</identifier>\n
+        \       <datestamp>2021-05-26T21:18:01Z</datestamp>\n      </header>\n      <metadata>\n
+        \       <lido:lido xmlns:gml=\"http://www.opengis.net/gml\" xmlns:lido=\"http://www.lido-schema.org\"
+        xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n  <lido:lidoRecID lido:pref=\"alternate\"
+        lido:type=\"purl\" lido:source=\"Koninklijk Museum voor Schone Kunsten Antwerpen\"
+        lido:label=\"dataPID\">http://kmska.be/collection/work/data/fvo6g7</lido:lidoRecID>\n
+        \ <lido:lidoRecID lido:pref=\"preferred\" lido:type=\"urn\" lido:source=\"Vlaamse
+        Kunstcollectie - Arthub Flanders\" lido:label=\"dataPID\">oai:datahub.vlaamsekunstcollectie.be:kmska.be:fvo6g7</lido:lidoRecID>\n
+        \ <lido:objectPublishedID lido:type=\"purl\" lido:source=\"Koninklijk Museum
+        voor Schone Kunsten Antwerpen\" lido:label=\"workPID\">http://kmska.be/collection/work/id/fvo6g7</lido:objectPublishedID>\n
+        \ <lido:category>\n    <lido:conceptID lido:type=\"purl\" lido:source=\"cidoc-crm\">http://www.cidoc-crm.org/Entity/e22-man-made-object/version-6.1</lido:conceptID>\n
+        \   <lido:term>Man-Made Object</lido:term>\n  </lido:category>\n  <lido:descriptiveMetadata
+        xml:lang=\"nl\">\n    <lido:objectClassificationWrap>\n      <lido:objectWorkTypeWrap>\n
+        \       <lido:objectWorkType>\n          <lido:term/>\n        </lido:objectWorkType>\n
+        \     </lido:objectWorkTypeWrap>\n      <lido:classificationWrap>\n        <lido:classification
+        lido:type=\"object-category\">\n          <lido:conceptID lido:pref=\"preferred\"
+        lido:type=\"local\" lido:source=\"TMS\">25</lido:conceptID>\n          <lido:conceptID
+        lido:pref=\"alternate\" lido:type=\"purl\" lido:source=\"AAT\">http://vocab.getty.edu/aat/300027354</lido:conceptID>\n
+        \         <lido:term lido:pref=\"preferred\" xml:lang=\"nl\">schetsboek</lido:term>\n
+        \         <lido:term lido:pref=\"alternate\" xml:lang=\"nl\">schetsboeken</lido:term>\n
+        \       </lido:classification>\n      </lido:classificationWrap>\n    </lido:objectClassificationWrap>\n
+        \   <lido:objectIdentificationWrap>\n      <lido:titleWrap>\n        <lido:titleSet>\n
+        \         <lido:appellationValue lido:pref=\"preferred\" xml:lang=\"nl\">zonder
+        titel</lido:appellationValue>\n          <lido:sourceAppellation xml:lang=\"nl\">55948</lido:sourceAppellation>\n
+        \       </lido:titleSet>\n      </lido:titleWrap>\n      <lido:repositoryWrap>\n
+        \       <lido:repositorySet>\n          <lido:repositoryName>\n            <lido:legalBodyID
+        lido:type=\"local\" lido:source=\"TMS\">1</lido:legalBodyID>\n            <lido:legalBodyName>\n
+        \             <lido:appellationValue>Koninklijk Museum voor Schone Kunsten
+        Antwerpen</lido:appellationValue>\n            </lido:legalBodyName>\n          </lido:repositoryName>\n
+        \         <lido:workID lido:type=\"object-number\">4018/15r</lido:workID>\n
+        \       </lido:repositorySet>\n      </lido:repositoryWrap>\n      <lido:objectMeasurementsWrap>\n
+        \       <lido:objectMeasurementsSet>\n          <lido:displayObjectMeasurements>223
+        \xD7 142 \xD7 16 mm</lido:displayObjectMeasurements>\n          <lido:objectMeasurements>\n
+        \           <lido:measurementsSet>\n              <lido:measurementType>Hoogte</lido:measurementType>\n
+        \             <lido:measurementUnit>Millimeters</lido:measurementUnit>\n              <lido:measurementValue>22.3</lido:measurementValue>\n
+        \           </lido:measurementsSet>\n            <lido:extentMeasurements>Volledig</lido:extentMeasurements>\n
+        \         </lido:objectMeasurements>\n        </lido:objectMeasurementsSet>\n
+        \       <lido:objectMeasurementsSet>\n          <lido:displayObjectMeasurements>223
+        \xD7 184 \xD7 16 mm (223 \xD7 184 \xD7 16 mm)</lido:displayObjectMeasurements>\n
+        \         <lido:objectMeasurements>\n            <lido:measurementsSet>\n
+        \             <lido:measurementType>Hoogte</lido:measurementType>\n              <lido:measurementUnit>Millimeters</lido:measurementUnit>\n
+        \             <lido:measurementValue>22.3</lido:measurementValue>\n            </lido:measurementsSet>\n
+        \           <lido:extentMeasurements>Overige</lido:extentMeasurements>\n          </lido:objectMeasurements>\n
+        \       </lido:objectMeasurementsSet>\n        <lido:objectMeasurementsSet>\n
+        \         <lido:displayObjectMeasurements>223 \xD7 142 \xD7 16 mm</lido:displayObjectMeasurements>\n
+        \         <lido:objectMeasurements>\n            <lido:measurementsSet>\n
+        \             <lido:measurementType>Breedte</lido:measurementType>\n              <lido:measurementUnit>Millimeters</lido:measurementUnit>\n
+        \             <lido:measurementValue>14.2</lido:measurementValue>\n            </lido:measurementsSet>\n
+        \           <lido:extentMeasurements>Volledig</lido:extentMeasurements>\n
+        \         </lido:objectMeasurements>\n        </lido:objectMeasurementsSet>\n
+        \       <lido:objectMeasurementsSet>\n          <lido:displayObjectMeasurements>223
+        \xD7 184 \xD7 16 mm (223 \xD7 184 \xD7 16 mm)</lido:displayObjectMeasurements>\n
+        \         <lido:objectMeasurements>\n            <lido:measurementsSet>\n
+        \             <lido:measurementType>Breedte</lido:measurementType>\n              <lido:measurementUnit>Millimeters</lido:measurementUnit>\n
+        \             <lido:measurementValue>18.4</lido:measurementValue>\n            </lido:measurementsSet>\n
+        \           <lido:extentMeasurements>Overige</lido:extentMeasurements>\n          </lido:objectMeasurements>\n
+        \       </lido:objectMeasurementsSet>\n        <lido:objectMeasurementsSet>\n
+        \         <lido:displayObjectMeasurements>223 \xD7 142 \xD7 16 mm</lido:displayObjectMeasurements>\n
+        \         <lido:objectMeasurements>\n            <lido:measurementsSet>\n
+        \             <lido:measurementType>Diepte</lido:measurementType>\n              <lido:measurementUnit>Millimeters</lido:measurementUnit>\n
+        \             <lido:measurementValue>1.6</lido:measurementValue>\n            </lido:measurementsSet>\n
+        \           <lido:extentMeasurements>Volledig</lido:extentMeasurements>\n
+        \         </lido:objectMeasurements>\n        </lido:objectMeasurementsSet>\n
+        \       <lido:objectMeasurementsSet>\n          <lido:displayObjectMeasurements>223
+        \xD7 184 \xD7 16 mm (223 \xD7 184 \xD7 16 mm)</lido:displayObjectMeasurements>\n
+        \         <lido:objectMeasurements>\n            <lido:measurementsSet>\n
+        \             <lido:measurementType>Diepte</lido:measurementType>\n              <lido:measurementUnit>Millimeters</lido:measurementUnit>\n
+        \             <lido:measurementValue>1.6</lido:measurementValue>\n            </lido:measurementsSet>\n
+        \           <lido:extentMeasurements>Overige</lido:extentMeasurements>\n          </lido:objectMeasurements>\n
+        \       </lido:objectMeasurementsSet>\n        <lido:objectMeasurementsSet>\n
+        \         <lido:displayObjectMeasurements>223 \xD7 184 \xD7 16 mm (223 \xD7
+        184 \xD7 16 mm)</lido:displayObjectMeasurements>\n          <lido:objectMeasurements>\n
+        \           <lido:measurementsSet>\n              <lido:measurementType>Gewicht</lido:measurementType>\n
+        \             <lido:measurementUnit>Kilograms</lido:measurementUnit>\n              <lido:measurementValue>0</lido:measurementValue>\n
+        \           </lido:measurementsSet>\n            <lido:extentMeasurements>Overige</lido:extentMeasurements>\n
+        \         </lido:objectMeasurements>\n        </lido:objectMeasurementsSet>\n
+        \       <lido:objectMeasurementsSet>\n          <lido:displayObjectMeasurements>223
+        \xD7 142 \xD7 16 mm</lido:displayObjectMeasurements>\n          <lido:objectMeasurements>\n
+        \           <lido:measurementsSet>\n              <lido:measurementType>Diameter</lido:measurementType>\n
+        \             <lido:measurementUnit>Centimeters</lido:measurementUnit>\n              <lido:measurementValue>0</lido:measurementValue>\n
+        \           </lido:measurementsSet>\n            <lido:extentMeasurements>Volledig</lido:extentMeasurements>\n
+        \         </lido:objectMeasurements>\n        </lido:objectMeasurementsSet>\n
+        \     </lido:objectMeasurementsWrap>\n    </lido:objectIdentificationWrap>\n
+        \   <lido:eventWrap>\n      <lido:eventSet>\n        <lido:event>\n          <lido:eventType>\n
+        \           <lido:term>production</lido:term>\n          </lido:eventType>\n
+        \         <lido:eventActor>\n            <lido:actorInRole>\n              <lido:actor>\n
+        \               <lido:actorID lido:type=\"local\" lido:source=\"TMS\">2479</lido:actorID>\n
+        \               <lido:actorID lido:type=\"purl\" lido:source=\"VIAF\">http://viaf.org/viaf/45137149</lido:actorID>\n
+        \               <lido:actorID lido:type=\"purl\" lido:source=\"RKD\">https://rkd.nl/explore/artists/117650</lido:actorID>\n
+        \               <lido:actorID lido:type=\"purl\" lido:source=\"Wikidata\">http://www.wikidata.org/wiki/Q2180503</lido:actorID>\n
+        \               <lido:nameActorSet>\n                  <lido:appellationValue
+        lido:pref=\"preferred\">Jozef Van Ruyssevelt</lido:appellationValue>\n                  <lido:appellationValue
+        lido:pref=\"alternate\">Jozef Van Ruyssevelt</lido:appellationValue>\n                </lido:nameActorSet>\n
+        \               <lido:vitalDatesActor>\n                  <lido:earliestDate>1941</lido:earliestDate>\n
+        \                 <lido:latestDate>1985</lido:latestDate>\n                </lido:vitalDatesActor>\n
+        \             </lido:actor>\n              <lido:roleActor>\n                <lido:term>aquarellist</lido:term>\n
+        \             </lido:roleActor>\n            </lido:actorInRole>\n          </lido:eventActor>\n
+        \         <lido:periodName>\n            <lido:term xml:lang=\"nl\">20ste
+        eeuw</lido:term>\n          </lido:periodName>\n          <lido:eventMaterialsTech>\n
+        \           <lido:displayMaterialsTech>inkt op papier</lido:displayMaterialsTech>\n
+        \         </lido:eventMaterialsTech>\n        </lido:event>\n      </lido:eventSet>\n
+        \   </lido:eventWrap>\n    <lido:objectRelationWrap>\n      <lido:relatedWorksWrap>\n
+        \       <lido:relatedWorkSet>\n          <lido:relatedWork>\n            <lido:object>\n
+        \             <lido:objectID lido:type=\"local\" lido:source=\"TMS\">4018/1-15</lido:objectID>\n
+        \             <lido:objectID lido:type=\"oai\">oai:datahub.vlaamsekunstcollectie.be:kmska.be:fvo6g7</lido:objectID>\n
+        \           </lido:object>\n          </lido:relatedWork>\n          <lido:relatedWorkRelType>\n
+        \           <lido:conceptID lido:type=\"local\" lido:source=\"TMS\">7</lido:conceptID>\n
+        \           <lido:conceptID lido:pref=\"preferred\" lido:type=\"URI\">http://purl.org/dc/terms/relation</lido:conceptID>\n
+        \           <lido:term>onlosmakelijk verbonden</lido:term>\n            <lido:term
+        lido:pref=\"preferred\" xml:lang=\"en\">Relation</lido:term>\n          </lido:relatedWorkRelType>\n
+        \       </lido:relatedWorkSet>\n      </lido:relatedWorksWrap>\n    </lido:objectRelationWrap>\n
+        \ </lido:descriptiveMetadata>\n  <lido:administrativeMetadata xml:lang=\"nl\">\n
+        \   <lido:rightsWorkWrap>\n      <lido:rightsWorkSet>\n        <lido:creditLine>\xA9
+        SABAM Belgium</lido:creditLine>\n      </lido:rightsWorkSet>\n    </lido:rightsWorkWrap>\n
+        \   <lido:recordWrap>\n      <lido:recordID lido:type=\"global\">http://kmska.be/collection/work/data/fvo6g7</lido:recordID>\n
+        \     <lido:recordID lido:type=\"local\">23757</lido:recordID>\n      <lido:recordType>\n
+        \       <lido:conceptID lido:type=\"local\" lido:source=\"AAT\">http://vocab.getty.edu/aat/300133025</lido:conceptID>\n
+        \       <lido:term>Item</lido:term>\n      </lido:recordType>\n      <lido:recordSource>\n
+        \       <lido:legalBodyID lido:type=\"local\" lido:source=\"TMS\">1</lido:legalBodyID>\n
+        \       <lido:legalBodyName>\n          <lido:appellationValue>Koninklijk
+        Museum voor Schone Kunsten Antwerpen</lido:appellationValue>\n        </lido:legalBodyName>\n
+        \       <lido:legalBodyWeblink>http://kmska.be</lido:legalBodyWeblink>\n      </lido:recordSource>\n
+        \   </lido:recordWrap>\n    <lido:resourceWrap>\n      <lido:resourceSet>\n
+        \       <lido:resourceID lido:type=\"purl\" lido:label=\"representationPID\">http://kmska.be/collection/work/representation/fvo6g7</lido:resourceID>\n
+        \       <lido:resourceRepresentation>\n          <lido:linkResource>http://kmska.be/collection/work/representation/fvo6g7</lido:linkResource>\n
+        \       </lido:resourceRepresentation>\n      </lido:resourceSet>\n    </lido:resourceWrap>\n
+        \ </lido:administrativeMetadata>\n</lido:lido>\n      </metadata>\n    </record>\n
+        \   <record>\n      <header>\n        <identifier>oai:datahub.vlaamsekunstcollectie.be:kmska.be:cenl0h</identifier>\n
+        \       <datestamp>2021-05-26T21:18:08Z</datestamp>\n      </header>\n      <metadata>\n
+        \       <lido:lido xmlns:gml=\"http://www.opengis.net/gml\" xmlns:lido=\"http://www.lido-schema.org\"
+        xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n  <lido:lidoRecID lido:pref=\"alternate\"
+        lido:type=\"purl\" lido:source=\"Koninklijk Museum voor Schone Kunsten Antwerpen\"
+        lido:label=\"dataPID\">http://kmska.be/collection/work/data/cenl0h</lido:lidoRecID>\n
+        \ <lido:lidoRecID lido:pref=\"preferred\" lido:type=\"urn\" lido:source=\"Vlaamse
+        Kunstcollectie - Arthub Flanders\" lido:label=\"dataPID\">oai:datahub.vlaamsekunstcollectie.be:kmska.be:cenl0h</lido:lidoRecID>\n
+        \ <lido:objectPublishedID lido:type=\"purl\" lido:source=\"Koninklijk Museum
+        voor Schone Kunsten Antwerpen\" lido:label=\"workPID\">http://kmska.be/collection/work/id/cenl0h</lido:objectPublishedID>\n
+        \ <lido:category>\n    <lido:conceptID lido:type=\"purl\" lido:source=\"cidoc-crm\">http://www.cidoc-crm.org/Entity/e22-man-made-object/version-6.1</lido:conceptID>\n
+        \   <lido:term>Man-Made Object</lido:term>\n  </lido:category>\n  <lido:descriptiveMetadata
+        xml:lang=\"nl\">\n    <lido:objectClassificationWrap>\n      <lido:objectWorkTypeWrap>\n
+        \       <lido:objectWorkType>\n          <lido:term/>\n        </lido:objectWorkType>\n
+        \     </lido:objectWorkTypeWrap>\n      <lido:classificationWrap>\n        <lido:classification
+        lido:type=\"object-category\">\n          <lido:conceptID lido:pref=\"preferred\"
+        lido:type=\"local\" lido:source=\"TMS\">15</lido:conceptID>\n          <lido:conceptID
+        lido:pref=\"alternate\" lido:type=\"purl\" lido:source=\"AAT\">http://vocab.getty.edu/aat/300033973</lido:conceptID>\n
+        \         <lido:term lido:pref=\"preferred\" xml:lang=\"nl\">tekening</lido:term>\n
+        \         <lido:term lido:pref=\"alternate\" xml:lang=\"nl\">tekeningen</lido:term>\n
+        \       </lido:classification>\n      </lido:classificationWrap>\n    </lido:objectClassificationWrap>\n
+        \   <lido:objectIdentificationWrap>\n      <lido:titleWrap>\n        <lido:titleSet>\n
+        \         <lido:appellationValue lido:pref=\"preferred\" xml:lang=\"nl\">Suite
+        en bleu IV</lido:appellationValue>\n          <lido:appellationValue lido:pref=\"preferred\"
+        xml:lang=\"en\">Suite en bleu</lido:appellationValue>\n          <lido:sourceAppellation
+        xml:lang=\"nl\">56107</lido:sourceAppellation>\n          <lido:sourceAppellation
+        xml:lang=\"en\">56109</lido:sourceAppellation>\n        </lido:titleSet>\n
+        \     </lido:titleWrap>\n      <lido:repositoryWrap>\n        <lido:repositorySet>\n
+        \         <lido:repositoryName>\n            <lido:legalBodyID lido:type=\"local\"
+        lido:source=\"TMS\">1</lido:legalBodyID>\n            <lido:legalBodyName>\n
+        \             <lido:appellationValue>Koninklijk Museum voor Schone Kunsten
+        Antwerpen</lido:appellationValue>\n            </lido:legalBodyName>\n          </lido:repositoryName>\n
+        \         <lido:workID lido:type=\"object-number\">4025/4</lido:workID>\n
+        \       </lido:repositorySet>\n      </lido:repositoryWrap>\n      <lido:objectMeasurementsWrap>\n
+        \       <lido:objectMeasurementsSet>\n          <lido:displayObjectMeasurements>540
+        \xD7 375 mm</lido:displayObjectMeasurements>\n          <lido:objectMeasurements>\n
+        \           <lido:measurementsSet>\n              <lido:measurementType>Hoogte</lido:measurementType>\n
+        \             <lido:measurementUnit>Millimeters</lido:measurementUnit>\n              <lido:measurementValue>54</lido:measurementValue>\n
+        \           </lido:measurementsSet>\n            <lido:extentMeasurements>Volledig</lido:extentMeasurements>\n
+        \         </lido:objectMeasurements>\n        </lido:objectMeasurementsSet>\n
+        \       <lido:objectMeasurementsSet>\n          <lido:displayObjectMeasurements>540
+        \xD7 375 mm</lido:displayObjectMeasurements>\n          <lido:objectMeasurements>\n
+        \           <lido:measurementsSet>\n              <lido:measurementType>Breedte</lido:measurementType>\n
+        \             <lido:measurementUnit>Millimeters</lido:measurementUnit>\n              <lido:measurementValue>37.5</lido:measurementValue>\n
+        \           </lido:measurementsSet>\n            <lido:extentMeasurements>Volledig</lido:extentMeasurements>\n
+        \         </lido:objectMeasurements>\n        </lido:objectMeasurementsSet>\n
+        \       <lido:objectMeasurementsSet>\n          <lido:displayObjectMeasurements>540
+        \xD7 375 mm</lido:displayObjectMeasurements>\n          <lido:objectMeasurements>\n
+        \           <lido:measurementsSet>\n              <lido:measurementType>Diepte</lido:measurementType>\n
+        \             <lido:measurementUnit>Centimeters</lido:measurementUnit>\n              <lido:measurementValue>0</lido:measurementValue>\n
+        \           </lido:measurementsSet>\n            <lido:extentMeasurements>Volledig</lido:extentMeasurements>\n
+        \         </lido:objectMeasurements>\n        </lido:objectMeasurementsSet>\n
+        \       <lido:objectMeasurementsSet>\n          <lido:displayObjectMeasurements>540
+        \xD7 375 mm</lido:displayObjectMeasurements>\n          <lido:objectMeasurements>\n
+        \           <lido:measurementsSet>\n              <lido:measurementType>Diameter</lido:measurementType>\n
+        \             <lido:measurementUnit>Centimeters</lido:measurementUnit>\n              <lido:measurementValue>0</lido:measurementValue>\n
+        \           </lido:measurementsSet>\n            <lido:extentMeasurements>Volledig</lido:extentMeasurements>\n
+        \         </lido:objectMeasurements>\n        </lido:objectMeasurementsSet>\n
+        \     </lido:objectMeasurementsWrap>\n    </lido:objectIdentificationWrap>\n
+        \   <lido:eventWrap>\n      <lido:eventSet>\n        <lido:event>\n          <lido:eventType>\n
+        \           <lido:term>production</lido:term>\n          </lido:eventType>\n
+        \         <lido:eventActor>\n            <lido:actorInRole>\n              <lido:actor>\n
+        \               <lido:actorID lido:type=\"local\" lido:source=\"TMS\">2596</lido:actorID>\n
+        \               <lido:actorID lido:type=\"purl\" lido:source=\"VIAF\">http://viaf.org/viaf/109890866</lido:actorID>\n
+        \               <lido:actorID lido:type=\"purl\" lido:source=\"RKD\">https://rkd.nl/explore/artists/72098</lido:actorID>\n
+        \               <lido:actorID lido:type=\"purl\" lido:source=\"Wikidata\">http://www.wikidata.org/wiki/Q548860</lido:actorID>\n
+        \               <lido:nameActorSet>\n                  <lido:appellationValue
+        lido:pref=\"preferred\">Michel Seuphor</lido:appellationValue>\n                  <lido:appellationValue
+        lido:pref=\"alternate\">Michel Seuphor</lido:appellationValue>\n                </lido:nameActorSet>\n
+        \               <lido:vitalDatesActor>\n                  <lido:earliestDate>1901</lido:earliestDate>\n
+        \                 <lido:latestDate>1999</lido:latestDate>\n                </lido:vitalDatesActor>\n
+        \             </lido:actor>\n              <lido:roleActor>\n                <lido:term>tekenaar</lido:term>\n
+        \             </lido:roleActor>\n            </lido:actorInRole>\n          </lido:eventActor>\n
+        \         <lido:eventDate>\n            <lido:displayDate>1955</lido:displayDate>\n
+        \           <lido:date>\n              <lido:earliestDate>1955</lido:earliestDate>\n
+        \             <lido:latestDate>1955</lido:latestDate>\n            </lido:date>\n
+        \         </lido:eventDate>\n          <lido:periodName>\n            <lido:term
+        xml:lang=\"nl\">20ste eeuw</lido:term>\n          </lido:periodName>\n          <lido:eventMaterialsTech>\n
+        \           <lido:displayMaterialsTech>inkt  en collage op papier</lido:displayMaterialsTech>\n
+        \         </lido:eventMaterialsTech>\n        </lido:event>\n      </lido:eventSet>\n
+        \   </lido:eventWrap>\n    <lido:objectRelationWrap>\n      <lido:relatedWorksWrap>\n
+        \       <lido:relatedWorkSet>\n          <lido:relatedWork>\n            <lido:object>\n
+        \             <lido:objectID lido:type=\"local\" lido:source=\"TMS\">4025/1-4</lido:objectID>\n
+        \             <lido:objectID lido:type=\"oai\">oai:datahub.vlaamsekunstcollectie.be:kmska.be:cenl0h</lido:objectID>\n
+        \           </lido:object>\n          </lido:relatedWork>\n          <lido:relatedWorkRelType>\n
+        \           <lido:conceptID lido:type=\"local\" lido:source=\"TMS\">0</lido:conceptID>\n
+        \           <lido:conceptID lido:pref=\"preferred\" lido:type=\"URI\">http://purl.org/dc/terms/isPartOf</lido:conceptID>\n
+        \           <lido:term>deel van</lido:term>\n            <lido:term lido:pref=\"preferred\"
+        xml:lang=\"en\">Is Part Of</lido:term>\n          </lido:relatedWorkRelType>\n
+        \       </lido:relatedWorkSet>\n        <lido:relatedWorkSet>\n          <lido:relatedWork>\n
+        \           <lido:object>\n              <lido:objectID lido:type=\"local\"
+        lido:source=\"TMS\">4025/1-4</lido:objectID>\n              <lido:objectID
+        lido:type=\"oai\">oai:datahub.vlaamsekunstcollectie.be:kmska.be:cenl0h</lido:objectID>\n
+        \           </lido:object>\n          </lido:relatedWork>\n          <lido:relatedWorkRelType>\n
+        \           <lido:conceptID lido:type=\"local\" lido:source=\"TMS\">0</lido:conceptID>\n
+        \           <lido:conceptID lido:pref=\"preferred\" lido:type=\"URI\">http://purl.org/dc/terms/isPartOf</lido:conceptID>\n
+        \           <lido:term>deel van</lido:term>\n            <lido:term lido:pref=\"preferred\"
+        xml:lang=\"en\">Is Part Of</lido:term>\n          </lido:relatedWorkRelType>\n
+        \       </lido:relatedWorkSet>\n      </lido:relatedWorksWrap>\n    </lido:objectRelationWrap>\n
+        \ </lido:descriptiveMetadata>\n  <lido:administrativeMetadata xml:lang=\"nl\">\n
+        \   <lido:rightsWorkWrap>\n      <lido:rightsWorkSet>\n        <lido:creditLine>\xA9
+        SABAM Belgium</lido:creditLine>\n      </lido:rightsWorkSet>\n    </lido:rightsWorkWrap>\n
+        \   <lido:recordWrap>\n      <lido:recordID lido:type=\"global\">http://kmska.be/collection/work/data/cenl0h</lido:recordID>\n
+        \     <lido:recordID lido:type=\"local\">23789</lido:recordID>\n      <lido:recordType>\n
+        \       <lido:conceptID lido:type=\"local\" lido:source=\"AAT\">http://vocab.getty.edu/aat/300133025</lido:conceptID>\n
+        \       <lido:term>Item</lido:term>\n      </lido:recordType>\n      <lido:recordSource>\n
+        \       <lido:legalBodyID lido:type=\"local\" lido:source=\"TMS\">1</lido:legalBodyID>\n
+        \       <lido:legalBodyName>\n          <lido:appellationValue>Koninklijk
+        Museum voor Schone Kunsten Antwerpen</lido:appellationValue>\n        </lido:legalBodyName>\n
+        \       <lido:legalBodyWeblink>http://kmska.be</lido:legalBodyWeblink>\n      </lido:recordSource>\n
+        \   </lido:recordWrap>\n    <lido:resourceWrap>\n      <lido:resourceSet>\n
+        \       <lido:resourceID lido:type=\"purl\" lido:label=\"representationPID\">http://kmska.be/collection/work/representation/cenl0h</lido:resourceID>\n
+        \       <lido:resourceRepresentation>\n          <lido:linkResource>http://kmska.be/collection/work/representation/cenl0h</lido:linkResource>\n
+        \       </lido:resourceRepresentation>\n      </lido:resourceSet>\n    </lido:resourceWrap>\n
+        \ </lido:administrativeMetadata>\n</lido:lido>\n      </metadata>\n    </record>\n
+        \   <record>\n      <header>\n        <identifier>oai:datahub.vlaamsekunstcollectie.be:kmska.be:icxvyl</identifier>\n
+        \       <datestamp>2021-05-26T21:18:07Z</datestamp>\n      </header>\n      <metadata>\n
+        \       <lido:lido xmlns:gml=\"http://www.opengis.net/gml\" xmlns:lido=\"http://www.lido-schema.org\"
+        xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n  <lido:lidoRecID lido:pref=\"alternate\"
+        lido:type=\"purl\" lido:source=\"Koninklijk Museum voor Schone Kunsten Antwerpen\"
+        lido:label=\"dataPID\">http://kmska.be/collection/work/data/icxvyl</lido:lidoRecID>\n
+        \ <lido:lidoRecID lido:pref=\"preferred\" lido:type=\"urn\" lido:source=\"Vlaamse
+        Kunstcollectie - Arthub Flanders\" lido:label=\"dataPID\">oai:datahub.vlaamsekunstcollectie.be:kmska.be:icxvyl</lido:lidoRecID>\n
+        \ <lido:objectPublishedID lido:type=\"purl\" lido:source=\"Koninklijk Museum
+        voor Schone Kunsten Antwerpen\" lido:label=\"workPID\">http://kmska.be/collection/work/id/icxvyl</lido:objectPublishedID>\n
+        \ <lido:category>\n    <lido:conceptID lido:type=\"purl\" lido:source=\"cidoc-crm\">http://www.cidoc-crm.org/Entity/e22-man-made-object/version-6.1</lido:conceptID>\n
+        \   <lido:term>Man-Made Object</lido:term>\n  </lido:category>\n  <lido:descriptiveMetadata
+        xml:lang=\"nl\">\n    <lido:objectClassificationWrap>\n      <lido:objectWorkTypeWrap>\n
+        \       <lido:objectWorkType>\n          <lido:term/>\n        </lido:objectWorkType>\n
+        \     </lido:objectWorkTypeWrap>\n      <lido:classificationWrap>\n        <lido:classification
+        lido:type=\"object-category\">\n          <lido:conceptID lido:pref=\"preferred\"
+        lido:type=\"local\" lido:source=\"TMS\">15</lido:conceptID>\n          <lido:conceptID
+        lido:pref=\"alternate\" lido:type=\"purl\" lido:source=\"AAT\">http://vocab.getty.edu/aat/300033973</lido:conceptID>\n
+        \         <lido:term lido:pref=\"preferred\" xml:lang=\"nl\">tekening</lido:term>\n
+        \         <lido:term lido:pref=\"alternate\" xml:lang=\"nl\">tekeningen</lido:term>\n
+        \       </lido:classification>\n      </lido:classificationWrap>\n    </lido:objectClassificationWrap>\n
+        \   <lido:objectIdentificationWrap>\n      <lido:titleWrap>\n        <lido:titleSet>\n
+        \         <lido:appellationValue lido:pref=\"preferred\" xml:lang=\"nl\">L'enfance
+        du soleil</lido:appellationValue>\n          <lido:appellationValue lido:pref=\"preferred\"
+        xml:lang=\"en\">L'enfance du soleil</lido:appellationValue>\n          <lido:sourceAppellation
+        xml:lang=\"nl\">56083</lido:sourceAppellation>\n          <lido:sourceAppellation
+        xml:lang=\"en\">56085</lido:sourceAppellation>\n        </lido:titleSet>\n
+        \     </lido:titleWrap>\n      <lido:repositoryWrap>\n        <lido:repositorySet>\n
+        \         <lido:repositoryName>\n            <lido:legalBodyID lido:type=\"local\"
+        lido:source=\"TMS\">1</lido:legalBodyID>\n            <lido:legalBodyName>\n
+        \             <lido:appellationValue>Koninklijk Museum voor Schone Kunsten
+        Antwerpen</lido:appellationValue>\n            </lido:legalBodyName>\n          </lido:repositoryName>\n
+        \         <lido:workID lido:type=\"object-number\">4029/6</lido:workID>\n
+        \       </lido:repositorySet>\n      </lido:repositoryWrap>\n      <lido:objectMeasurementsWrap>\n
+        \       <lido:objectMeasurementsSet>\n          <lido:displayObjectMeasurements>670
+        \xD7 510 mm</lido:displayObjectMeasurements>\n          <lido:objectMeasurements>\n
+        \           <lido:measurementsSet>\n              <lido:measurementType>Hoogte</lido:measurementType>\n
+        \             <lido:measurementUnit>Millimeters</lido:measurementUnit>\n              <lido:measurementValue>67</lido:measurementValue>\n
+        \           </lido:measurementsSet>\n            <lido:extentMeasurements>Volledig</lido:extentMeasurements>\n
+        \         </lido:objectMeasurements>\n        </lido:objectMeasurementsSet>\n
+        \       <lido:objectMeasurementsSet>\n          <lido:displayObjectMeasurements>670
+        \xD7 510 mm</lido:displayObjectMeasurements>\n          <lido:objectMeasurements>\n
+        \           <lido:measurementsSet>\n              <lido:measurementType>Breedte</lido:measurementType>\n
+        \             <lido:measurementUnit>Millimeters</lido:measurementUnit>\n              <lido:measurementValue>51</lido:measurementValue>\n
+        \           </lido:measurementsSet>\n            <lido:extentMeasurements>Volledig</lido:extentMeasurements>\n
+        \         </lido:objectMeasurements>\n        </lido:objectMeasurementsSet>\n
+        \       <lido:objectMeasurementsSet>\n          <lido:displayObjectMeasurements>670
+        \xD7 510 mm</lido:displayObjectMeasurements>\n          <lido:objectMeasurements>\n
+        \           <lido:measurementsSet>\n              <lido:measurementType>Diepte</lido:measurementType>\n
+        \             <lido:measurementUnit>Centimeters</lido:measurementUnit>\n              <lido:measurementValue>0</lido:measurementValue>\n
+        \           </lido:measurementsSet>\n            <lido:extentMeasurements>Volledig</lido:extentMeasurements>\n
+        \         </lido:objectMeasurements>\n        </lido:objectMeasurementsSet>\n
+        \       <lido:objectMeasurementsSet>\n          <lido:displayObjectMeasurements>670
+        \xD7 510 mm</lido:displayObjectMeasurements>\n          <lido:objectMeasurements>\n
+        \           <lido:measurementsSet>\n              <lido:measurementType>Diameter</lido:measurementType>\n
+        \             <lido:measurementUnit>Centimeters</lido:measurementUnit>\n              <lido:measurementValue>0</lido:measurementValue>\n
+        \           </lido:measurementsSet>\n            <lido:extentMeasurements>Volledig</lido:extentMeasurements>\n
+        \         </lido:objectMeasurements>\n        </lido:objectMeasurementsSet>\n
+        \     </lido:objectMeasurementsWrap>\n    </lido:objectIdentificationWrap>\n
+        \   <lido:eventWrap>\n      <lido:eventSet>\n        <lido:event>\n          <lido:eventType>\n
+        \           <lido:term>production</lido:term>\n          </lido:eventType>\n
+        \         <lido:eventActor>\n            <lido:actorInRole>\n              <lido:actor>\n
+        \               <lido:actorID lido:type=\"local\" lido:source=\"TMS\">2596</lido:actorID>\n
+        \               <lido:actorID lido:type=\"purl\" lido:source=\"VIAF\">http://viaf.org/viaf/109890866</lido:actorID>\n
+        \               <lido:actorID lido:type=\"purl\" lido:source=\"RKD\">https://rkd.nl/explore/artists/72098</lido:actorID>\n
+        \               <lido:actorID lido:type=\"purl\" lido:source=\"Wikidata\">http://www.wikidata.org/wiki/Q548860</lido:actorID>\n
+        \               <lido:nameActorSet>\n                  <lido:appellationValue
+        lido:pref=\"preferred\">Michel Seuphor</lido:appellationValue>\n                  <lido:appellationValue
+        lido:pref=\"alternate\">Michel Seuphor</lido:appellationValue>\n                </lido:nameActorSet>\n
+        \               <lido:vitalDatesActor>\n                  <lido:earliestDate>1901</lido:earliestDate>\n
+        \                 <lido:latestDate>1999</lido:latestDate>\n                </lido:vitalDatesActor>\n
+        \             </lido:actor>\n              <lido:roleActor>\n                <lido:term>tekenaar</lido:term>\n
+        \             </lido:roleActor>\n            </lido:actorInRole>\n          </lido:eventActor>\n
+        \         <lido:eventDate>\n            <lido:displayDate>1959</lido:displayDate>\n
+        \           <lido:date>\n              <lido:earliestDate>1959</lido:earliestDate>\n
+        \             <lido:latestDate>1959</lido:latestDate>\n            </lido:date>\n
+        \         </lido:eventDate>\n          <lido:periodName>\n            <lido:term
+        xml:lang=\"nl\">20ste eeuw</lido:term>\n          </lido:periodName>\n          <lido:eventMaterialsTech>\n
+        \           <lido:displayMaterialsTech>inkt op papier</lido:displayMaterialsTech>\n
+        \         </lido:eventMaterialsTech>\n        </lido:event>\n      </lido:eventSet>\n
+        \   </lido:eventWrap>\n  </lido:descriptiveMetadata>\n  <lido:administrativeMetadata
+        xml:lang=\"nl\">\n    <lido:rightsWorkWrap>\n      <lido:rightsWorkSet>\n
+        \       <lido:creditLine>\xA9 SABAM Belgium</lido:creditLine>\n      </lido:rightsWorkSet>\n
+        \   </lido:rightsWorkWrap>\n    <lido:recordWrap>\n      <lido:recordID lido:type=\"global\">http://kmska.be/collection/work/data/icxvyl</lido:recordID>\n
+        \     <lido:recordID lido:type=\"local\">23785</lido:recordID>\n      <lido:recordType>\n
+        \       <lido:conceptID lido:type=\"local\" lido:source=\"AAT\">http://vocab.getty.edu/aat/300133025</lido:conceptID>\n
+        \       <lido:term>Item</lido:term>\n      </lido:recordType>\n      <lido:recordSource>\n
+        \       <lido:legalBodyID lido:type=\"local\" lido:source=\"TMS\">1</lido:legalBodyID>\n
+        \       <lido:legalBodyName>\n          <lido:appellationValue>Koninklijk
+        Museum voor Schone Kunsten Antwerpen</lido:appellationValue>\n        </lido:legalBodyName>\n
+        \       <lido:legalBodyWeblink>http://kmska.be</lido:legalBodyWeblink>\n      </lido:recordSource>\n
+        \   </lido:recordWrap>\n    <lido:resourceWrap>\n      <lido:resourceSet>\n
+        \       <lido:resourceID lido:type=\"purl\" lido:label=\"representationPID\">http://kmska.be/collection/work/representation/icxvyl</lido:resourceID>\n
+        \       <lido:resourceRepresentation>\n          <lido:linkResource>http://kmska.be/collection/work/representation/icxvyl</lido:linkResource>\n
+        \       </lido:resourceRepresentation>\n      </lido:resourceSet>\n    </lido:resourceWrap>\n
+        \ </lido:administrativeMetadata>\n</lido:lido>\n      </metadata>\n    </record>\n
+        \   <record>\n      <header>\n        <identifier>oai:datahub.vlaamsekunstcollectie.be:kmska.be:asv41x</identifier>\n
+        \       <datestamp>2021-05-26T21:18:12Z</datestamp>\n      </header>\n      <metadata>\n
+        \       <lido:lido xmlns:gml=\"http://www.opengis.net/gml\" xmlns:lido=\"http://www.lido-schema.org\"
+        xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n  <lido:lidoRecID lido:pref=\"alternate\"
+        lido:type=\"purl\" lido:source=\"Koninklijk Museum voor Schone Kunsten Antwerpen\"
+        lido:label=\"dataPID\">http://kmska.be/collection/work/data/asv41x</lido:lidoRecID>\n
+        \ <lido:lidoRecID lido:pref=\"preferred\" lido:type=\"urn\" lido:source=\"Vlaamse
+        Kunstcollectie - Arthub Flanders\" lido:label=\"dataPID\">oai:datahub.vlaamsekunstcollectie.be:kmska.be:asv41x</lido:lidoRecID>\n
+        \ <lido:objectPublishedID lido:type=\"purl\" lido:source=\"Koninklijk Museum
+        voor Schone Kunsten Antwerpen\" lido:label=\"workPID\">http://kmska.be/collection/work/id/asv41x</lido:objectPublishedID>\n
+        \ <lido:category>\n    <lido:conceptID lido:type=\"purl\" lido:source=\"cidoc-crm\">http://www.cidoc-crm.org/Entity/e22-man-made-object/version-6.1</lido:conceptID>\n
+        \   <lido:term>Man-Made Object</lido:term>\n  </lido:category>\n  <lido:descriptiveMetadata
+        xml:lang=\"nl\">\n    <lido:objectClassificationWrap>\n      <lido:objectWorkTypeWrap>\n
+        \       <lido:objectWorkType>\n          <lido:term/>\n        </lido:objectWorkType>\n
+        \     </lido:objectWorkTypeWrap>\n      <lido:classificationWrap>\n        <lido:classification
+        lido:type=\"object-category\">\n          <lido:conceptID lido:pref=\"preferred\"
+        lido:type=\"local\" lido:source=\"TMS\">15</lido:conceptID>\n          <lido:conceptID
+        lido:pref=\"alternate\" lido:type=\"purl\" lido:source=\"AAT\">http://vocab.getty.edu/aat/300033973</lido:conceptID>\n
+        \         <lido:term lido:pref=\"preferred\" xml:lang=\"nl\">tekening</lido:term>\n
+        \         <lido:term lido:pref=\"alternate\" xml:lang=\"nl\">tekeningen</lido:term>\n
+        \       </lido:classification>\n      </lido:classificationWrap>\n    </lido:objectClassificationWrap>\n
+        \   <lido:objectIdentificationWrap>\n      <lido:titleWrap>\n        <lido:titleSet>\n
+        \         <lido:appellationValue lido:pref=\"preferred\" xml:lang=\"nl\">Le
+        constructiviste \xE9gar\xE9</lido:appellationValue>\n          <lido:appellationValue
+        lido:pref=\"preferred\" xml:lang=\"en\">Le constructiviste \xE9gar\xE9</lido:appellationValue>\n
+        \         <lido:sourceAppellation xml:lang=\"nl\">56216</lido:sourceAppellation>\n
+        \         <lido:sourceAppellation xml:lang=\"en\">56218</lido:sourceAppellation>\n
+        \       </lido:titleSet>\n      </lido:titleWrap>\n      <lido:repositoryWrap>\n
+        \       <lido:repositorySet>\n          <lido:repositoryName>\n            <lido:legalBodyID
+        lido:type=\"local\" lido:source=\"TMS\">1</lido:legalBodyID>\n            <lido:legalBodyName>\n
+        \             <lido:appellationValue>Koninklijk Museum voor Schone Kunsten
+        Antwerpen</lido:appellationValue>\n            </lido:legalBodyName>\n          </lido:repositoryName>\n
+        \         <lido:workID lido:type=\"object-number\">4030/3</lido:workID>\n
+        \       </lido:repositorySet>\n      </lido:repositoryWrap>\n      <lido:objectMeasurementsWrap>\n
+        \       <lido:objectMeasurementsSet>\n          <lido:displayObjectMeasurements>670
+        \xD7 510 mm</lido:displayObjectMeasurements>\n          <lido:objectMeasurements>\n
+        \           <lido:measurementsSet>\n              <lido:measurementType>Hoogte</lido:measurementType>\n
+        \             <lido:measurementUnit>Millimeters</lido:measurementUnit>\n              <lido:measurementValue>67</lido:measurementValue>\n
+        \           </lido:measurementsSet>\n            <lido:extentMeasurements>Volledig</lido:extentMeasurements>\n
+        \         </lido:objectMeasurements>\n        </lido:objectMeasurementsSet>\n
+        \       <lido:objectMeasurementsSet>\n          <lido:displayObjectMeasurements>670
+        \xD7 510 mm</lido:displayObjectMeasurements>\n          <lido:objectMeasurements>\n
+        \           <lido:measurementsSet>\n              <lido:measurementType>Breedte</lido:measurementType>\n
+        \             <lido:measurementUnit>Millimeters</lido:measurementUnit>\n              <lido:measurementValue>51</lido:measurementValue>\n
+        \           </lido:measurementsSet>\n            <lido:extentMeasurements>Volledig</lido:extentMeasurements>\n
+        \         </lido:objectMeasurements>\n        </lido:objectMeasurementsSet>\n
+        \       <lido:objectMeasurementsSet>\n          <lido:displayObjectMeasurements>670
+        \xD7 510 mm</lido:displayObjectMeasurements>\n          <lido:objectMeasurements>\n
+        \           <lido:measurementsSet>\n              <lido:measurementType>Diepte</lido:measurementType>\n
+        \             <lido:measurementUnit>Centimeters</lido:measurementUnit>\n              <lido:measurementValue>0</lido:measurementValue>\n
+        \           </lido:measurementsSet>\n            <lido:extentMeasurements>Volledig</lido:extentMeasurements>\n
+        \         </lido:objectMeasurements>\n        </lido:objectMeasurementsSet>\n
+        \       <lido:objectMeasurementsSet>\n          <lido:displayObjectMeasurements>670
+        \xD7 510 mm</lido:displayObjectMeasurements>\n          <lido:objectMeasurements>\n
+        \           <lido:measurementsSet>\n              <lido:measurementType>Diameter</lido:measurementType>\n
+        \             <lido:measurementUnit>Centimeters</lido:measurementUnit>\n              <lido:measurementValue>0</lido:measurementValue>\n
+        \           </lido:measurementsSet>\n            <lido:extentMeasurements>Volledig</lido:extentMeasurements>\n
+        \         </lido:objectMeasurements>\n        </lido:objectMeasurementsSet>\n
+        \     </lido:objectMeasurementsWrap>\n    </lido:objectIdentificationWrap>\n
+        \   <lido:eventWrap>\n      <lido:eventSet>\n        <lido:event>\n          <lido:eventType>\n
+        \           <lido:term>production</lido:term>\n          </lido:eventType>\n
+        \         <lido:eventActor>\n            <lido:actorInRole>\n              <lido:actor>\n
+        \               <lido:actorID lido:type=\"local\" lido:source=\"TMS\">2596</lido:actorID>\n
+        \               <lido:actorID lido:type=\"purl\" lido:source=\"VIAF\">http://viaf.org/viaf/109890866</lido:actorID>\n
+        \               <lido:actorID lido:type=\"purl\" lido:source=\"RKD\">https://rkd.nl/explore/artists/72098</lido:actorID>\n
+        \               <lido:actorID lido:type=\"purl\" lido:source=\"Wikidata\">http://www.wikidata.org/wiki/Q548860</lido:actorID>\n
+        \               <lido:nameActorSet>\n                  <lido:appellationValue
+        lido:pref=\"preferred\">Michel Seuphor</lido:appellationValue>\n                  <lido:appellationValue
+        lido:pref=\"alternate\">Michel Seuphor</lido:appellationValue>\n                </lido:nameActorSet>\n
+        \               <lido:vitalDatesActor>\n                  <lido:earliestDate>1901</lido:earliestDate>\n
+        \                 <lido:latestDate>1999</lido:latestDate>\n                </lido:vitalDatesActor>\n
+        \             </lido:actor>\n              <lido:roleActor>\n                <lido:term>tekenaar</lido:term>\n
+        \             </lido:roleActor>\n            </lido:actorInRole>\n          </lido:eventActor>\n
+        \         <lido:eventDate>\n            <lido:displayDate>1962</lido:displayDate>\n
+        \           <lido:date>\n              <lido:earliestDate>1962</lido:earliestDate>\n
+        \             <lido:latestDate>1962</lido:latestDate>\n            </lido:date>\n
+        \         </lido:eventDate>\n          <lido:periodName>\n            <lido:term
+        xml:lang=\"nl\">20ste eeuw</lido:term>\n          </lido:periodName>\n          <lido:eventMaterialsTech>\n
+        \           <lido:displayMaterialsTech>inkt op papier</lido:displayMaterialsTech>\n
+        \         </lido:eventMaterialsTech>\n        </lido:event>\n      </lido:eventSet>\n
+        \   </lido:eventWrap>\n  </lido:descriptiveMetadata>\n  <lido:administrativeMetadata
+        xml:lang=\"nl\">\n    <lido:rightsWorkWrap>\n      <lido:rightsWorkSet>\n
+        \       <lido:creditLine>\xA9 SABAM Belgium</lido:creditLine>\n      </lido:rightsWorkSet>\n
+        \   </lido:rightsWorkWrap>\n    <lido:recordWrap>\n      <lido:recordID lido:type=\"global\">http://kmska.be/collection/work/data/asv41x</lido:recordID>\n
+        \     <lido:recordID lido:type=\"local\">23813</lido:recordID>\n      <lido:recordType>\n
+        \       <lido:conceptID lido:type=\"local\" lido:source=\"AAT\">http://vocab.getty.edu/aat/300133025</lido:conceptID>\n
+        \       <lido:term>Item</lido:term>\n      </lido:recordType>\n      <lido:recordSource>\n
+        \       <lido:legalBodyID lido:type=\"local\" lido:source=\"TMS\">1</lido:legalBodyID>\n
+        \       <lido:legalBodyName>\n          <lido:appellationValue>Koninklijk
+        Museum voor Schone Kunsten Antwerpen</lido:appellationValue>\n        </lido:legalBodyName>\n
+        \       <lido:legalBodyWeblink>http://kmska.be</lido:legalBodyWeblink>\n      </lido:recordSource>\n
+        \   </lido:recordWrap>\n    <lido:resourceWrap>\n      <lido:resourceSet>\n
+        \       <lido:resourceID lido:type=\"purl\" lido:label=\"representationPID\">http://kmska.be/collection/work/representation/asv41x</lido:resourceID>\n
+        \       <lido:resourceRepresentation>\n          <lido:linkResource>http://kmska.be/collection/work/representation/asv41x</lido:linkResource>\n
+        \       </lido:resourceRepresentation>\n      </lido:resourceSet>\n    </lido:resourceWrap>\n
+        \ </lido:administrativeMetadata>\n</lido:lido>\n      </metadata>\n    </record>\n
+        \   <record>\n      <header>\n        <identifier>oai:datahub.vlaamsekunstcollectie.be:kmska.be:vx5wq8</identifier>\n
+        \       <datestamp>2021-05-26T21:18:03Z</datestamp>\n      </header>\n      <metadata>\n
+        \       <lido:lido xmlns:gml=\"http://www.opengis.net/gml\" xmlns:lido=\"http://www.lido-schema.org\"
+        xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n  <lido:lidoRecID lido:pref=\"alternate\"
+        lido:type=\"purl\" lido:source=\"Koninklijk Museum voor Schone Kunsten Antwerpen\"
+        lido:label=\"dataPID\">http://kmska.be/collection/work/data/vx5wq8</lido:lidoRecID>\n
+        \ <lido:lidoRecID lido:pref=\"preferred\" lido:type=\"urn\" lido:source=\"Vlaamse
+        Kunstcollectie - Arthub Flanders\" lido:label=\"dataPID\">oai:datahub.vlaamsekunstcollectie.be:kmska.be:vx5wq8</lido:lidoRecID>\n
+        \ <lido:objectPublishedID lido:type=\"purl\" lido:source=\"Koninklijk Museum
+        voor Schone Kunsten Antwerpen\" lido:label=\"workPID\">http://kmska.be/collection/work/id/vx5wq8</lido:objectPublishedID>\n
+        \ <lido:category>\n    <lido:conceptID lido:type=\"purl\" lido:source=\"cidoc-crm\">http://www.cidoc-crm.org/Entity/e22-man-made-object/version-6.1</lido:conceptID>\n
+        \   <lido:term>Man-Made Object</lido:term>\n  </lido:category>\n  <lido:descriptiveMetadata
+        xml:lang=\"nl\">\n    <lido:objectClassificationWrap>\n      <lido:objectWorkTypeWrap>\n
+        \       <lido:objectWorkType>\n          <lido:term/>\n        </lido:objectWorkType>\n
+        \     </lido:objectWorkTypeWrap>\n      <lido:classificationWrap>\n        <lido:classification
+        lido:type=\"object-category\">\n          <lido:conceptID lido:pref=\"preferred\"
+        lido:type=\"local\" lido:source=\"TMS\">15</lido:conceptID>\n          <lido:conceptID
+        lido:pref=\"alternate\" lido:type=\"purl\" lido:source=\"AAT\">http://vocab.getty.edu/aat/300033973</lido:conceptID>\n
+        \         <lido:term lido:pref=\"preferred\" xml:lang=\"nl\">tekening</lido:term>\n
+        \         <lido:term lido:pref=\"alternate\" xml:lang=\"nl\">tekeningen</lido:term>\n
+        \       </lido:classification>\n      </lido:classificationWrap>\n    </lido:objectClassificationWrap>\n
+        \   <lido:objectIdentificationWrap>\n      <lido:titleWrap>\n        <lido:titleSet>\n
+        \         <lido:appellationValue lido:pref=\"preferred\" xml:lang=\"en\">Orphe
+        prajna paramita</lido:appellationValue>\n          <lido:sourceAppellation
+        xml:lang=\"en\">55983</lido:sourceAppellation>\n        </lido:titleSet>\n
+        \     </lido:titleWrap>\n      <lido:repositoryWrap>\n        <lido:repositorySet>\n
+        \         <lido:repositoryName>\n            <lido:legalBodyID lido:type=\"local\"
+        lido:source=\"TMS\">1</lido:legalBodyID>\n            <lido:legalBodyName>\n
+        \             <lido:appellationValue>Koninklijk Museum voor Schone Kunsten
+        Antwerpen</lido:appellationValue>\n            </lido:legalBodyName>\n          </lido:repositoryName>\n
+        \         <lido:workID lido:type=\"object-number\">4032/6</lido:workID>\n
+        \       </lido:repositorySet>\n      </lido:repositoryWrap>\n      <lido:objectMeasurementsWrap>\n
+        \       <lido:objectMeasurementsSet>\n          <lido:displayObjectMeasurements>1340
+        \xD7 1530 mm</lido:displayObjectMeasurements>\n          <lido:objectMeasurements>\n
+        \           <lido:measurementsSet>\n              <lido:measurementType>Hoogte</lido:measurementType>\n
+        \             <lido:measurementUnit>Millimeters</lido:measurementUnit>\n              <lido:measurementValue>134</lido:measurementValue>\n
+        \           </lido:measurementsSet>\n            <lido:extentMeasurements>Volledig</lido:extentMeasurements>\n
+        \         </lido:objectMeasurements>\n        </lido:objectMeasurementsSet>\n
+        \       <lido:objectMeasurementsSet>\n          <lido:displayObjectMeasurements>1340
+        \xD7 1530 mm</lido:displayObjectMeasurements>\n          <lido:objectMeasurements>\n
+        \           <lido:measurementsSet>\n              <lido:measurementType>Hoogte</lido:measurementType>\n
+        \             <lido:measurementUnit>Millimeters</lido:measurementUnit>\n              <lido:measurementValue>134</lido:measurementValue>\n
+        \           </lido:measurementsSet>\n            <lido:extentMeasurements>Volledig</lido:extentMeasurements>\n
+        \         </lido:objectMeasurements>\n        </lido:objectMeasurementsSet>\n
+        \       <lido:objectMeasurementsSet>\n          <lido:displayObjectMeasurements>670
+        \xD7 510 mm (670 \xD7 510 mm)</lido:displayObjectMeasurements>\n          <lido:objectMeasurements>\n
+        \           <lido:measurementsSet>\n              <lido:measurementType>Hoogte</lido:measurementType>\n
+        \             <lido:measurementUnit>Millimeters</lido:measurementUnit>\n              <lido:measurementValue>67</lido:measurementValue>\n
+        \           </lido:measurementsSet>\n            <lido:extentMeasurements>Onderdeel</lido:extentMeasurements>\n
+        \         </lido:objectMeasurements>\n        </lido:objectMeasurementsSet>\n
+        \       <lido:objectMeasurementsSet>\n          <lido:displayObjectMeasurements>670
+        \xD7 510 mm (670 \xD7 510 mm)</lido:displayObjectMeasurements>\n          <lido:objectMeasurements>\n
+        \           <lido:measurementsSet>\n              <lido:measurementType>Hoogte</lido:measurementType>\n
+        \             <lido:measurementUnit>Millimeters</lido:measurementUnit>\n              <lido:measurementValue>67</lido:measurementValue>\n
+        \           </lido:measurementsSet>\n            <lido:extentMeasurements>Onderdeel</lido:extentMeasurements>\n
+        \         </lido:objectMeasurements>\n        </lido:objectMeasurementsSet>\n
+        \       <lido:objectMeasurementsSet>\n          <lido:displayObjectMeasurements>1340
+        \xD7 1530 mm</lido:displayObjectMeasurements>\n          <lido:objectMeasurements>\n
+        \           <lido:measurementsSet>\n              <lido:measurementType>Breedte</lido:measurementType>\n
+        \             <lido:measurementUnit>Millimeters</lido:measurementUnit>\n              <lido:measurementValue>153</lido:measurementValue>\n
+        \           </lido:measurementsSet>\n            <lido:extentMeasurements>Volledig</lido:extentMeasurements>\n
+        \         </lido:objectMeasurements>\n        </lido:objectMeasurementsSet>\n
+        \       <lido:objectMeasurementsSet>\n          <lido:displayObjectMeasurements>1340
+        \xD7 1530 mm</lido:displayObjectMeasurements>\n          <lido:objectMeasurements>\n
+        \           <lido:measurementsSet>\n              <lido:measurementType>Breedte</lido:measurementType>\n
+        \             <lido:measurementUnit>Millimeters</lido:measurementUnit>\n              <lido:measurementValue>153</lido:measurementValue>\n
+        \           </lido:measurementsSet>\n            <lido:extentMeasurements>Volledig</lido:extentMeasurements>\n
+        \         </lido:objectMeasurements>\n        </lido:objectMeasurementsSet>\n
+        \       <lido:objectMeasurementsSet>\n          <lido:displayObjectMeasurements>670
+        \xD7 510 mm (670 \xD7 510 mm)</lido:displayObjectMeasurements>\n          <lido:objectMeasurements>\n
+        \           <lido:measurementsSet>\n              <lido:measurementType>Breedte</lido:measurementType>\n
+        \             <lido:measurementUnit>Millimeters</lido:measurementUnit>\n              <lido:measurementValue>51</lido:measurementValue>\n
+        \           </lido:measurementsSet>\n            <lido:extentMeasurements>Onderdeel</lido:extentMeasurements>\n
+        \         </lido:objectMeasurements>\n        </lido:objectMeasurementsSet>\n
+        \       <lido:objectMeasurementsSet>\n          <lido:displayObjectMeasurements>670
+        \xD7 510 mm (670 \xD7 510 mm)</lido:displayObjectMeasurements>\n          <lido:objectMeasurements>\n
+        \           <lido:measurementsSet>\n              <lido:measurementType>Breedte</lido:measurementType>\n
+        \             <lido:measurementUnit>Millimeters</lido:measurementUnit>\n              <lido:measurementValue>51</lido:measurementValue>\n
+        \           </lido:measurementsSet>\n            <lido:extentMeasurements>Onderdeel</lido:extentMeasurements>\n
+        \         </lido:objectMeasurements>\n        </lido:objectMeasurementsSet>\n
+        \       <lido:objectMeasurementsSet>\n          <lido:displayObjectMeasurements>1340
+        \xD7 1530 mm</lido:displayObjectMeasurements>\n          <lido:objectMeasurements>\n
+        \           <lido:measurementsSet>\n              <lido:measurementType>Diepte</lido:measurementType>\n
+        \             <lido:measurementUnit>Centimeters</lido:measurementUnit>\n              <lido:measurementValue>0</lido:measurementValue>\n
+        \           </lido:measurementsSet>\n            <lido:extentMeasurements>Volledig</lido:extentMeasurements>\n
+        \         </lido:objectMeasurements>\n        </lido:objectMeasurementsSet>\n
+        \       <lido:objectMeasurementsSet>\n          <lido:displayObjectMeasurements>1340
+        \xD7 1530 mm</lido:displayObjectMeasurements>\n          <lido:objectMeasurements>\n
+        \           <lido:measurementsSet>\n              <lido:measurementType>Diepte</lido:measurementType>\n
+        \             <lido:measurementUnit>Centimeters</lido:measurementUnit>\n              <lido:measurementValue>0</lido:measurementValue>\n
+        \           </lido:measurementsSet>\n            <lido:extentMeasurements>Volledig</lido:extentMeasurements>\n
+        \         </lido:objectMeasurements>\n        </lido:objectMeasurementsSet>\n
+        \       <lido:objectMeasurementsSet>\n          <lido:displayObjectMeasurements>670
+        \xD7 510 mm (670 \xD7 510 mm)</lido:displayObjectMeasurements>\n          <lido:objectMeasurements>\n
+        \           <lido:measurementsSet>\n              <lido:measurementType>Diepte</lido:measurementType>\n
+        \             <lido:measurementUnit>Centimeters</lido:measurementUnit>\n              <lido:measurementValue>0</lido:measurementValue>\n
+        \           </lido:measurementsSet>\n            <lido:extentMeasurements>Onderdeel</lido:extentMeasurements>\n
+        \         </lido:objectMeasurements>\n        </lido:objectMeasurementsSet>\n
+        \       <lido:objectMeasurementsSet>\n          <lido:displayObjectMeasurements>670
+        \xD7 510 mm (670 \xD7 510 mm)</lido:displayObjectMeasurements>\n          <lido:objectMeasurements>\n
+        \           <lido:measurementsSet>\n              <lido:measurementType>Diepte</lido:measurementType>\n
+        \             <lido:measurementUnit>Centimeters</lido:measurementUnit>\n              <lido:measurementValue>0</lido:measurementValue>\n
+        \           </lido:measurementsSet>\n            <lido:extentMeasurements>Onderdeel</lido:extentMeasurements>\n
+        \         </lido:objectMeasurements>\n        </lido:objectMeasurementsSet>\n
+        \       <lido:objectMeasurementsSet>\n          <lido:displayObjectMeasurements>1340
+        \xD7 1530 mm</lido:displayObjectMeasurements>\n          <lido:objectMeasurements>\n
+        \           <lido:measurementsSet>\n              <lido:measurementType>Diameter</lido:measurementType>\n
+        \             <lido:measurementUnit>Centimeters</lido:measurementUnit>\n              <lido:measurementValue>0</lido:measurementValue>\n
+        \           </lido:measurementsSet>\n            <lido:extentMeasurements>Volledig</lido:extentMeasurements>\n
+        \         </lido:objectMeasurements>\n        </lido:objectMeasurementsSet>\n
+        \       <lido:objectMeasurementsSet>\n          <lido:displayObjectMeasurements>1340
+        \xD7 1530 mm</lido:displayObjectMeasurements>\n          <lido:objectMeasurements>\n
+        \           <lido:measurementsSet>\n              <lido:measurementType>Diameter</lido:measurementType>\n
+        \             <lido:measurementUnit>Centimeters</lido:measurementUnit>\n              <lido:measurementValue>0</lido:measurementValue>\n
+        \           </lido:measurementsSet>\n            <lido:extentMeasurements>Volledig</lido:extentMeasurements>\n
+        \         </lido:objectMeasurements>\n        </lido:objectMeasurementsSet>\n
+        \       <lido:objectMeasurementsSet>\n          <lido:displayObjectMeasurements>670
+        \xD7 510 mm (670 \xD7 510 mm)</lido:displayObjectMeasurements>\n          <lido:objectMeasurements>\n
+        \           <lido:measurementsSet>\n              <lido:measurementType>Diameter</lido:measurementType>\n
+        \             <lido:measurementUnit>Centimeters</lido:measurementUnit>\n              <lido:measurementValue>0</lido:measurementValue>\n
+        \           </lido:measurementsSet>\n            <lido:extentMeasurements>Onderdeel</lido:extentMeasurements>\n
+        \         </lido:objectMeasurements>\n        </lido:objectMeasurementsSet>\n
+        \       <lido:objectMeasurementsSet>\n          <lido:displayObjectMeasurements>670
+        \xD7 510 mm (670 \xD7 510 mm)</lido:displayObjectMeasurements>\n          <lido:objectMeasurements>\n
+        \           <lido:measurementsSet>\n              <lido:measurementType>Diameter</lido:measurementType>\n
+        \             <lido:measurementUnit>Centimeters</lido:measurementUnit>\n              <lido:measurementValue>0</lido:measurementValue>\n
+        \           </lido:measurementsSet>\n            <lido:extentMeasurements>Onderdeel</lido:extentMeasurements>\n
+        \         </lido:objectMeasurements>\n        </lido:objectMeasurementsSet>\n
+        \     </lido:objectMeasurementsWrap>\n    </lido:objectIdentificationWrap>\n
+        \   <lido:eventWrap>\n      <lido:eventSet>\n        <lido:event>\n          <lido:eventType>\n
+        \           <lido:term>production</lido:term>\n          </lido:eventType>\n
+        \         <lido:eventActor>\n            <lido:actorInRole>\n              <lido:actor>\n
+        \               <lido:actorID lido:type=\"local\" lido:source=\"TMS\">2596</lido:actorID>\n
+        \               <lido:actorID lido:type=\"purl\" lido:source=\"VIAF\">http://viaf.org/viaf/109890866</lido:actorID>\n
+        \               <lido:actorID lido:type=\"purl\" lido:source=\"RKD\">https://rkd.nl/explore/artists/72098</lido:actorID>\n
+        \               <lido:actorID lido:type=\"purl\" lido:source=\"Wikidata\">http://www.wikidata.org/wiki/Q548860</lido:actorID>\n
+        \               <lido:nameActorSet>\n                  <lido:appellationValue
+        lido:pref=\"preferred\">Michel Seuphor</lido:appellationValue>\n                  <lido:appellationValue
+        lido:pref=\"alternate\">Michel Seuphor</lido:appellationValue>\n                </lido:nameActorSet>\n
+        \               <lido:vitalDatesActor>\n                  <lido:earliestDate>1901</lido:earliestDate>\n
+        \                 <lido:latestDate>1999</lido:latestDate>\n                </lido:vitalDatesActor>\n
+        \             </lido:actor>\n              <lido:roleActor>\n                <lido:term>tekenaar</lido:term>\n
+        \             </lido:roleActor>\n            </lido:actorInRole>\n          </lido:eventActor>\n
+        \         <lido:eventDate>\n            <lido:displayDate>1964</lido:displayDate>\n
+        \           <lido:date>\n              <lido:earliestDate>1964</lido:earliestDate>\n
+        \             <lido:latestDate>1964</lido:latestDate>\n            </lido:date>\n
+        \         </lido:eventDate>\n          <lido:periodName>\n            <lido:term
+        xml:lang=\"nl\">20ste eeuw</lido:term>\n          </lido:periodName>\n          <lido:eventMaterialsTech>\n
+        \           <lido:displayMaterialsTech>inkt op papier</lido:displayMaterialsTech>\n
+        \         </lido:eventMaterialsTech>\n        </lido:event>\n      </lido:eventSet>\n
+        \   </lido:eventWrap>\n    <lido:objectRelationWrap>\n      <lido:relatedWorksWrap>\n
+        \       <lido:relatedWorkSet>\n          <lido:relatedWork>\n            <lido:object>\n
+        \             <lido:objectID lido:type=\"local\" lido:source=\"TMS\">4032/1-6</lido:objectID>\n
+        \             <lido:objectID lido:type=\"oai\">oai:datahub.vlaamsekunstcollectie.be:kmska.be:vx5wq8</lido:objectID>\n
+        \           </lido:object>\n          </lido:relatedWork>\n          <lido:relatedWorkRelType>\n
+        \           <lido:conceptID lido:type=\"local\" lido:source=\"TMS\">0</lido:conceptID>\n
+        \           <lido:conceptID lido:pref=\"preferred\" lido:type=\"URI\">http://purl.org/dc/terms/isPartOf</lido:conceptID>\n
+        \           <lido:term>deel van</lido:term>\n            <lido:term lido:pref=\"preferred\"
+        xml:lang=\"en\">Is Part Of</lido:term>\n          </lido:relatedWorkRelType>\n
+        \       </lido:relatedWorkSet>\n        <lido:relatedWorkSet>\n          <lido:relatedWork>\n
+        \           <lido:object>\n              <lido:objectID lido:type=\"local\"
+        lido:source=\"TMS\">4032/1-6</lido:objectID>\n              <lido:objectID
+        lido:type=\"oai\">oai:datahub.vlaamsekunstcollectie.be:kmska.be:vx5wq8</lido:objectID>\n
+        \           </lido:object>\n          </lido:relatedWork>\n          <lido:relatedWorkRelType>\n
+        \           <lido:conceptID lido:type=\"local\" lido:source=\"TMS\">0</lido:conceptID>\n
+        \           <lido:conceptID lido:pref=\"preferred\" lido:type=\"URI\">http://purl.org/dc/terms/isPartOf</lido:conceptID>\n
+        \           <lido:term>deel van</lido:term>\n            <lido:term lido:pref=\"preferred\"
+        xml:lang=\"en\">Is Part Of</lido:term>\n          </lido:relatedWorkRelType>\n
+        \       </lido:relatedWorkSet>\n      </lido:relatedWorksWrap>\n    </lido:objectRelationWrap>\n
+        \ </lido:descriptiveMetadata>\n  <lido:administrativeMetadata xml:lang=\"nl\">\n
+        \   <lido:rightsWorkWrap>\n      <lido:rightsWorkSet>\n        <lido:creditLine>\xA9
+        SABAM Belgium</lido:creditLine>\n      </lido:rightsWorkSet>\n    </lido:rightsWorkWrap>\n
+        \   <lido:recordWrap>\n      <lido:recordID lido:type=\"global\">http://kmska.be/collection/work/data/vx5wq8</lido:recordID>\n
+        \     <lido:recordID lido:type=\"local\">23767</lido:recordID>\n      <lido:recordType>\n
+        \       <lido:conceptID lido:type=\"local\" lido:source=\"AAT\">http://vocab.getty.edu/aat/300133025</lido:conceptID>\n
+        \       <lido:term>Item</lido:term>\n      </lido:recordType>\n      <lido:recordSource>\n
+        \       <lido:legalBodyID lido:type=\"local\" lido:source=\"TMS\">1</lido:legalBodyID>\n
+        \       <lido:legalBodyName>\n          <lido:appellationValue>Koninklijk
+        Museum voor Schone Kunsten Antwerpen</lido:appellationValue>\n        </lido:legalBodyName>\n
+        \       <lido:legalBodyWeblink>http://kmska.be</lido:legalBodyWeblink>\n      </lido:recordSource>\n
+        \   </lido:recordWrap>\n    <lido:resourceWrap>\n      <lido:resourceSet>\n
+        \       <lido:resourceID lido:type=\"purl\" lido:label=\"representationPID\">http://kmska.be/collection/work/representation/vx5wq8</lido:resourceID>\n
+        \       <lido:resourceRepresentation>\n          <lido:linkResource>http://kmska.be/collection/work/representation/vx5wq8</lido:linkResource>\n
+        \       </lido:resourceRepresentation>\n      </lido:resourceSet>\n    </lido:resourceWrap>\n
+        \ </lido:administrativeMetadata>\n</lido:lido>\n      </metadata>\n    </record>\n
+        \   <record>\n      <header>\n        <identifier>oai:datahub.vlaamsekunstcollectie.be:kmska.be:w8h8eb</identifier>\n
+        \       <datestamp>2021-05-26T21:18:06Z</datestamp>\n      </header>\n      <metadata>\n
+        \       <lido:lido xmlns:gml=\"http://www.opengis.net/gml\" xmlns:lido=\"http://www.lido-schema.org\"
+        xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n  <lido:lidoRecID lido:pref=\"alternate\"
+        lido:type=\"purl\" lido:source=\"Koninklijk Museum voor Schone Kunsten Antwerpen\"
+        lido:label=\"dataPID\">http://kmska.be/collection/work/data/w8h8eb</lido:lidoRecID>\n
+        \ <lido:lidoRecID lido:pref=\"preferred\" lido:type=\"urn\" lido:source=\"Vlaamse
+        Kunstcollectie - Arthub Flanders\" lido:label=\"dataPID\">oai:datahub.vlaamsekunstcollectie.be:kmska.be:w8h8eb</lido:lidoRecID>\n
+        \ <lido:objectPublishedID lido:type=\"purl\" lido:source=\"Koninklijk Museum
+        voor Schone Kunsten Antwerpen\" lido:label=\"workPID\">http://kmska.be/collection/work/id/w8h8eb</lido:objectPublishedID>\n
+        \ <lido:category>\n    <lido:conceptID lido:type=\"purl\" lido:source=\"cidoc-crm\">http://www.cidoc-crm.org/Entity/e22-man-made-object/version-6.1</lido:conceptID>\n
+        \   <lido:term>Man-Made Object</lido:term>\n  </lido:category>\n  <lido:descriptiveMetadata
+        xml:lang=\"nl\">\n    <lido:objectClassificationWrap>\n      <lido:objectWorkTypeWrap>\n
+        \       <lido:objectWorkType>\n          <lido:term/>\n        </lido:objectWorkType>\n
+        \     </lido:objectWorkTypeWrap>\n      <lido:classificationWrap>\n        <lido:classification
+        lido:type=\"object-category\">\n          <lido:conceptID lido:pref=\"preferred\"
+        lido:type=\"local\" lido:source=\"TMS\">15</lido:conceptID>\n          <lido:conceptID
+        lido:pref=\"alternate\" lido:type=\"purl\" lido:source=\"AAT\">http://vocab.getty.edu/aat/300033973</lido:conceptID>\n
+        \         <lido:term lido:pref=\"preferred\" xml:lang=\"nl\">tekening</lido:term>\n
+        \         <lido:term lido:pref=\"alternate\" xml:lang=\"nl\">tekeningen</lido:term>\n
+        \       </lido:classification>\n      </lido:classificationWrap>\n    </lido:objectClassificationWrap>\n
+        \   <lido:objectIdentificationWrap>\n      <lido:titleWrap>\n        <lido:titleSet>\n
+        \         <lido:appellationValue lido:pref=\"preferred\" xml:lang=\"nl\">Divertissement
+        en dentelle</lido:appellationValue>\n          <lido:appellationValue lido:pref=\"preferred\"
+        xml:lang=\"en\">Divertissement en dentelle</lido:appellationValue>\n          <lido:sourceAppellation
+        xml:lang=\"nl\">56047</lido:sourceAppellation>\n          <lido:sourceAppellation
+        xml:lang=\"en\">56049</lido:sourceAppellation>\n        </lido:titleSet>\n
+        \     </lido:titleWrap>\n      <lido:repositoryWrap>\n        <lido:repositorySet>\n
+        \         <lido:repositoryName>\n            <lido:legalBodyID lido:type=\"local\"
+        lido:source=\"TMS\">1</lido:legalBodyID>\n            <lido:legalBodyName>\n
+        \             <lido:appellationValue>Koninklijk Museum voor Schone Kunsten
+        Antwerpen</lido:appellationValue>\n            </lido:legalBodyName>\n          </lido:repositoryName>\n
+        \       </lido:repositorySet>\n      </lido:repositoryWrap>\n      <lido:objectMeasurementsWrap>\n
+        \       <lido:objectMeasurementsSet>\n          <lido:displayObjectMeasurements>670
+        \xD7 506 mm</lido:displayObjectMeasurements>\n          <lido:objectMeasurements>\n
+        \           <lido:measurementsSet>\n              <lido:measurementType>Hoogte</lido:measurementType>\n
+        \             <lido:measurementUnit>Millimeters</lido:measurementUnit>\n              <lido:measurementValue>67</lido:measurementValue>\n
+        \           </lido:measurementsSet>\n            <lido:extentMeasurements>Volledig</lido:extentMeasurements>\n
+        \         </lido:objectMeasurements>\n        </lido:objectMeasurementsSet>\n
+        \       <lido:objectMeasurementsSet>\n          <lido:displayObjectMeasurements>670
+        \xD7 506 mm</lido:displayObjectMeasurements>\n          <lido:objectMeasurements>\n
+        \           <lido:measurementsSet>\n              <lido:measurementType>Breedte</lido:measurementType>\n
+        \             <lido:measurementUnit>Millimeters</lido:measurementUnit>\n              <lido:measurementValue>50.6</lido:measurementValue>\n
+        \           </lido:measurementsSet>\n            <lido:extentMeasurements>Volledig</lido:extentMeasurements>\n
+        \         </lido:objectMeasurements>\n        </lido:objectMeasurementsSet>\n
+        \       <lido:objectMeasurementsSet>\n          <lido:displayObjectMeasurements>670
+        \xD7 506 mm</lido:displayObjectMeasurements>\n          <lido:objectMeasurements>\n
+        \           <lido:measurementsSet>\n              <lido:measurementType>Diepte</lido:measurementType>\n
+        \             <lido:measurementUnit>Centimeters</lido:measurementUnit>\n              <lido:measurementValue>0</lido:measurementValue>\n
+        \           </lido:measurementsSet>\n            <lido:extentMeasurements>Volledig</lido:extentMeasurements>\n
+        \         </lido:objectMeasurements>\n        </lido:objectMeasurementsSet>\n
+        \       <lido:objectMeasurementsSet>\n          <lido:displayObjectMeasurements>670
+        \xD7 506 mm</lido:displayObjectMeasurements>\n          <lido:objectMeasurements>\n
+        \           <lido:measurementsSet>\n              <lido:measurementType>Diameter</lido:measurementType>\n
+        \             <lido:measurementUnit>Centimeters</lido:measurementUnit>\n              <lido:measurementValue>0</lido:measurementValue>\n
+        \           </lido:measurementsSet>\n            <lido:extentMeasurements>Volledig</lido:extentMeasurements>\n
+        \         </lido:objectMeasurements>\n        </lido:objectMeasurementsSet>\n
+        \     </lido:objectMeasurementsWrap>\n    </lido:objectIdentificationWrap>\n
+        \   <lido:eventWrap>\n      <lido:eventSet>\n        <lido:event>\n          <lido:eventType>\n
+        \           <lido:term>production</lido:term>\n          </lido:eventType>\n
+        \         <lido:eventActor>\n            <lido:actorInRole>\n              <lido:actor>\n
+        \               <lido:actorID lido:type=\"local\" lido:source=\"TMS\">2596</lido:actorID>\n
+        \               <lido:actorID lido:type=\"purl\" lido:source=\"VIAF\">http://viaf.org/viaf/109890866</lido:actorID>\n
+        \               <lido:actorID lido:type=\"purl\" lido:source=\"RKD\">https://rkd.nl/explore/artists/72098</lido:actorID>\n
+        \               <lido:actorID lido:type=\"purl\" lido:source=\"Wikidata\">http://www.wikidata.org/wiki/Q548860</lido:actorID>\n
+        \               <lido:nameActorSet>\n                  <lido:appellationValue
+        lido:pref=\"preferred\">Michel Seuphor</lido:appellationValue>\n                  <lido:appellationValue
+        lido:pref=\"alternate\">Michel Seuphor</lido:appellationValue>\n                </lido:nameActorSet>\n
+        \               <lido:vitalDatesActor>\n                  <lido:earliestDate>1901</lido:earliestDate>\n
+        \                 <lido:latestDate>1999</lido:latestDate>\n                </lido:vitalDatesActor>\n
+        \             </lido:actor>\n              <lido:roleActor>\n                <lido:term>tekenaar</lido:term>\n
+        \             </lido:roleActor>\n            </lido:actorInRole>\n          </lido:eventActor>\n
+        \         <lido:eventDate>\n            <lido:displayDate>1965</lido:displayDate>\n
+        \           <lido:date>\n              <lido:earliestDate>1965</lido:earliestDate>\n
+        \             <lido:latestDate>1965</lido:latestDate>\n            </lido:date>\n
+        \         </lido:eventDate>\n          <lido:periodName>\n            <lido:term
+        xml:lang=\"nl\">20ste eeuw</lido:term>\n          </lido:periodName>\n          <lido:eventMaterialsTech>\n
+        \           <lido:displayMaterialsTech>inkt op papier</lido:displayMaterialsTech>\n
+        \         </lido:eventMaterialsTech>\n        </lido:event>\n      </lido:eventSet>\n
+        \   </lido:eventWrap>\n    <lido:objectRelationWrap>\n      <lido:relatedWorksWrap>\n
+        \       <lido:relatedWorkSet>\n          <lido:relatedWork>\n            <lido:object>\n
+        \             <lido:objectID lido:type=\"local\" lido:source=\"TMS\">4029/1-6</lido:objectID>\n
+        \             <lido:objectID lido:type=\"oai\">oai:datahub.vlaamsekunstcollectie.be:kmska.be:icxvyl</lido:objectID>\n
+        \           </lido:object>\n          </lido:relatedWork>\n          <lido:relatedWorkRelType>\n
+        \           <lido:conceptID lido:type=\"local\" lido:source=\"TMS\">0</lido:conceptID>\n
+        \           <lido:conceptID lido:pref=\"preferred\" lido:type=\"URI\">http://purl.org/dc/terms/isPartOf</lido:conceptID>\n
+        \           <lido:term>deel van</lido:term>\n            <lido:term lido:pref=\"preferred\"
+        xml:lang=\"en\">Is Part Of</lido:term>\n          </lido:relatedWorkRelType>\n
+        \       </lido:relatedWorkSet>\n        <lido:relatedWorkSet>\n          <lido:relatedWork>\n
+        \           <lido:object>\n              <lido:objectID lido:type=\"local\"
+        lido:source=\"TMS\">4036/1-6</lido:objectID>\n              <lido:objectID
+        lido:type=\"oai\">oai:datahub.vlaamsekunstcollectie.be:kmska.be:w8h8eb</lido:objectID>\n
+        \           </lido:object>\n          </lido:relatedWork>\n          <lido:relatedWorkRelType>\n
+        \           <lido:conceptID lido:type=\"local\" lido:source=\"TMS\">0</lido:conceptID>\n
+        \           <lido:conceptID lido:pref=\"preferred\" lido:type=\"URI\">http://purl.org/dc/terms/isPartOf</lido:conceptID>\n
+        \           <lido:term>deel van</lido:term>\n            <lido:term lido:pref=\"preferred\"
+        xml:lang=\"en\">Is Part Of</lido:term>\n          </lido:relatedWorkRelType>\n
+        \       </lido:relatedWorkSet>\n        <lido:relatedWorkSet>\n          <lido:relatedWork>\n
+        \           <lido:object>\n              <lido:objectID lido:type=\"local\"
+        lido:source=\"TMS\">4036/1-6</lido:objectID>\n              <lido:objectID
+        lido:type=\"oai\">oai:datahub.vlaamsekunstcollectie.be:kmska.be:w8h8eb</lido:objectID>\n
+        \           </lido:object>\n          </lido:relatedWork>\n          <lido:relatedWorkRelType>\n
+        \           <lido:conceptID lido:type=\"local\" lido:source=\"TMS\">0</lido:conceptID>\n
+        \           <lido:conceptID lido:pref=\"preferred\" lido:type=\"URI\">http://purl.org/dc/terms/isPartOf</lido:conceptID>\n
+        \           <lido:term>deel van</lido:term>\n            <lido:term lido:pref=\"preferred\"
+        xml:lang=\"en\">Is Part Of</lido:term>\n          </lido:relatedWorkRelType>\n
+        \       </lido:relatedWorkSet>\n        <lido:relatedWorkSet>\n          <lido:relatedWork>\n
+        \           <lido:object>\n              <lido:objectID lido:type=\"local\"
+        lido:source=\"TMS\">4029/1-6</lido:objectID>\n              <lido:objectID
+        lido:type=\"oai\">oai:datahub.vlaamsekunstcollectie.be:kmska.be:icxvyl</lido:objectID>\n
+        \           </lido:object>\n          </lido:relatedWork>\n          <lido:relatedWorkRelType>\n
+        \           <lido:conceptID lido:type=\"local\" lido:source=\"TMS\">0</lido:conceptID>\n
+        \           <lido:conceptID lido:pref=\"preferred\" lido:type=\"URI\">http://purl.org/dc/terms/isPartOf</lido:conceptID>\n
+        \           <lido:term>deel van</lido:term>\n            <lido:term lido:pref=\"preferred\"
+        xml:lang=\"en\">Is Part Of</lido:term>\n          </lido:relatedWorkRelType>\n
+        \       </lido:relatedWorkSet>\n      </lido:relatedWorksWrap>\n    </lido:objectRelationWrap>\n
+        \ </lido:descriptiveMetadata>\n  <lido:administrativeMetadata xml:lang=\"nl\">\n
+        \   <lido:rightsWorkWrap>\n      <lido:rightsWorkSet>\n        <lido:creditLine>\xA9
+        SABAM Belgium</lido:creditLine>\n      </lido:rightsWorkSet>\n    </lido:rightsWorkWrap>\n
+        \   <lido:recordWrap>\n      <lido:recordID lido:type=\"global\">http://kmska.be/collection/work/data/w8h8eb</lido:recordID>\n
+        \     <lido:recordID lido:type=\"local\">23779</lido:recordID>\n      <lido:recordType>\n
+        \       <lido:conceptID lido:type=\"local\" lido:source=\"AAT\">http://vocab.getty.edu/aat/300133025</lido:conceptID>\n
+        \       <lido:term>Item</lido:term>\n      </lido:recordType>\n      <lido:recordSource>\n
+        \       <lido:legalBodyID lido:type=\"local\" lido:source=\"TMS\">1</lido:legalBodyID>\n
+        \       <lido:legalBodyName>\n          <lido:appellationValue>Koninklijk
+        Museum voor Schone Kunsten Antwerpen</lido:appellationValue>\n        </lido:legalBodyName>\n
+        \       <lido:legalBodyWeblink>http://kmska.be</lido:legalBodyWeblink>\n      </lido:recordSource>\n
+        \   </lido:recordWrap>\n    <lido:resourceWrap>\n      <lido:resourceSet>\n
+        \       <lido:resourceID lido:type=\"purl\" lido:label=\"representationPID\">http://kmska.be/collection/work/representation/w8h8eb</lido:resourceID>\n
+        \       <lido:resourceRepresentation>\n          <lido:linkResource>http://kmska.be/collection/work/representation/w8h8eb</lido:linkResource>\n
+        \       </lido:resourceRepresentation>\n      </lido:resourceSet>\n    </lido:resourceWrap>\n
+        \ </lido:administrativeMetadata>\n</lido:lido>\n      </metadata>\n    </record>\n
+        \   <record>\n      <header>\n        <identifier>oai:datahub.vlaamsekunstcollectie.be:kmska.be:5xgxpq</identifier>\n
+        \       <datestamp>2021-05-26T21:18:11Z</datestamp>\n      </header>\n      <metadata>\n
+        \       <lido:lido xmlns:gml=\"http://www.opengis.net/gml\" xmlns:lido=\"http://www.lido-schema.org\"
+        xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n  <lido:lidoRecID lido:pref=\"alternate\"
+        lido:type=\"purl\" lido:source=\"Koninklijk Museum voor Schone Kunsten Antwerpen\"
+        lido:label=\"dataPID\">http://kmska.be/collection/work/data/5xgxpq</lido:lidoRecID>\n
+        \ <lido:lidoRecID lido:pref=\"preferred\" lido:type=\"urn\" lido:source=\"Vlaamse
+        Kunstcollectie - Arthub Flanders\" lido:label=\"dataPID\">oai:datahub.vlaamsekunstcollectie.be:kmska.be:5xgxpq</lido:lidoRecID>\n
+        \ <lido:objectPublishedID lido:type=\"purl\" lido:source=\"Koninklijk Museum
+        voor Schone Kunsten Antwerpen\" lido:label=\"workPID\">http://kmska.be/collection/work/id/5xgxpq</lido:objectPublishedID>\n
+        \ <lido:category>\n    <lido:conceptID lido:type=\"purl\" lido:source=\"cidoc-crm\">http://www.cidoc-crm.org/Entity/e22-man-made-object/version-6.1</lido:conceptID>\n
+        \   <lido:term>Man-Made Object</lido:term>\n  </lido:category>\n  <lido:descriptiveMetadata
+        xml:lang=\"nl\">\n    <lido:objectClassificationWrap>\n      <lido:objectWorkTypeWrap>\n
+        \       <lido:objectWorkType>\n          <lido:term/>\n        </lido:objectWorkType>\n
+        \     </lido:objectWorkTypeWrap>\n      <lido:classificationWrap>\n        <lido:classification
+        lido:type=\"object-category\">\n          <lido:conceptID lido:pref=\"preferred\"
+        lido:type=\"local\" lido:source=\"TMS\">15</lido:conceptID>\n          <lido:conceptID
+        lido:pref=\"alternate\" lido:type=\"purl\" lido:source=\"AAT\">http://vocab.getty.edu/aat/300033973</lido:conceptID>\n
+        \         <lido:term lido:pref=\"preferred\" xml:lang=\"nl\">tekening</lido:term>\n
+        \         <lido:term lido:pref=\"alternate\" xml:lang=\"nl\">tekeningen</lido:term>\n
+        \       </lido:classification>\n      </lido:classificationWrap>\n    </lido:objectClassificationWrap>\n
+        \   <lido:objectIdentificationWrap>\n      <lido:titleWrap>\n        <lido:titleSet>\n
+        \         <lido:appellationValue lido:pref=\"preferred\" xml:lang=\"nl\">Espace
+        envahi</lido:appellationValue>\n          <lido:appellationValue lido:pref=\"preferred\"
+        xml:lang=\"en\">Espace envahi</lido:appellationValue>\n          <lido:sourceAppellation
+        xml:lang=\"nl\">56177</lido:sourceAppellation>\n          <lido:sourceAppellation
+        xml:lang=\"en\">56179</lido:sourceAppellation>\n        </lido:titleSet>\n
+        \     </lido:titleWrap>\n      <lido:repositoryWrap>\n        <lido:repositorySet>\n
+        \         <lido:repositoryName>\n            <lido:legalBodyID lido:type=\"local\"
+        lido:source=\"TMS\">1</lido:legalBodyID>\n            <lido:legalBodyName>\n
+        \             <lido:appellationValue>Koninklijk Museum voor Schone Kunsten
+        Antwerpen</lido:appellationValue>\n            </lido:legalBodyName>\n          </lido:repositoryName>\n
+        \         <lido:workID lido:type=\"object-number\">4037/6</lido:workID>\n
+        \       </lido:repositorySet>\n      </lido:repositoryWrap>\n      <lido:objectMeasurementsWrap>\n
+        \       <lido:objectMeasurementsSet>\n          <lido:displayObjectMeasurements>670
+        \xD7 510 mm</lido:displayObjectMeasurements>\n          <lido:objectMeasurements>\n
+        \           <lido:measurementsSet>\n              <lido:measurementType>Hoogte</lido:measurementType>\n
+        \             <lido:measurementUnit>Millimeters</lido:measurementUnit>\n              <lido:measurementValue>67</lido:measurementValue>\n
+        \           </lido:measurementsSet>\n            <lido:extentMeasurements>Volledig</lido:extentMeasurements>\n
+        \         </lido:objectMeasurements>\n        </lido:objectMeasurementsSet>\n
+        \       <lido:objectMeasurementsSet>\n          <lido:displayObjectMeasurements>670
+        \xD7 510 mm</lido:displayObjectMeasurements>\n          <lido:objectMeasurements>\n
+        \           <lido:measurementsSet>\n              <lido:measurementType>Breedte</lido:measurementType>\n
+        \             <lido:measurementUnit>Millimeters</lido:measurementUnit>\n              <lido:measurementValue>51</lido:measurementValue>\n
+        \           </lido:measurementsSet>\n            <lido:extentMeasurements>Volledig</lido:extentMeasurements>\n
+        \         </lido:objectMeasurements>\n        </lido:objectMeasurementsSet>\n
+        \       <lido:objectMeasurementsSet>\n          <lido:displayObjectMeasurements>670
+        \xD7 510 mm</lido:displayObjectMeasurements>\n          <lido:objectMeasurements>\n
+        \           <lido:measurementsSet>\n              <lido:measurementType>Diepte</lido:measurementType>\n
+        \             <lido:measurementUnit>Centimeters</lido:measurementUnit>\n              <lido:measurementValue>0</lido:measurementValue>\n
+        \           </lido:measurementsSet>\n            <lido:extentMeasurements>Volledig</lido:extentMeasurements>\n
+        \         </lido:objectMeasurements>\n        </lido:objectMeasurementsSet>\n
+        \       <lido:objectMeasurementsSet>\n          <lido:displayObjectMeasurements>670
+        \xD7 510 mm</lido:displayObjectMeasurements>\n          <lido:objectMeasurements>\n
+        \           <lido:measurementsSet>\n              <lido:measurementType>Diameter</lido:measurementType>\n
+        \             <lido:measurementUnit>Centimeters</lido:measurementUnit>\n              <lido:measurementValue>0</lido:measurementValue>\n
+        \           </lido:measurementsSet>\n            <lido:extentMeasurements>Volledig</lido:extentMeasurements>\n
+        \         </lido:objectMeasurements>\n        </lido:objectMeasurementsSet>\n
+        \     </lido:objectMeasurementsWrap>\n    </lido:objectIdentificationWrap>\n
+        \   <lido:eventWrap>\n      <lido:eventSet>\n        <lido:event>\n          <lido:eventType>\n
+        \           <lido:term>production</lido:term>\n          </lido:eventType>\n
+        \         <lido:eventActor>\n            <lido:actorInRole>\n              <lido:actor>\n
+        \               <lido:actorID lido:type=\"local\" lido:source=\"TMS\">2596</lido:actorID>\n
+        \               <lido:actorID lido:type=\"purl\" lido:source=\"VIAF\">http://viaf.org/viaf/109890866</lido:actorID>\n
+        \               <lido:actorID lido:type=\"purl\" lido:source=\"RKD\">https://rkd.nl/explore/artists/72098</lido:actorID>\n
+        \               <lido:actorID lido:type=\"purl\" lido:source=\"Wikidata\">http://www.wikidata.org/wiki/Q548860</lido:actorID>\n
+        \               <lido:nameActorSet>\n                  <lido:appellationValue
+        lido:pref=\"preferred\">Michel Seuphor</lido:appellationValue>\n                  <lido:appellationValue
+        lido:pref=\"alternate\">Michel Seuphor</lido:appellationValue>\n                </lido:nameActorSet>\n
+        \               <lido:vitalDatesActor>\n                  <lido:earliestDate>1901</lido:earliestDate>\n
+        \                 <lido:latestDate>1999</lido:latestDate>\n                </lido:vitalDatesActor>\n
+        \             </lido:actor>\n              <lido:roleActor>\n                <lido:term>tekenaar</lido:term>\n
+        \             </lido:roleActor>\n            </lido:actorInRole>\n          </lido:eventActor>\n
+        \         <lido:eventDate>\n            <lido:displayDate>1966</lido:displayDate>\n
+        \           <lido:date>\n              <lido:earliestDate>1966</lido:earliestDate>\n
+        \             <lido:latestDate>1966</lido:latestDate>\n            </lido:date>\n
+        \         </lido:eventDate>\n          <lido:periodName>\n            <lido:term
+        xml:lang=\"nl\">20ste eeuw</lido:term>\n          </lido:periodName>\n          <lido:eventMaterialsTech>\n
+        \           <lido:displayMaterialsTech>inkt op papier</lido:displayMaterialsTech>\n
+        \         </lido:eventMaterialsTech>\n        </lido:event>\n      </lido:eventSet>\n
+        \   </lido:eventWrap>\n    <lido:objectRelationWrap>\n      <lido:relatedWorksWrap>\n
+        \       <lido:relatedWorkSet>\n          <lido:relatedWork>\n            <lido:object>\n
+        \             <lido:objectID lido:type=\"local\" lido:source=\"TMS\">4037/1-6</lido:objectID>\n
+        \             <lido:objectID lido:type=\"oai\">oai:datahub.vlaamsekunstcollectie.be:kmska.be:5xgxpq</lido:objectID>\n
+        \           </lido:object>\n          </lido:relatedWork>\n          <lido:relatedWorkRelType>\n
+        \           <lido:conceptID lido:type=\"local\" lido:source=\"TMS\">0</lido:conceptID>\n
+        \           <lido:conceptID lido:pref=\"preferred\" lido:type=\"URI\">http://purl.org/dc/terms/isPartOf</lido:conceptID>\n
+        \           <lido:term>deel van</lido:term>\n            <lido:term lido:pref=\"preferred\"
+        xml:lang=\"en\">Is Part Of</lido:term>\n          </lido:relatedWorkRelType>\n
+        \       </lido:relatedWorkSet>\n        <lido:relatedWorkSet>\n          <lido:relatedWork>\n
+        \           <lido:object>\n              <lido:objectID lido:type=\"local\"
+        lido:source=\"TMS\">4037/1-6</lido:objectID>\n              <lido:objectID
+        lido:type=\"oai\">oai:datahub.vlaamsekunstcollectie.be:kmska.be:5xgxpq</lido:objectID>\n
+        \           </lido:object>\n          </lido:relatedWork>\n          <lido:relatedWorkRelType>\n
+        \           <lido:conceptID lido:type=\"local\" lido:source=\"TMS\">0</lido:conceptID>\n
+        \           <lido:conceptID lido:pref=\"preferred\" lido:type=\"URI\">http://purl.org/dc/terms/isPartOf</lido:conceptID>\n
+        \           <lido:term>deel van</lido:term>\n            <lido:term lido:pref=\"preferred\"
+        xml:lang=\"en\">Is Part Of</lido:term>\n          </lido:relatedWorkRelType>\n
+        \       </lido:relatedWorkSet>\n      </lido:relatedWorksWrap>\n    </lido:objectRelationWrap>\n
+        \ </lido:descriptiveMetadata>\n  <lido:administrativeMetadata xml:lang=\"nl\">\n
+        \   <lido:rightsWorkWrap>\n      <lido:rightsWorkSet>\n        <lido:creditLine>\xA9
+        SABAM Belgium</lido:creditLine>\n      </lido:rightsWorkSet>\n    </lido:rightsWorkWrap>\n
+        \   <lido:recordWrap>\n      <lido:recordID lido:type=\"global\">http://kmska.be/collection/work/data/5xgxpq</lido:recordID>\n
+        \     <lido:recordID lido:type=\"local\">23805</lido:recordID>\n      <lido:recordType>\n
+        \       <lido:conceptID lido:type=\"local\" lido:source=\"AAT\">http://vocab.getty.edu/aat/300133025</lido:conceptID>\n
+        \       <lido:term>Item</lido:term>\n      </lido:recordType>\n      <lido:recordSource>\n
+        \       <lido:legalBodyID lido:type=\"local\" lido:source=\"TMS\">1</lido:legalBodyID>\n
+        \       <lido:legalBodyName>\n          <lido:appellationValue>Koninklijk
+        Museum voor Schone Kunsten Antwerpen</lido:appellationValue>\n        </lido:legalBodyName>\n
+        \       <lido:legalBodyWeblink>http://kmska.be</lido:legalBodyWeblink>\n      </lido:recordSource>\n
+        \   </lido:recordWrap>\n    <lido:resourceWrap>\n      <lido:resourceSet>\n
+        \       <lido:resourceID lido:type=\"purl\" lido:label=\"representationPID\">http://kmska.be/collection/work/representation/5xgxpq</lido:resourceID>\n
+        \       <lido:resourceRepresentation>\n          <lido:linkResource>http://kmska.be/collection/work/representation/5xgxpq</lido:linkResource>\n
+        \       </lido:resourceRepresentation>\n      </lido:resourceSet>\n    </lido:resourceWrap>\n
+        \ </lido:administrativeMetadata>\n</lido:lido>\n      </metadata>\n    </record>\n
+        \   <record>\n      <header>\n        <identifier>oai:datahub.vlaamsekunstcollectie.be:kmska.be:ygchve</identifier>\n
+        \       <datestamp>2021-05-26T21:18:12Z</datestamp>\n      </header>\n      <metadata>\n
+        \       <lido:lido xmlns:gml=\"http://www.opengis.net/gml\" xmlns:lido=\"http://www.lido-schema.org\"
+        xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n  <lido:lidoRecID lido:pref=\"alternate\"
+        lido:type=\"purl\" lido:source=\"Koninklijk Museum voor Schone Kunsten Antwerpen\"
+        lido:label=\"dataPID\">http://kmska.be/collection/work/data/ygchve</lido:lidoRecID>\n
+        \ <lido:lidoRecID lido:pref=\"preferred\" lido:type=\"urn\" lido:source=\"Vlaamse
+        Kunstcollectie - Arthub Flanders\" lido:label=\"dataPID\">oai:datahub.vlaamsekunstcollectie.be:kmska.be:ygchve</lido:lidoRecID>\n
+        \ <lido:objectPublishedID lido:type=\"purl\" lido:source=\"Koninklijk Museum
+        voor Schone Kunsten Antwerpen\" lido:label=\"workPID\">http://kmska.be/collection/work/id/ygchve</lido:objectPublishedID>\n
+        \ <lido:category>\n    <lido:conceptID lido:type=\"purl\" lido:source=\"cidoc-crm\">http://www.cidoc-crm.org/Entity/e22-man-made-object/version-6.1</lido:conceptID>\n
+        \   <lido:term>Man-Made Object</lido:term>\n  </lido:category>\n  <lido:descriptiveMetadata
+        xml:lang=\"nl\">\n    <lido:objectClassificationWrap>\n      <lido:objectWorkTypeWrap>\n
+        \       <lido:objectWorkType>\n          <lido:term/>\n        </lido:objectWorkType>\n
+        \     </lido:objectWorkTypeWrap>\n      <lido:classificationWrap>\n        <lido:classification
+        lido:type=\"object-category\">\n          <lido:conceptID lido:pref=\"preferred\"
+        lido:type=\"local\" lido:source=\"TMS\">15</lido:conceptID>\n          <lido:conceptID
+        lido:pref=\"alternate\" lido:type=\"purl\" lido:source=\"AAT\">http://vocab.getty.edu/aat/300033973</lido:conceptID>\n
+        \         <lido:term lido:pref=\"preferred\" xml:lang=\"nl\">tekening</lido:term>\n
+        \         <lido:term lido:pref=\"alternate\" xml:lang=\"nl\">tekeningen</lido:term>\n
+        \       </lido:classification>\n      </lido:classificationWrap>\n    </lido:objectClassificationWrap>\n
+        \   <lido:objectIdentificationWrap>\n      <lido:titleWrap>\n        <lido:titleSet>\n
+        \         <lido:appellationValue lido:pref=\"preferred\" xml:lang=\"nl\">C\xE9l\xE9bration
+        du po\xE8te</lido:appellationValue>\n          <lido:appellationValue lido:pref=\"preferred\"
+        xml:lang=\"en\">C\xE9l\xE9bration du po\xE8te</lido:appellationValue>\n          <lido:sourceAppellation
+        xml:lang=\"nl\">56198</lido:sourceAppellation>\n          <lido:sourceAppellation
+        xml:lang=\"en\">56200</lido:sourceAppellation>\n        </lido:titleSet>\n
+        \     </lido:titleWrap>\n      <lido:repositoryWrap>\n        <lido:repositorySet>\n
+        \         <lido:repositoryName>\n            <lido:legalBodyID lido:type=\"local\"
+        lido:source=\"TMS\">1</lido:legalBodyID>\n            <lido:legalBodyName>\n
+        \             <lido:appellationValue>Koninklijk Museum voor Schone Kunsten
+        Antwerpen</lido:appellationValue>\n            </lido:legalBodyName>\n          </lido:repositoryName>\n
+        \         <lido:workID lido:type=\"object-number\">4039/3</lido:workID>\n
+        \       </lido:repositorySet>\n      </lido:repositoryWrap>\n      <lido:objectMeasurementsWrap>\n
+        \       <lido:objectMeasurementsSet>\n          <lido:displayObjectMeasurements>744
+        \xD7 520 mm</lido:displayObjectMeasurements>\n          <lido:objectMeasurements>\n
+        \           <lido:measurementsSet>\n              <lido:measurementType>Hoogte</lido:measurementType>\n
+        \             <lido:measurementUnit>Millimeters</lido:measurementUnit>\n              <lido:measurementValue>74.4</lido:measurementValue>\n
+        \           </lido:measurementsSet>\n            <lido:extentMeasurements>Volledig</lido:extentMeasurements>\n
+        \         </lido:objectMeasurements>\n        </lido:objectMeasurementsSet>\n
+        \       <lido:objectMeasurementsSet>\n          <lido:displayObjectMeasurements>744
+        \xD7 520 mm</lido:displayObjectMeasurements>\n          <lido:objectMeasurements>\n
+        \           <lido:measurementsSet>\n              <lido:measurementType>Breedte</lido:measurementType>\n
+        \             <lido:measurementUnit>Millimeters</lido:measurementUnit>\n              <lido:measurementValue>52</lido:measurementValue>\n
+        \           </lido:measurementsSet>\n            <lido:extentMeasurements>Volledig</lido:extentMeasurements>\n
+        \         </lido:objectMeasurements>\n        </lido:objectMeasurementsSet>\n
+        \       <lido:objectMeasurementsSet>\n          <lido:displayObjectMeasurements>744
+        \xD7 520 mm</lido:displayObjectMeasurements>\n          <lido:objectMeasurements>\n
+        \           <lido:measurementsSet>\n              <lido:measurementType>Diepte</lido:measurementType>\n
+        \             <lido:measurementUnit>Centimeters</lido:measurementUnit>\n              <lido:measurementValue>0</lido:measurementValue>\n
+        \           </lido:measurementsSet>\n            <lido:extentMeasurements>Volledig</lido:extentMeasurements>\n
+        \         </lido:objectMeasurements>\n        </lido:objectMeasurementsSet>\n
+        \       <lido:objectMeasurementsSet>\n          <lido:displayObjectMeasurements>744
+        \xD7 520 mm</lido:displayObjectMeasurements>\n          <lido:objectMeasurements>\n
+        \           <lido:measurementsSet>\n              <lido:measurementType>Diameter</lido:measurementType>\n
+        \             <lido:measurementUnit>Centimeters</lido:measurementUnit>\n              <lido:measurementValue>0</lido:measurementValue>\n
+        \           </lido:measurementsSet>\n            <lido:extentMeasurements>Volledig</lido:extentMeasurements>\n
+        \         </lido:objectMeasurements>\n        </lido:objectMeasurementsSet>\n
+        \     </lido:objectMeasurementsWrap>\n    </lido:objectIdentificationWrap>\n
+        \   <lido:eventWrap>\n      <lido:eventSet>\n        <lido:event>\n          <lido:eventType>\n
+        \           <lido:term>production</lido:term>\n          </lido:eventType>\n
+        \         <lido:eventActor>\n            <lido:actorInRole>\n              <lido:actor>\n
+        \               <lido:actorID lido:type=\"local\" lido:source=\"TMS\">2596</lido:actorID>\n
+        \               <lido:actorID lido:type=\"purl\" lido:source=\"VIAF\">http://viaf.org/viaf/109890866</lido:actorID>\n
+        \               <lido:actorID lido:type=\"purl\" lido:source=\"RKD\">https://rkd.nl/explore/artists/72098</lido:actorID>\n
+        \               <lido:actorID lido:type=\"purl\" lido:source=\"Wikidata\">http://www.wikidata.org/wiki/Q548860</lido:actorID>\n
+        \               <lido:nameActorSet>\n                  <lido:appellationValue
+        lido:pref=\"preferred\">Michel Seuphor</lido:appellationValue>\n                  <lido:appellationValue
+        lido:pref=\"alternate\">Michel Seuphor</lido:appellationValue>\n                </lido:nameActorSet>\n
+        \               <lido:vitalDatesActor>\n                  <lido:earliestDate>1901</lido:earliestDate>\n
+        \                 <lido:latestDate>1999</lido:latestDate>\n                </lido:vitalDatesActor>\n
+        \             </lido:actor>\n              <lido:roleActor>\n                <lido:term>tekenaar</lido:term>\n
+        \             </lido:roleActor>\n            </lido:actorInRole>\n          </lido:eventActor>\n
+        \         <lido:eventDate>\n            <lido:displayDate>1969</lido:displayDate>\n
+        \           <lido:date>\n              <lido:earliestDate>1969</lido:earliestDate>\n
+        \             <lido:latestDate>1969</lido:latestDate>\n            </lido:date>\n
+        \         </lido:eventDate>\n          <lido:periodName>\n            <lido:term
+        xml:lang=\"nl\">20ste eeuw</lido:term>\n          </lido:periodName>\n          <lido:eventMaterialsTech>\n
+        \           <lido:displayMaterialsTech>inkt op karton</lido:displayMaterialsTech>\n
+        \         </lido:eventMaterialsTech>\n        </lido:event>\n      </lido:eventSet>\n
+        \   </lido:eventWrap>\n    <lido:objectRelationWrap>\n      <lido:relatedWorksWrap>\n
+        \       <lido:relatedWorkSet>\n          <lido:relatedWork>\n            <lido:object>\n
+        \             <lido:objectID lido:type=\"local\" lido:source=\"TMS\">4030/1-3</lido:objectID>\n
+        \             <lido:objectID lido:type=\"oai\">oai:datahub.vlaamsekunstcollectie.be:kmska.be:asv41x</lido:objectID>\n
+        \           </lido:object>\n          </lido:relatedWork>\n          <lido:relatedWorkRelType>\n
+        \           <lido:conceptID lido:type=\"local\" lido:source=\"TMS\">0</lido:conceptID>\n
+        \           <lido:conceptID lido:pref=\"preferred\" lido:type=\"URI\">http://purl.org/dc/terms/isPartOf</lido:conceptID>\n
+        \           <lido:term>deel van</lido:term>\n            <lido:term lido:pref=\"preferred\"
+        xml:lang=\"en\">Is Part Of</lido:term>\n          </lido:relatedWorkRelType>\n
+        \       </lido:relatedWorkSet>\n        <lido:relatedWorkSet>\n          <lido:relatedWork>\n
+        \           <lido:object>\n              <lido:objectID lido:type=\"local\"
+        lido:source=\"TMS\">4039/1-3</lido:objectID>\n              <lido:objectID
+        lido:type=\"oai\">oai:datahub.vlaamsekunstcollectie.be:kmska.be:ygchve</lido:objectID>\n
+        \           </lido:object>\n          </lido:relatedWork>\n          <lido:relatedWorkRelType>\n
+        \           <lido:conceptID lido:type=\"local\" lido:source=\"TMS\">0</lido:conceptID>\n
+        \           <lido:conceptID lido:pref=\"preferred\" lido:type=\"URI\">http://purl.org/dc/terms/isPartOf</lido:conceptID>\n
+        \           <lido:term>deel van</lido:term>\n            <lido:term lido:pref=\"preferred\"
+        xml:lang=\"en\">Is Part Of</lido:term>\n          </lido:relatedWorkRelType>\n
+        \       </lido:relatedWorkSet>\n        <lido:relatedWorkSet>\n          <lido:relatedWork>\n
+        \           <lido:object>\n              <lido:objectID lido:type=\"local\"
+        lido:source=\"TMS\">4039/1-3</lido:objectID>\n              <lido:objectID
+        lido:type=\"oai\">oai:datahub.vlaamsekunstcollectie.be:kmska.be:ygchve</lido:objectID>\n
+        \           </lido:object>\n          </lido:relatedWork>\n          <lido:relatedWorkRelType>\n
+        \           <lido:conceptID lido:type=\"local\" lido:source=\"TMS\">0</lido:conceptID>\n
+        \           <lido:conceptID lido:pref=\"preferred\" lido:type=\"URI\">http://purl.org/dc/terms/isPartOf</lido:conceptID>\n
+        \           <lido:term>deel van</lido:term>\n            <lido:term lido:pref=\"preferred\"
+        xml:lang=\"en\">Is Part Of</lido:term>\n          </lido:relatedWorkRelType>\n
+        \       </lido:relatedWorkSet>\n        <lido:relatedWorkSet>\n          <lido:relatedWork>\n
+        \           <lido:object>\n              <lido:objectID lido:type=\"local\"
+        lido:source=\"TMS\">4030/1-3</lido:objectID>\n              <lido:objectID
+        lido:type=\"oai\">oai:datahub.vlaamsekunstcollectie.be:kmska.be:asv41x</lido:objectID>\n
+        \           </lido:object>\n          </lido:relatedWork>\n          <lido:relatedWorkRelType>\n
+        \           <lido:conceptID lido:type=\"local\" lido:source=\"TMS\">0</lido:conceptID>\n
+        \           <lido:conceptID lido:pref=\"preferred\" lido:type=\"URI\">http://purl.org/dc/terms/isPartOf</lido:conceptID>\n
+        \           <lido:term>deel van</lido:term>\n            <lido:term lido:pref=\"preferred\"
+        xml:lang=\"en\">Is Part Of</lido:term>\n          </lido:relatedWorkRelType>\n
+        \       </lido:relatedWorkSet>\n      </lido:relatedWorksWrap>\n    </lido:objectRelationWrap>\n
+        \ </lido:descriptiveMetadata>\n  <lido:administrativeMetadata xml:lang=\"nl\">\n
+        \   <lido:rightsWorkWrap>\n      <lido:rightsWorkSet>\n        <lido:creditLine>\xA9
+        SABAM Belgium</lido:creditLine>\n      </lido:rightsWorkSet>\n    </lido:rightsWorkWrap>\n
+        \   <lido:recordWrap>\n      <lido:recordID lido:type=\"global\">http://kmska.be/collection/work/data/ygchve</lido:recordID>\n
+        \     <lido:recordID lido:type=\"local\">23810</lido:recordID>\n      <lido:recordType>\n
+        \       <lido:conceptID lido:type=\"local\" lido:source=\"AAT\">http://vocab.getty.edu/aat/300133025</lido:conceptID>\n
+        \       <lido:term>Item</lido:term>\n      </lido:recordType>\n      <lido:recordSource>\n
+        \       <lido:legalBodyID lido:type=\"local\" lido:source=\"TMS\">1</lido:legalBodyID>\n
+        \       <lido:legalBodyName>\n          <lido:appellationValue>Koninklijk
+        Museum voor Schone Kunsten Antwerpen</lido:appellationValue>\n        </lido:legalBodyName>\n
+        \       <lido:legalBodyWeblink>http://kmska.be</lido:legalBodyWeblink>\n      </lido:recordSource>\n
+        \   </lido:recordWrap>\n    <lido:resourceWrap>\n      <lido:resourceSet>\n
+        \       <lido:resourceID lido:type=\"purl\" lido:label=\"representationPID\">http://kmska.be/collection/work/representation/ygchve</lido:resourceID>\n
+        \       <lido:resourceRepresentation>\n          <lido:linkResource>http://kmska.be/collection/work/representation/ygchve</lido:linkResource>\n
+        \       </lido:resourceRepresentation>\n      </lido:resourceSet>\n    </lido:resourceWrap>\n
+        \ </lido:administrativeMetadata>\n</lido:lido>\n      </metadata>\n    </record>\n
+        \   <record>\n      <header>\n        <identifier>oai:datahub.vlaamsekunstcollectie.be:kmska.be:ojpmq0</identifier>\n
+        \       <datestamp>2021-05-26T21:18:10Z</datestamp>\n      </header>\n      <metadata>\n
+        \       <lido:lido xmlns:gml=\"http://www.opengis.net/gml\" xmlns:lido=\"http://www.lido-schema.org\"
+        xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n  <lido:lidoRecID lido:pref=\"alternate\"
+        lido:type=\"purl\" lido:source=\"Koninklijk Museum voor Schone Kunsten Antwerpen\"
+        lido:label=\"dataPID\">http://kmska.be/collection/work/data/ojpmq0</lido:lidoRecID>\n
+        \ <lido:lidoRecID lido:pref=\"preferred\" lido:type=\"urn\" lido:source=\"Vlaamse
+        Kunstcollectie - Arthub Flanders\" lido:label=\"dataPID\">oai:datahub.vlaamsekunstcollectie.be:kmska.be:ojpmq0</lido:lidoRecID>\n
+        \ <lido:objectPublishedID lido:type=\"purl\" lido:source=\"Koninklijk Museum
+        voor Schone Kunsten Antwerpen\" lido:label=\"workPID\">http://kmska.be/collection/work/id/ojpmq0</lido:objectPublishedID>\n
+        \ <lido:category>\n    <lido:conceptID lido:type=\"purl\" lido:source=\"cidoc-crm\">http://www.cidoc-crm.org/Entity/e22-man-made-object/version-6.1</lido:conceptID>\n
+        \   <lido:term>Man-Made Object</lido:term>\n  </lido:category>\n  <lido:descriptiveMetadata
+        xml:lang=\"nl\">\n    <lido:objectClassificationWrap>\n      <lido:objectWorkTypeWrap>\n
+        \       <lido:objectWorkType>\n          <lido:term/>\n        </lido:objectWorkType>\n
+        \     </lido:objectWorkTypeWrap>\n      <lido:classificationWrap>\n        <lido:classification
+        lido:type=\"object-category\">\n          <lido:conceptID lido:pref=\"preferred\"
+        lido:type=\"local\" lido:source=\"TMS\">15</lido:conceptID>\n          <lido:conceptID
+        lido:pref=\"alternate\" lido:type=\"purl\" lido:source=\"AAT\">http://vocab.getty.edu/aat/300033973</lido:conceptID>\n
+        \         <lido:term lido:pref=\"preferred\" xml:lang=\"nl\">tekening</lido:term>\n
+        \         <lido:term lido:pref=\"alternate\" xml:lang=\"nl\">tekeningen</lido:term>\n
+        \       </lido:classification>\n      </lido:classificationWrap>\n    </lido:objectClassificationWrap>\n
+        \   <lido:objectIdentificationWrap>\n      <lido:titleWrap>\n        <lido:titleSet>\n
+        \         <lido:appellationValue lido:pref=\"preferred\" xml:lang=\"nl\">Les
+        formes rendent hommage aux carr\xE9</lido:appellationValue>\n          <lido:appellationValue
+        lido:pref=\"preferred\" xml:lang=\"en\">Les formes rendent hommage aux carr\xE9</lido:appellationValue>\n
+        \         <lido:sourceAppellation xml:lang=\"nl\">56141</lido:sourceAppellation>\n
+        \         <lido:sourceAppellation xml:lang=\"en\">56143</lido:sourceAppellation>\n
+        \       </lido:titleSet>\n      </lido:titleWrap>\n      <lido:repositoryWrap>\n
+        \       <lido:repositorySet>\n          <lido:repositoryName>\n            <lido:legalBodyID
+        lido:type=\"local\" lido:source=\"TMS\">1</lido:legalBodyID>\n            <lido:legalBodyName>\n
+        \             <lido:appellationValue>Koninklijk Museum voor Schone Kunsten
+        Antwerpen</lido:appellationValue>\n            </lido:legalBodyName>\n          </lido:repositoryName>\n
+        \         <lido:workID lido:type=\"object-number\">4045/3</lido:workID>\n
+        \       </lido:repositorySet>\n      </lido:repositoryWrap>\n      <lido:objectMeasurementsWrap>\n
+        \       <lido:objectMeasurementsSet>\n          <lido:displayObjectMeasurements>670
+        \xD7 510 mm</lido:displayObjectMeasurements>\n          <lido:objectMeasurements>\n
+        \           <lido:measurementsSet>\n              <lido:measurementType>Hoogte</lido:measurementType>\n
+        \             <lido:measurementUnit>Millimeters</lido:measurementUnit>\n              <lido:measurementValue>67</lido:measurementValue>\n
+        \           </lido:measurementsSet>\n            <lido:extentMeasurements>Volledig</lido:extentMeasurements>\n
+        \         </lido:objectMeasurements>\n        </lido:objectMeasurementsSet>\n
+        \       <lido:objectMeasurementsSet>\n          <lido:displayObjectMeasurements>670
+        \xD7 510 mm</lido:displayObjectMeasurements>\n          <lido:objectMeasurements>\n
+        \           <lido:measurementsSet>\n              <lido:measurementType>Breedte</lido:measurementType>\n
+        \             <lido:measurementUnit>Millimeters</lido:measurementUnit>\n              <lido:measurementValue>51</lido:measurementValue>\n
+        \           </lido:measurementsSet>\n            <lido:extentMeasurements>Volledig</lido:extentMeasurements>\n
+        \         </lido:objectMeasurements>\n        </lido:objectMeasurementsSet>\n
+        \       <lido:objectMeasurementsSet>\n          <lido:displayObjectMeasurements>670
+        \xD7 510 mm</lido:displayObjectMeasurements>\n          <lido:objectMeasurements>\n
+        \           <lido:measurementsSet>\n              <lido:measurementType>Diepte</lido:measurementType>\n
+        \             <lido:measurementUnit>Centimeters</lido:measurementUnit>\n              <lido:measurementValue>0</lido:measurementValue>\n
+        \           </lido:measurementsSet>\n            <lido:extentMeasurements>Volledig</lido:extentMeasurements>\n
+        \         </lido:objectMeasurements>\n        </lido:objectMeasurementsSet>\n
+        \       <lido:objectMeasurementsSet>\n          <lido:displayObjectMeasurements>670
+        \xD7 510 mm</lido:displayObjectMeasurements>\n          <lido:objectMeasurements>\n
+        \           <lido:measurementsSet>\n              <lido:measurementType>Diameter</lido:measurementType>\n
+        \             <lido:measurementUnit>Centimeters</lido:measurementUnit>\n              <lido:measurementValue>0</lido:measurementValue>\n
+        \           </lido:measurementsSet>\n            <lido:extentMeasurements>Volledig</lido:extentMeasurements>\n
+        \         </lido:objectMeasurements>\n        </lido:objectMeasurementsSet>\n
+        \     </lido:objectMeasurementsWrap>\n    </lido:objectIdentificationWrap>\n
+        \   <lido:eventWrap>\n      <lido:eventSet>\n        <lido:event>\n          <lido:eventType>\n
+        \           <lido:term>production</lido:term>\n          </lido:eventType>\n
+        \         <lido:eventActor>\n            <lido:actorInRole>\n              <lido:actor>\n
+        \               <lido:actorID lido:type=\"local\" lido:source=\"TMS\">2596</lido:actorID>\n
+        \               <lido:actorID lido:type=\"purl\" lido:source=\"VIAF\">http://viaf.org/viaf/109890866</lido:actorID>\n
+        \               <lido:actorID lido:type=\"purl\" lido:source=\"RKD\">https://rkd.nl/explore/artists/72098</lido:actorID>\n
+        \               <lido:actorID lido:type=\"purl\" lido:source=\"Wikidata\">http://www.wikidata.org/wiki/Q548860</lido:actorID>\n
+        \               <lido:nameActorSet>\n                  <lido:appellationValue
+        lido:pref=\"preferred\">Michel Seuphor</lido:appellationValue>\n                  <lido:appellationValue
+        lido:pref=\"alternate\">Michel Seuphor</lido:appellationValue>\n                </lido:nameActorSet>\n
+        \               <lido:vitalDatesActor>\n                  <lido:earliestDate>1901</lido:earliestDate>\n
+        \                 <lido:latestDate>1999</lido:latestDate>\n                </lido:vitalDatesActor>\n
+        \             </lido:actor>\n              <lido:roleActor>\n                <lido:term>tekenaar</lido:term>\n
+        \             </lido:roleActor>\n            </lido:actorInRole>\n          </lido:eventActor>\n
+        \         <lido:eventDate>\n            <lido:displayDate>1975</lido:displayDate>\n
+        \           <lido:date>\n              <lido:earliestDate>1975</lido:earliestDate>\n
+        \             <lido:latestDate>1975</lido:latestDate>\n            </lido:date>\n
+        \         </lido:eventDate>\n          <lido:periodName>\n            <lido:term
+        xml:lang=\"nl\">20ste eeuw</lido:term>\n          </lido:periodName>\n          <lido:eventMaterialsTech>\n
+        \           <lido:displayMaterialsTech>inkt op papier</lido:displayMaterialsTech>\n
+        \         </lido:eventMaterialsTech>\n        </lido:event>\n      </lido:eventSet>\n
+        \   </lido:eventWrap>\n    <lido:objectRelationWrap>\n      <lido:relatedWorksWrap>\n
+        \       <lido:relatedWorkSet>\n          <lido:relatedWork>\n            <lido:object>\n
+        \             <lido:objectID lido:type=\"local\" lido:source=\"TMS\">4045/1-3</lido:objectID>\n
+        \             <lido:objectID lido:type=\"oai\">oai:datahub.vlaamsekunstcollectie.be:kmska.be:ojpmq0</lido:objectID>\n
+        \           </lido:object>\n          </lido:relatedWork>\n          <lido:relatedWorkRelType>\n
+        \           <lido:conceptID lido:type=\"local\" lido:source=\"TMS\">0</lido:conceptID>\n
+        \           <lido:conceptID lido:pref=\"preferred\" lido:type=\"URI\">http://purl.org/dc/terms/isPartOf</lido:conceptID>\n
+        \           <lido:term>deel van</lido:term>\n            <lido:term lido:pref=\"preferred\"
+        xml:lang=\"en\">Is Part Of</lido:term>\n          </lido:relatedWorkRelType>\n
+        \       </lido:relatedWorkSet>\n        <lido:relatedWorkSet>\n          <lido:relatedWork>\n
+        \           <lido:object>\n              <lido:objectID lido:type=\"local\"
+        lido:source=\"TMS\">4045/1-3</lido:objectID>\n              <lido:objectID
+        lido:type=\"oai\">oai:datahub.vlaamsekunstcollectie.be:kmska.be:ojpmq0</lido:objectID>\n
+        \           </lido:object>\n          </lido:relatedWork>\n          <lido:relatedWorkRelType>\n
+        \           <lido:conceptID lido:type=\"local\" lido:source=\"TMS\">0</lido:conceptID>\n
+        \           <lido:conceptID lido:pref=\"preferred\" lido:type=\"URI\">http://purl.org/dc/terms/isPartOf</lido:conceptID>\n
+        \           <lido:term>deel van</lido:term>\n            <lido:term lido:pref=\"preferred\"
+        xml:lang=\"en\">Is Part Of</lido:term>\n          </lido:relatedWorkRelType>\n
+        \       </lido:relatedWorkSet>\n      </lido:relatedWorksWrap>\n    </lido:objectRelationWrap>\n
+        \ </lido:descriptiveMetadata>\n  <lido:administrativeMetadata xml:lang=\"nl\">\n
+        \   <lido:rightsWorkWrap>\n      <lido:rightsWorkSet>\n        <lido:creditLine>\xA9
+        SABAM Belgium</lido:creditLine>\n      </lido:rightsWorkSet>\n    </lido:rightsWorkWrap>\n
+        \   <lido:recordWrap>\n      <lido:recordID lido:type=\"global\">http://kmska.be/collection/work/data/ojpmq0</lido:recordID>\n
+        \     <lido:recordID lido:type=\"local\">23799</lido:recordID>\n      <lido:recordType>\n
+        \       <lido:conceptID lido:type=\"local\" lido:source=\"AAT\">http://vocab.getty.edu/aat/300133025</lido:conceptID>\n
+        \       <lido:term>Item</lido:term>\n      </lido:recordType>\n      <lido:recordSource>\n
+        \       <lido:legalBodyID lido:type=\"local\" lido:source=\"TMS\">1</lido:legalBodyID>\n
+        \       <lido:legalBodyName>\n          <lido:appellationValue>Koninklijk
+        Museum voor Schone Kunsten Antwerpen</lido:appellationValue>\n        </lido:legalBodyName>\n
+        \       <lido:legalBodyWeblink>http://kmska.be</lido:legalBodyWeblink>\n      </lido:recordSource>\n
+        \   </lido:recordWrap>\n    <lido:resourceWrap>\n      <lido:resourceSet>\n
+        \       <lido:resourceID lido:type=\"purl\" lido:label=\"representationPID\">http://kmska.be/collection/work/representation/ft7jx4</lido:resourceID>\n
+        \       <lido:resourceRepresentation>\n          <lido:linkResource>http://kmska.be/collection/work/representation/ft7jx4</lido:linkResource>\n
+        \       </lido:resourceRepresentation>\n      </lido:resourceSet>\n    </lido:resourceWrap>\n
+        \ </lido:administrativeMetadata>\n</lido:lido>\n      </metadata>\n    </record>\n
+        \   <record>\n      <header>\n        <identifier>oai:datahub.vlaamsekunstcollectie.be:kmska.be:1nxd4p</identifier>\n
+        \       <datestamp>2021-05-26T21:18:05Z</datestamp>\n      </header>\n      <metadata>\n
+        \       <lido:lido xmlns:gml=\"http://www.opengis.net/gml\" xmlns:lido=\"http://www.lido-schema.org\"
+        xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n  <lido:lidoRecID lido:pref=\"alternate\"
+        lido:type=\"purl\" lido:source=\"Koninklijk Museum voor Schone Kunsten Antwerpen\"
+        lido:label=\"dataPID\">http://kmska.be/collection/work/data/1nxd4p</lido:lidoRecID>\n
+        \ <lido:lidoRecID lido:pref=\"preferred\" lido:type=\"urn\" lido:source=\"Vlaamse
+        Kunstcollectie - Arthub Flanders\" lido:label=\"dataPID\">oai:datahub.vlaamsekunstcollectie.be:kmska.be:1nxd4p</lido:lidoRecID>\n
+        \ <lido:objectPublishedID lido:type=\"purl\" lido:source=\"Koninklijk Museum
+        voor Schone Kunsten Antwerpen\" lido:label=\"workPID\">http://kmska.be/collection/work/id/1nxd4p</lido:objectPublishedID>\n
+        \ <lido:category>\n    <lido:conceptID lido:type=\"purl\" lido:source=\"cidoc-crm\">http://www.cidoc-crm.org/Entity/e22-man-made-object/version-6.1</lido:conceptID>\n
+        \   <lido:term>Man-Made Object</lido:term>\n  </lido:category>\n  <lido:descriptiveMetadata
+        xml:lang=\"nl\">\n    <lido:objectClassificationWrap>\n      <lido:objectWorkTypeWrap>\n
+        \       <lido:objectWorkType>\n          <lido:term/>\n        </lido:objectWorkType>\n
+        \     </lido:objectWorkTypeWrap>\n      <lido:classificationWrap>\n        <lido:classification
+        lido:type=\"object-category\">\n          <lido:conceptID lido:pref=\"preferred\"
+        lido:type=\"local\" lido:source=\"TMS\">15</lido:conceptID>\n          <lido:conceptID
+        lido:pref=\"alternate\" lido:type=\"purl\" lido:source=\"AAT\">http://vocab.getty.edu/aat/300033973</lido:conceptID>\n
+        \         <lido:term lido:pref=\"preferred\" xml:lang=\"nl\">tekening</lido:term>\n
+        \         <lido:term lido:pref=\"alternate\" xml:lang=\"nl\">tekeningen</lido:term>\n
+        \       </lido:classification>\n      </lido:classificationWrap>\n    </lido:objectClassificationWrap>\n
+        \   <lido:objectIdentificationWrap>\n      <lido:titleWrap>\n        <lido:titleSet>\n
+        \         <lido:appellationValue lido:pref=\"preferred\" xml:lang=\"nl\">Solstice</lido:appellationValue>\n
+        \         <lido:appellationValue lido:pref=\"preferred\" xml:lang=\"en\">Solstice</lido:appellationValue>\n
+        \         <lido:sourceAppellation xml:lang=\"nl\">56012</lido:sourceAppellation>\n
+        \         <lido:sourceAppellation xml:lang=\"en\">56014</lido:sourceAppellation>\n
+        \       </lido:titleSet>\n      </lido:titleWrap>\n      <lido:repositoryWrap>\n
+        \       <lido:repositorySet>\n          <lido:repositoryName>\n            <lido:legalBodyID
+        lido:type=\"local\" lido:source=\"TMS\">1</lido:legalBodyID>\n            <lido:legalBodyName>\n
+        \             <lido:appellationValue>Koninklijk Museum voor Schone Kunsten
+        Antwerpen</lido:appellationValue>\n            </lido:legalBodyName>\n          </lido:repositoryName>\n
+        \         <lido:workID lido:type=\"object-number\">4059/6</lido:workID>\n
+        \       </lido:repositorySet>\n      </lido:repositoryWrap>\n      <lido:objectMeasurementsWrap>\n
+        \       <lido:objectMeasurementsSet>\n          <lido:displayObjectMeasurements>670
+        \xD7 510 mm</lido:displayObjectMeasurements>\n          <lido:objectMeasurements>\n
+        \           <lido:measurementsSet>\n              <lido:measurementType>Hoogte</lido:measurementType>\n
+        \             <lido:measurementUnit>Millimeters</lido:measurementUnit>\n              <lido:measurementValue>67</lido:measurementValue>\n
+        \           </lido:measurementsSet>\n            <lido:extentMeasurements>Volledig</lido:extentMeasurements>\n
+        \         </lido:objectMeasurements>\n        </lido:objectMeasurementsSet>\n
+        \       <lido:objectMeasurementsSet>\n          <lido:displayObjectMeasurements>670
+        \xD7 510 mm</lido:displayObjectMeasurements>\n          <lido:objectMeasurements>\n
+        \           <lido:measurementsSet>\n              <lido:measurementType>Breedte</lido:measurementType>\n
+        \             <lido:measurementUnit>Millimeters</lido:measurementUnit>\n              <lido:measurementValue>51</lido:measurementValue>\n
+        \           </lido:measurementsSet>\n            <lido:extentMeasurements>Volledig</lido:extentMeasurements>\n
+        \         </lido:objectMeasurements>\n        </lido:objectMeasurementsSet>\n
+        \       <lido:objectMeasurementsSet>\n          <lido:displayObjectMeasurements>670
+        \xD7 510 mm</lido:displayObjectMeasurements>\n          <lido:objectMeasurements>\n
+        \           <lido:measurementsSet>\n              <lido:measurementType>Diepte</lido:measurementType>\n
+        \             <lido:measurementUnit>Centimeters</lido:measurementUnit>\n              <lido:measurementValue>0</lido:measurementValue>\n
+        \           </lido:measurementsSet>\n            <lido:extentMeasurements>Volledig</lido:extentMeasurements>\n
+        \         </lido:objectMeasurements>\n        </lido:objectMeasurementsSet>\n
+        \       <lido:objectMeasurementsSet>\n          <lido:displayObjectMeasurements>670
+        \xD7 510 mm</lido:displayObjectMeasurements>\n          <lido:objectMeasurements>\n
+        \           <lido:measurementsSet>\n              <lido:measurementType>Diameter</lido:measurementType>\n
+        \             <lido:measurementUnit>Centimeters</lido:measurementUnit>\n              <lido:measurementValue>0</lido:measurementValue>\n
+        \           </lido:measurementsSet>\n            <lido:extentMeasurements>Volledig</lido:extentMeasurements>\n
+        \         </lido:objectMeasurements>\n        </lido:objectMeasurementsSet>\n
+        \     </lido:objectMeasurementsWrap>\n    </lido:objectIdentificationWrap>\n
+        \   <lido:eventWrap>\n      <lido:eventSet>\n        <lido:event>\n          <lido:eventType>\n
+        \           <lido:term>production</lido:term>\n          </lido:eventType>\n
+        \         <lido:eventActor>\n            <lido:actorInRole>\n              <lido:actor>\n
+        \               <lido:actorID lido:type=\"local\" lido:source=\"TMS\">2596</lido:actorID>\n
+        \               <lido:actorID lido:type=\"purl\" lido:source=\"VIAF\">http://viaf.org/viaf/109890866</lido:actorID>\n
+        \               <lido:actorID lido:type=\"purl\" lido:source=\"RKD\">https://rkd.nl/explore/artists/72098</lido:actorID>\n
+        \               <lido:actorID lido:type=\"purl\" lido:source=\"Wikidata\">http://www.wikidata.org/wiki/Q548860</lido:actorID>\n
+        \               <lido:nameActorSet>\n                  <lido:appellationValue
+        lido:pref=\"preferred\">Michel Seuphor</lido:appellationValue>\n                  <lido:appellationValue
+        lido:pref=\"alternate\">Michel Seuphor</lido:appellationValue>\n                </lido:nameActorSet>\n
+        \               <lido:vitalDatesActor>\n                  <lido:earliestDate>1901</lido:earliestDate>\n
+        \                 <lido:latestDate>1999</lido:latestDate>\n                </lido:vitalDatesActor>\n
+        \             </lido:actor>\n              <lido:roleActor>\n                <lido:term>tekenaar</lido:term>\n
+        \             </lido:roleActor>\n            </lido:actorInRole>\n          </lido:eventActor>\n
+        \         <lido:eventDate>\n            <lido:displayDate>(1980)</lido:displayDate>\n
+        \           <lido:date>\n              <lido:earliestDate>1980</lido:earliestDate>\n
+        \             <lido:latestDate>1980</lido:latestDate>\n            </lido:date>\n
+        \         </lido:eventDate>\n          <lido:periodName>\n            <lido:term
+        xml:lang=\"nl\">20ste eeuw</lido:term>\n          </lido:periodName>\n          <lido:eventMaterialsTech>\n
+        \           <lido:displayMaterialsTech>inkt op papier en collage</lido:displayMaterialsTech>\n
+        \         </lido:eventMaterialsTech>\n        </lido:event>\n      </lido:eventSet>\n
+        \   </lido:eventWrap>\n    <lido:objectRelationWrap>\n      <lido:relatedWorksWrap>\n
+        \       <lido:relatedWorkSet>\n          <lido:relatedWork>\n            <lido:object>\n
+        \             <lido:objectID lido:type=\"local\" lido:source=\"TMS\">4059/1-6</lido:objectID>\n
+        \             <lido:objectID lido:type=\"oai\">oai:datahub.vlaamsekunstcollectie.be:kmska.be:1nxd4p</lido:objectID>\n
+        \           </lido:object>\n          </lido:relatedWork>\n          <lido:relatedWorkRelType>\n
+        \           <lido:conceptID lido:type=\"local\" lido:source=\"TMS\">0</lido:conceptID>\n
+        \           <lido:conceptID lido:pref=\"preferred\" lido:type=\"URI\">http://purl.org/dc/terms/isPartOf</lido:conceptID>\n
+        \           <lido:term>deel van</lido:term>\n            <lido:term lido:pref=\"preferred\"
+        xml:lang=\"en\">Is Part Of</lido:term>\n          </lido:relatedWorkRelType>\n
+        \       </lido:relatedWorkSet>\n        <lido:relatedWorkSet>\n          <lido:relatedWork>\n
+        \           <lido:object>\n              <lido:objectID lido:type=\"local\"
+        lido:source=\"TMS\">4059/1-6</lido:objectID>\n              <lido:objectID
+        lido:type=\"oai\">oai:datahub.vlaamsekunstcollectie.be:kmska.be:1nxd4p</lido:objectID>\n
+        \           </lido:object>\n          </lido:relatedWork>\n          <lido:relatedWorkRelType>\n
+        \           <lido:conceptID lido:type=\"local\" lido:source=\"TMS\">0</lido:conceptID>\n
+        \           <lido:conceptID lido:pref=\"preferred\" lido:type=\"URI\">http://purl.org/dc/terms/isPartOf</lido:conceptID>\n
+        \           <lido:term>deel van</lido:term>\n            <lido:term lido:pref=\"preferred\"
+        xml:lang=\"en\">Is Part Of</lido:term>\n          </lido:relatedWorkRelType>\n
+        \       </lido:relatedWorkSet>\n      </lido:relatedWorksWrap>\n    </lido:objectRelationWrap>\n
+        \ </lido:descriptiveMetadata>\n  <lido:administrativeMetadata xml:lang=\"nl\">\n
+        \   <lido:rightsWorkWrap>\n      <lido:rightsWorkSet>\n        <lido:creditLine>\xA9
+        SABAM Belgium</lido:creditLine>\n      </lido:rightsWorkSet>\n    </lido:rightsWorkWrap>\n
+        \   <lido:recordWrap>\n      <lido:recordID lido:type=\"global\">http://kmska.be/collection/work/data/1nxd4p</lido:recordID>\n
+        \     <lido:recordID lido:type=\"local\">23773</lido:recordID>\n      <lido:recordType>\n
+        \       <lido:conceptID lido:type=\"local\" lido:source=\"AAT\">http://vocab.getty.edu/aat/300133025</lido:conceptID>\n
+        \       <lido:term>Item</lido:term>\n      </lido:recordType>\n      <lido:recordSource>\n
+        \       <lido:legalBodyID lido:type=\"local\" lido:source=\"TMS\">1</lido:legalBodyID>\n
+        \       <lido:legalBodyName>\n          <lido:appellationValue>Koninklijk
+        Museum voor Schone Kunsten Antwerpen</lido:appellationValue>\n        </lido:legalBodyName>\n
+        \       <lido:legalBodyWeblink>http://kmska.be</lido:legalBodyWeblink>\n      </lido:recordSource>\n
+        \   </lido:recordWrap>\n    <lido:resourceWrap>\n      <lido:resourceSet>\n
+        \       <lido:resourceID lido:type=\"purl\" lido:label=\"representationPID\">http://kmska.be/collection/work/representation/1nxd4p</lido:resourceID>\n
+        \       <lido:resourceRepresentation>\n          <lido:linkResource>http://kmska.be/collection/work/representation/1nxd4p</lido:linkResource>\n
+        \       </lido:resourceRepresentation>\n      </lido:resourceSet>\n    </lido:resourceWrap>\n
+        \ </lido:administrativeMetadata>\n</lido:lido>\n      </metadata>\n    </record>\n
+        \   <record>\n      <header>\n        <identifier>oai:datahub.vlaamsekunstcollectie.be:kmska.be:b0uxmv</identifier>\n
+        \       <datestamp>2021-05-26T21:18:09Z</datestamp>\n      </header>\n      <metadata>\n
+        \       <lido:lido xmlns:gml=\"http://www.opengis.net/gml\" xmlns:lido=\"http://www.lido-schema.org\"
+        xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n  <lido:lidoRecID lido:pref=\"alternate\"
+        lido:type=\"purl\" lido:source=\"Koninklijk Museum voor Schone Kunsten Antwerpen\"
+        lido:label=\"dataPID\">http://kmska.be/collection/work/data/b0uxmv</lido:lidoRecID>\n
+        \ <lido:lidoRecID lido:pref=\"preferred\" lido:type=\"urn\" lido:source=\"Vlaamse
+        Kunstcollectie - Arthub Flanders\" lido:label=\"dataPID\">oai:datahub.vlaamsekunstcollectie.be:kmska.be:b0uxmv</lido:lidoRecID>\n
+        \ <lido:objectPublishedID lido:type=\"purl\" lido:source=\"Koninklijk Museum
+        voor Schone Kunsten Antwerpen\" lido:label=\"workPID\">http://kmska.be/collection/work/id/b0uxmv</lido:objectPublishedID>\n
+        \ <lido:category>\n    <lido:conceptID lido:type=\"purl\" lido:source=\"cidoc-crm\">http://www.cidoc-crm.org/Entity/e22-man-made-object/version-6.1</lido:conceptID>\n
+        \   <lido:term>Man-Made Object</lido:term>\n  </lido:category>\n  <lido:descriptiveMetadata
+        xml:lang=\"nl\">\n    <lido:objectClassificationWrap>\n      <lido:objectWorkTypeWrap>\n
+        \       <lido:objectWorkType>\n          <lido:term/>\n        </lido:objectWorkType>\n
+        \     </lido:objectWorkTypeWrap>\n      <lido:classificationWrap>\n        <lido:classification
+        lido:type=\"object-category\">\n          <lido:conceptID lido:pref=\"preferred\"
+        lido:type=\"local\" lido:source=\"TMS\">15</lido:conceptID>\n          <lido:conceptID
+        lido:pref=\"alternate\" lido:type=\"purl\" lido:source=\"AAT\">http://vocab.getty.edu/aat/300033973</lido:conceptID>\n
+        \         <lido:term lido:pref=\"preferred\" xml:lang=\"nl\">tekening</lido:term>\n
+        \         <lido:term lido:pref=\"alternate\" xml:lang=\"nl\">tekeningen</lido:term>\n
+        \       </lido:classification>\n      </lido:classificationWrap>\n    </lido:objectClassificationWrap>\n
+        \   <lido:objectIdentificationWrap>\n      <lido:titleWrap>\n        <lido:titleSet>\n
+        \         <lido:appellationValue lido:pref=\"preferred\" xml:lang=\"nl\">Allegro
+        pizzicato</lido:appellationValue>\n          <lido:appellationValue lido:pref=\"preferred\"
+        xml:lang=\"en\">Allegro pizzicato</lido:appellationValue>\n          <lido:sourceAppellation
+        xml:lang=\"nl\">56125</lido:sourceAppellation>\n          <lido:sourceAppellation
+        xml:lang=\"en\">56127</lido:sourceAppellation>\n        </lido:titleSet>\n
+        \     </lido:titleWrap>\n      <lido:repositoryWrap>\n        <lido:repositorySet>\n
+        \         <lido:repositoryName>\n            <lido:legalBodyID lido:type=\"local\"
+        lido:source=\"TMS\">1</lido:legalBodyID>\n            <lido:legalBodyName>\n
+        \             <lido:appellationValue>Koninklijk Museum voor Schone Kunsten
+        Antwerpen</lido:appellationValue>\n            </lido:legalBodyName>\n          </lido:repositoryName>\n
+        \         <lido:workID lido:type=\"object-number\">4062/3</lido:workID>\n
+        \       </lido:repositorySet>\n      </lido:repositoryWrap>\n      <lido:objectMeasurementsWrap>\n
+        \       <lido:objectMeasurementsSet>\n          <lido:displayObjectMeasurements>670
+        \xD7 510 mm</lido:displayObjectMeasurements>\n          <lido:objectMeasurements>\n
+        \           <lido:measurementsSet>\n              <lido:measurementType>Hoogte</lido:measurementType>\n
+        \             <lido:measurementUnit>Millimeters</lido:measurementUnit>\n              <lido:measurementValue>67</lido:measurementValue>\n
+        \           </lido:measurementsSet>\n            <lido:extentMeasurements>Volledig</lido:extentMeasurements>\n
+        \         </lido:objectMeasurements>\n        </lido:objectMeasurementsSet>\n
+        \       <lido:objectMeasurementsSet>\n          <lido:displayObjectMeasurements>670
+        \xD7 510 mm</lido:displayObjectMeasurements>\n          <lido:objectMeasurements>\n
+        \           <lido:measurementsSet>\n              <lido:measurementType>Breedte</lido:measurementType>\n
+        \             <lido:measurementUnit>Millimeters</lido:measurementUnit>\n              <lido:measurementValue>51</lido:measurementValue>\n
+        \           </lido:measurementsSet>\n            <lido:extentMeasurements>Volledig</lido:extentMeasurements>\n
+        \         </lido:objectMeasurements>\n        </lido:objectMeasurementsSet>\n
+        \       <lido:objectMeasurementsSet>\n          <lido:displayObjectMeasurements>670
+        \xD7 510 mm</lido:displayObjectMeasurements>\n          <lido:objectMeasurements>\n
+        \           <lido:measurementsSet>\n              <lido:measurementType>Diepte</lido:measurementType>\n
+        \             <lido:measurementUnit>Centimeters</lido:measurementUnit>\n              <lido:measurementValue>0</lido:measurementValue>\n
+        \           </lido:measurementsSet>\n            <lido:extentMeasurements>Volledig</lido:extentMeasurements>\n
+        \         </lido:objectMeasurements>\n        </lido:objectMeasurementsSet>\n
+        \       <lido:objectMeasurementsSet>\n          <lido:displayObjectMeasurements>670
+        \xD7 510 mm</lido:displayObjectMeasurements>\n          <lido:objectMeasurements>\n
+        \           <lido:measurementsSet>\n              <lido:measurementType>Diameter</lido:measurementType>\n
+        \             <lido:measurementUnit>Centimeters</lido:measurementUnit>\n              <lido:measurementValue>0</lido:measurementValue>\n
+        \           </lido:measurementsSet>\n            <lido:extentMeasurements>Volledig</lido:extentMeasurements>\n
+        \         </lido:objectMeasurements>\n        </lido:objectMeasurementsSet>\n
+        \     </lido:objectMeasurementsWrap>\n    </lido:objectIdentificationWrap>\n
+        \   <lido:eventWrap>\n      <lido:eventSet>\n        <lido:event>\n          <lido:eventType>\n
+        \           <lido:term>production</lido:term>\n          </lido:eventType>\n
+        \         <lido:eventActor>\n            <lido:actorInRole>\n              <lido:actor>\n
+        \               <lido:actorID lido:type=\"local\" lido:source=\"TMS\">2596</lido:actorID>\n
+        \               <lido:actorID lido:type=\"purl\" lido:source=\"VIAF\">http://viaf.org/viaf/109890866</lido:actorID>\n
+        \               <lido:actorID lido:type=\"purl\" lido:source=\"RKD\">https://rkd.nl/explore/artists/72098</lido:actorID>\n
+        \               <lido:actorID lido:type=\"purl\" lido:source=\"Wikidata\">http://www.wikidata.org/wiki/Q548860</lido:actorID>\n
+        \               <lido:nameActorSet>\n                  <lido:appellationValue
+        lido:pref=\"preferred\">Michel Seuphor</lido:appellationValue>\n                  <lido:appellationValue
+        lido:pref=\"alternate\">Michel Seuphor</lido:appellationValue>\n                </lido:nameActorSet>\n
+        \               <lido:vitalDatesActor>\n                  <lido:earliestDate>1901</lido:earliestDate>\n
+        \                 <lido:latestDate>1999</lido:latestDate>\n                </lido:vitalDatesActor>\n
+        \             </lido:actor>\n              <lido:roleActor>\n                <lido:term>tekenaar</lido:term>\n
+        \             </lido:roleActor>\n            </lido:actorInRole>\n          </lido:eventActor>\n
+        \         <lido:eventDate>\n            <lido:displayDate>1980</lido:displayDate>\n
+        \           <lido:date>\n              <lido:earliestDate>1980</lido:earliestDate>\n
+        \             <lido:latestDate>1980</lido:latestDate>\n            </lido:date>\n
+        \         </lido:eventDate>\n          <lido:periodName>\n            <lido:term
+        xml:lang=\"nl\">20ste eeuw</lido:term>\n          </lido:periodName>\n          <lido:eventMaterialsTech>\n
+        \           <lido:displayMaterialsTech>inkt en collage op papier</lido:displayMaterialsTech>\n
+        \         </lido:eventMaterialsTech>\n        </lido:event>\n      </lido:eventSet>\n
+        \   </lido:eventWrap>\n    <lido:objectRelationWrap>\n      <lido:relatedWorksWrap>\n
+        \       <lido:relatedWorkSet>\n          <lido:relatedWork>\n            <lido:object>\n
+        \             <lido:objectID lido:type=\"local\" lido:source=\"TMS\">4062/1-3</lido:objectID>\n
+        \             <lido:objectID lido:type=\"oai\">oai:datahub.vlaamsekunstcollectie.be:kmska.be:b0uxmv</lido:objectID>\n
+        \           </lido:object>\n          </lido:relatedWork>\n          <lido:relatedWorkRelType>\n
+        \           <lido:conceptID lido:type=\"local\" lido:source=\"TMS\">0</lido:conceptID>\n
+        \           <lido:conceptID lido:pref=\"preferred\" lido:type=\"URI\">http://purl.org/dc/terms/isPartOf</lido:conceptID>\n
+        \           <lido:term>deel van</lido:term>\n            <lido:term lido:pref=\"preferred\"
+        xml:lang=\"en\">Is Part Of</lido:term>\n          </lido:relatedWorkRelType>\n
+        \       </lido:relatedWorkSet>\n        <lido:relatedWorkSet>\n          <lido:relatedWork>\n
+        \           <lido:object>\n              <lido:objectID lido:type=\"local\"
+        lido:source=\"TMS\">4062/1-3</lido:objectID>\n              <lido:objectID
+        lido:type=\"oai\">oai:datahub.vlaamsekunstcollectie.be:kmska.be:b0uxmv</lido:objectID>\n
+        \           </lido:object>\n          </lido:relatedWork>\n          <lido:relatedWorkRelType>\n
+        \           <lido:conceptID lido:type=\"local\" lido:source=\"TMS\">0</lido:conceptID>\n
+        \           <lido:conceptID lido:pref=\"preferred\" lido:type=\"URI\">http://purl.org/dc/terms/isPartOf</lido:conceptID>\n
+        \           <lido:term>deel van</lido:term>\n            <lido:term lido:pref=\"preferred\"
+        xml:lang=\"en\">Is Part Of</lido:term>\n          </lido:relatedWorkRelType>\n
+        \       </lido:relatedWorkSet>\n      </lido:relatedWorksWrap>\n    </lido:objectRelationWrap>\n
+        \ </lido:descriptiveMetadata>\n  <lido:administrativeMetadata xml:lang=\"nl\">\n
+        \   <lido:rightsWorkWrap>\n      <lido:rightsWorkSet>\n        <lido:creditLine>\xA9
+        SABAM Belgium</lido:creditLine>\n      </lido:rightsWorkSet>\n    </lido:rightsWorkWrap>\n
+        \   <lido:recordWrap>\n      <lido:recordID lido:type=\"global\">http://kmska.be/collection/work/data/b0uxmv</lido:recordID>\n
+        \     <lido:recordID lido:type=\"local\">23796</lido:recordID>\n      <lido:recordType>\n
+        \       <lido:conceptID lido:type=\"local\" lido:source=\"AAT\">http://vocab.getty.edu/aat/300133025</lido:conceptID>\n
+        \       <lido:term>Item</lido:term>\n      </lido:recordType>\n      <lido:recordSource>\n
+        \       <lido:legalBodyID lido:type=\"local\" lido:source=\"TMS\">1</lido:legalBodyID>\n
+        \       <lido:legalBodyName>\n          <lido:appellationValue>Koninklijk
+        Museum voor Schone Kunsten Antwerpen</lido:appellationValue>\n        </lido:legalBodyName>\n
+        \       <lido:legalBodyWeblink>http://kmska.be</lido:legalBodyWeblink>\n      </lido:recordSource>\n
+        \   </lido:recordWrap>\n    <lido:resourceWrap>\n      <lido:resourceSet>\n
+        \       <lido:resourceID lido:type=\"purl\" lido:label=\"representationPID\">http://kmska.be/collection/work/representation/b0uxmv</lido:resourceID>\n
+        \       <lido:resourceRepresentation>\n          <lido:linkResource>http://kmska.be/collection/work/representation/b0uxmv</lido:linkResource>\n
+        \       </lido:resourceRepresentation>\n      </lido:resourceSet>\n    </lido:resourceWrap>\n
+        \ </lido:administrativeMetadata>\n</lido:lido>\n      </metadata>\n    </record>\n
+        \   <resumptionToken completeListSize=\"12\"/>\n  </ListRecords>\n</OAI-PMH>\n"
+    headers:
+      Cache-Control:
+      - no-cache
+      Connection:
+      - close
+      Content-Type:
+      - text/xml; charset=utf8
+      Date:
+      - Tue, 08 Jun 2021 14:28:49 GMT
+      Server:
+      - Apache/2.4.6 (CentOS)
+      Vary:
+      - Accept-Encoding
+      X-Powered-By:
+      - PHP/7.2.19
+      content-length:
+      - '133547'
+    status:
+      code: 200
+      message: OK
+version: 1

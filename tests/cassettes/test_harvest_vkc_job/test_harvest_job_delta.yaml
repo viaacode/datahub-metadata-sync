@@ -1,0 +1,132 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.25.1
+    method: GET
+    uri: http://datahub.vlaamsekunstcollectie.be/oai/?verb=ListRecords&from=2021-05-26T21%3A18%3A22Z&metadataPrefix=oai_lido
+  response:
+    body:
+      string: "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<OAI-PMH xmlns=\"http://www.openarchives.org/OAI/2.0/\"
+        xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.openarchives.org/OAI/2.0/
+        http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd\">\n  <responseDate>2021-06-08T14:28:49Z</responseDate>\n
+        \ <request verb=\"ListRecords\" from=\"2021-05-26T21:18:22Z\" metadataPrefix=\"oai_lido\">http://datahub.vlaamsekunstcollectie.be</request>\n
+        \ <ListRecords>\n    <record>\n      <header>\n        <identifier>oai:datahub.vlaamsekunstcollectie.be:(not
+        assigned)</identifier>\n        <datestamp>2021-05-26T21:18:22Z</datestamp>\n
+        \     </header>\n      <metadata>\n        <lido:lido xmlns:gml=\"http://www.opengis.net/gml\"
+        xmlns:lido=\"http://www.lido-schema.org\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n
+        \ <lido:lidoRecID lido:pref=\"alternate\" lido:type=\"purl\" lido:source=\"Koninklijk
+        Museum voor Schone Kunsten Antwerpen\" lido:label=\"dataPID\">(not assigned)</lido:lidoRecID>\n
+        \ <lido:lidoRecID lido:pref=\"preferred\" lido:type=\"urn\" lido:source=\"Vlaamse
+        Kunstcollectie - Arthub Flanders\" lido:label=\"dataPID\">oai:datahub.vlaamsekunstcollectie.be:(not
+        assigned)</lido:lidoRecID>\n  <lido:objectPublishedID lido:type=\"purl\" lido:source=\"Koninklijk
+        Museum voor Schone Kunsten Antwerpen\" lido:label=\"workPID\">(not assigned)</lido:objectPublishedID>\n
+        \ <lido:category>\n    <lido:conceptID lido:type=\"purl\" lido:source=\"cidoc-crm\">http://www.cidoc-crm.org/Entity/e22-man-made-object/version-6.1</lido:conceptID>\n
+        \   <lido:term>Man-Made Object</lido:term>\n  </lido:category>\n  <lido:descriptiveMetadata
+        xml:lang=\"nl\">\n    <lido:objectClassificationWrap>\n      <lido:objectWorkTypeWrap>\n
+        \       <lido:objectWorkType>\n          <lido:term/>\n        </lido:objectWorkType>\n
+        \     </lido:objectWorkTypeWrap>\n      <lido:classificationWrap>\n        <lido:classification
+        lido:type=\"object-category\">\n          <lido:conceptID lido:pref=\"preferred\"
+        lido:type=\"local\" lido:source=\"TMS\">12</lido:conceptID>\n          <lido:term
+        lido:pref=\"preferred\" xml:lang=\"nl\">schilderij</lido:term>\n        </lido:classification>\n
+        \     </lido:classificationWrap>\n    </lido:objectClassificationWrap>\n    <lido:objectIdentificationWrap>\n
+        \     <lido:titleWrap>\n        <lido:titleSet>\n          <lido:appellationValue
+        lido:pref=\"preferred\" xml:lang=\"en\">Head of a Man in Profile</lido:appellationValue>\n
+        \         <lido:sourceAppellation xml:lang=\"en\">56297</lido:sourceAppellation>\n
+        \       </lido:titleSet>\n      </lido:titleWrap>\n      <lido:repositoryWrap>\n
+        \       <lido:repositorySet>\n          <lido:repositoryName>\n            <lido:legalBodyID
+        lido:type=\"local\" lido:source=\"TMS\">15</lido:legalBodyID>\n            <lido:legalBodyName>\n
+        \             <lido:appellationValue>Tentoonstellingen</lido:appellationValue>\n
+        \           </lido:legalBodyName>\n          </lido:repositoryName>\n          <lido:workID
+        lido:type=\"object-number\">T2023.065-1</lido:workID>\n        </lido:repositorySet>\n
+        \     </lido:repositoryWrap>\n      <lido:objectMeasurementsWrap>\n        <lido:objectMeasurementsSet>\n
+        \         <lido:displayObjectMeasurements>49,1 \xD7 37,2 cm</lido:displayObjectMeasurements>\n
+        \         <lido:objectMeasurements>\n            <lido:measurementsSet>\n
+        \             <lido:measurementType>Hoogte</lido:measurementType>\n              <lido:measurementUnit>Centimeters</lido:measurementUnit>\n
+        \             <lido:measurementValue>49.1</lido:measurementValue>\n            </lido:measurementsSet>\n
+        \           <lido:extentMeasurements>Volledig</lido:extentMeasurements>\n
+        \         </lido:objectMeasurements>\n        </lido:objectMeasurementsSet>\n
+        \       <lido:objectMeasurementsSet>\n          <lido:displayObjectMeasurements>49,1
+        \xD7 37,2 cm</lido:displayObjectMeasurements>\n          <lido:objectMeasurements>\n
+        \           <lido:measurementsSet>\n              <lido:measurementType>Breedte</lido:measurementType>\n
+        \             <lido:measurementUnit>Centimeters</lido:measurementUnit>\n              <lido:measurementValue>37.2</lido:measurementValue>\n
+        \           </lido:measurementsSet>\n            <lido:extentMeasurements>Volledig</lido:extentMeasurements>\n
+        \         </lido:objectMeasurements>\n        </lido:objectMeasurementsSet>\n
+        \       <lido:objectMeasurementsSet>\n          <lido:displayObjectMeasurements>49,1
+        \xD7 37,2 cm</lido:displayObjectMeasurements>\n          <lido:objectMeasurements>\n
+        \           <lido:measurementsSet>\n              <lido:measurementType>Diepte</lido:measurementType>\n
+        \             <lido:measurementUnit>Centimeters</lido:measurementUnit>\n              <lido:measurementValue>0</lido:measurementValue>\n
+        \           </lido:measurementsSet>\n            <lido:extentMeasurements>Volledig</lido:extentMeasurements>\n
+        \         </lido:objectMeasurements>\n        </lido:objectMeasurementsSet>\n
+        \       <lido:objectMeasurementsSet>\n          <lido:displayObjectMeasurements>49,1
+        \xD7 37,2 cm</lido:displayObjectMeasurements>\n          <lido:objectMeasurements>\n
+        \           <lido:measurementsSet>\n              <lido:measurementType>Diameter</lido:measurementType>\n
+        \             <lido:measurementUnit>Centimeters</lido:measurementUnit>\n              <lido:measurementValue>0</lido:measurementValue>\n
+        \           </lido:measurementsSet>\n            <lido:extentMeasurements>Volledig</lido:extentMeasurements>\n
+        \         </lido:objectMeasurements>\n        </lido:objectMeasurementsSet>\n
+        \     </lido:objectMeasurementsWrap>\n    </lido:objectIdentificationWrap>\n
+        \   <lido:eventWrap>\n      <lido:eventSet>\n        <lido:event>\n          <lido:eventType>\n
+        \           <lido:term>production</lido:term>\n          </lido:eventType>\n
+        \         <lido:eventActor>\n            <lido:actorInRole>\n              <lido:actor>\n
+        \               <lido:actorID lido:type=\"local\" lido:source=\"TMS\">2469</lido:actorID>\n
+        \               <lido:actorID lido:type=\"purl\" lido:source=\"VIAF\">http://viaf.org/viaf/56647196</lido:actorID>\n
+        \               <lido:actorID lido:type=\"purl\" lido:source=\"RKD\">https://rkd.nl/explore/artists/68737</lido:actorID>\n
+        \               <lido:actorID lido:type=\"purl\" lido:source=\"Wikidata\">http://www.wikidata.org/wiki/Q5599</lido:actorID>\n
+        \               <lido:nameActorSet>\n                  <lido:appellationValue
+        lido:pref=\"preferred\">Peter Paul Rubens</lido:appellationValue>\n                  <lido:appellationValue
+        lido:pref=\"alternate\">Peter Paul Rubens</lido:appellationValue>\n                </lido:nameActorSet>\n
+        \               <lido:vitalDatesActor>\n                  <lido:earliestDate>1577</lido:earliestDate>\n
+        \                 <lido:latestDate>1640</lido:latestDate>\n                </lido:vitalDatesActor>\n
+        \             </lido:actor>\n              <lido:roleActor>\n                <lido:term>schilder</lido:term>\n
+        \             </lido:roleActor>\n            </lido:actorInRole>\n          </lido:eventActor>\n
+        \         <lido:periodName>\n            <lido:term xml:lang=\"nl\"/>\n          </lido:periodName>\n
+        \         <lido:eventMaterialsTech>\n            <lido:displayMaterialsTech>olieverf
+        op paneel</lido:displayMaterialsTech>\n          </lido:eventMaterialsTech>\n
+        \       </lido:event>\n      </lido:eventSet>\n    </lido:eventWrap>\n  </lido:descriptiveMetadata>\n
+        \ <lido:administrativeMetadata xml:lang=\"nl\">\n    <lido:rightsWorkWrap>\n
+        \     <lido:rightsWorkSet>\n        <lido:rightsType>\n          <lido:conceptID
+        lido:type=\"purl\" lido:source=\"Creative Commons\">https://creativecommons.org/publicdomain/zero/1.0/</lido:conceptID>\n
+        \         <lido:term>CC0</lido:term>\n        </lido:rightsType>\n        <lido:creditLine>CC0</lido:creditLine>\n
+        \     </lido:rightsWorkSet>\n    </lido:rightsWorkWrap>\n    <lido:recordWrap>\n
+        \     <lido:recordID lido:type=\"global\">(not assigned)</lido:recordID>\n
+        \     <lido:recordID lido:type=\"local\">23865</lido:recordID>\n      <lido:recordType>\n
+        \       <lido:conceptID lido:type=\"local\" lido:source=\"AAT\">http://vocab.getty.edu/aat/300133025</lido:conceptID>\n
+        \       <lido:term>Item</lido:term>\n      </lido:recordType>\n      <lido:recordSource>\n
+        \       <lido:legalBodyID lido:type=\"local\" lido:source=\"TMS\">15</lido:legalBodyID>\n
+        \       <lido:legalBodyName>\n          <lido:appellationValue>Tentoonstellingen</lido:appellationValue>\n
+        \       </lido:legalBodyName>\n        <lido:legalBodyWeblink>http://kmska.be</lido:legalBodyWeblink>\n
+        \     </lido:recordSource>\n    </lido:recordWrap>\n    <lido:resourceWrap>\n
+        \     <lido:resourceSet>\n        <lido:resourceID lido:type=\"purl\" lido:label=\"representationPID\">(not
+        assigned)</lido:resourceID>\n        <lido:resourceRepresentation>\n          <lido:linkResource>(not
+        assigned)</lido:linkResource>\n        </lido:resourceRepresentation>\n      </lido:resourceSet>\n
+        \   </lido:resourceWrap>\n  </lido:administrativeMetadata>\n</lido:lido>\n
+        \     </metadata>\n    </record>\n    <resumptionToken completeListSize=\"1\"/>\n
+        \ </ListRecords>\n</OAI-PMH>\n"
+    headers:
+      Cache-Control:
+      - no-cache
+      Connection:
+      - close
+      Content-Type:
+      - text/xml; charset=utf8
+      Date:
+      - Tue, 08 Jun 2021 14:28:49 GMT
+      Server:
+      - Apache/2.4.6 (CentOS)
+      Vary:
+      - Accept-Encoding
+      X-Powered-By:
+      - PHP/7.2.19
+      content-length:
+      - '8793'
+    status:
+      code: 200
+      message: OK
+version: 1
