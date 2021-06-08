@@ -85,5 +85,7 @@ def test_xml_transformations():
 
     # __import__('pdb').set_trace()
     # TODO: further test the converted mam_xml is actually inserted here!
+    # right now our current transformer task kinda fails silently, we need to
+    # improve this and add more tests for these cases here!
     assert 'UPDATE harvest_vkc' in update_conn.qry_history()[0]
     assert 'UPDATE harvest_vkc' in update_conn.qry_history()[1]
