@@ -48,15 +48,19 @@ class HarvestTable:
             return None
 
     @staticmethod
-    def insert(cursor, record):
-        cursor.execute(
-            """
+    def insert_qry():
+        return """
             INSERT INTO harvest_vkc (
                 work_id, vkc_xml, mam_xml, datestamp,
                 aanbieder, min_breedte_cm, max_breedte_cm
             )
             VALUES(%s, %s, NULL, %s, %s, %s, %s)
-            """,
+            """
+
+    @staticmethod
+    def insert(cursor, record):
+        cursor.execute(
+            HarvestTable.insert_qry(),
             (
                 record['work_id'], record['xml'], record['datestamp'],
                 record['aanbieder'], record['min_breedte_cm'],

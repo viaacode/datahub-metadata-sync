@@ -1,0 +1,58 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept:
+      - application/vnd.mediahaven.v2+json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.25.1
+    method: GET
+    uri: https://archief-qas.viaa.be/mediahaven-rest-api/resources/media/?q=%2B(Type:image)%2B(dc_identifier_localidsinventarisnummer:*)&startIndex=0&nrOfResults=3
+  response:
+    body:
+      string: "{\"TotalNrOfResults\":180,\"StartIndex\":0,\"MediaDataList\":[]}"
+    headers:
+      Cache-Control:
+      - no-store, must-revalidate, pre-check=0, post-check=0, max-age=0, s-maxage=0
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/vnd.mediahaven.v2+json
+      Date:
+      - Tue, 08 Jun 2021 15:51:03 GMT
+      Expires:
+      - '0'
+      Pragma:
+      - no-cache
+      Server:
+      - nginx/1.19.0
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Transfer-Encoding:
+      - chunked
+      Via:
+      - kong/0.13.1
+      X-Correlation-ID:
+      - 0ad3a600c0b2b17c885277c8196e680a
+      X-Kong-Proxy-Latency:
+      - '0'
+      X-Kong-Upstream-Latency:
+      - '672'
+      X-MediaHavenVersion:
+      - '21.1'
+      X-RateLimit-Limit-second:
+      - '10'
+      X-RateLimit-Remaining-second:
+      - '9'
+      x-forwarded-proto:
+      - https
+    status:
+      code: 200
+      message: ''
+version: 1

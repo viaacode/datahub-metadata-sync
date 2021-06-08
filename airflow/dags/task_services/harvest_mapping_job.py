@@ -7,13 +7,14 @@
 #
 #   Calls mediahaven api to request all inventaris nummers
 #   of images in order to build a mapping table with work_id
-#   and assiciated frament_ids into MappingTable
+#   and associated frament_ids into MappingTable
 #
 
 from task_services.mediahaven_api import MediahavenApi
 from task_services.mapping_table import MappingTable
 
-BATCH_SIZE = 500
+#BATCH_SIZE = 500
+BATCH_SIZE = 3
 
 
 # find all possible images with inventaris nr's and store in db table :
@@ -29,6 +30,7 @@ def harvest_mapping_job(db_connection, full_sync=False):
     print(f"Found {total_records} inventarisnummers.")
     if not full_sync and (mapping_count == total_records):
         print("Using existing mapping table mapping_vkc.")
+        db_connection.close()
         return
 
     # rebuild table from scratch
@@ -46,6 +48,10 @@ def harvest_mapping_job(db_connection, full_sync=False):
         offset += BATCH_SIZE
         result = mh_api.list_inventaris(offset, BATCH_SIZE)
         records = result['MediaDataList']
+
+        # add this break to create a smaller pytest-recording
+        # if offset > 6:
+        #    break
 
     db_connection.commit()
     db_connection.close()

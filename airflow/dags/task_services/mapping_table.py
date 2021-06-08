@@ -43,15 +43,19 @@ class MappingTable:
         cursor.close()
 
     @staticmethod
-    def insert(connection, record):
-        cursor = connection.cursor(cursor_factory=DictCursor)
-        cursor.execute(
-            """
+    def insert_qry():
+        return """
             INSERT INTO mapping_vkc
             (work_id, work_id_alternate, fragment_id, external_id,
             cp_id, mimetype, width_px, height_px)
             VALUES(%s, %s, %s, %s, %s, %s, %s, %s)
-            """,
+            """
+
+    @staticmethod
+    def insert(connection, record):
+        cursor = connection.cursor(cursor_factory=DictCursor)
+        cursor.execute(
+            MappingTable.insert_qry(),
             (
                 record['work_id'],
                 record['work_id_alternate'],

@@ -5,7 +5,8 @@
 #
 #  tests/test_harvest_vkc_job.py
 #
-#   This runs the harvest_vkc task both in full_sync True and False.
+#   This runs the harvest_vkc_job both with dag parameter
+#   full_sync True and False.
 #   We supply some fixture data to our MockDatabase.
 #
 
@@ -13,6 +14,7 @@ import pytest
 from airflow.dags.task_services.harvest_vkc_job import harvest_vkc_job
 from datetime import datetime
 from mock_database import MockDatabase
+
 
 def harvest_vkc_delta_fixture():
     return [
@@ -36,8 +38,9 @@ def harvest_vkc_full_fixture():
         },
         {
             'qry': 'SELECT max(datestamp)',
-            'rows': [] # real full sync returns no datestamp
-            # in our yaml file this is using from_filter = '2011-06-01T00:00:00Z'
+            'rows': []  # return empty datestamp for full sync
+            # in test_harvest_job_fullsync.yaml this is
+            # using from_filter = '2011-06-01T00:00:00Z'
             # 'rows': [datetime(2021, 5, 26, 23, 18, 1)]  # gives back +-12 results
         }
     ]
@@ -75,7 +78,7 @@ def test_harvest_job_delta():
     # set up mocked database connection with fixture data
     testdb = MockDatabase(harvest_vkc_delta_fixture())
 
-    # run delta sync
+    # run delta sync by supplying full_sync=False
     harvest_vkc_job(testdb, False)
 
     assert 'TRUNCATE TABLE harvest_vkc' not in testdb.qry_history()
