@@ -82,6 +82,7 @@ def vcr_config():
 
 
 @pytest.mark.vcr
+@mock.patch('airflow.dags.task_services.harvest_mapping_job.BATCH_SIZE', 3)
 def test_mapping_delta():
     # set up mocked database connection with fixture data
     testdb = MockDatabase(mapping_delta_fixture())
@@ -95,14 +96,13 @@ def test_mapping_delta():
 
 
 @pytest.mark.vcr
+@mock.patch('airflow.dags.task_services.harvest_mapping_job.BATCH_SIZE', 3)
 def test_mapping_full():
     # set up mocked database connection with fixture data
     testdb = MockDatabase(mapping_full_fixture())
 
     # run harvest_vkc_job full sync and patch the batch size to 3
-    # TODO: FIX THIS MOCK IS NOT WORKING YET!
-    with mock.patch('airflow.dags.task_services.harvest_mapping_job.BATCH_SIZE', 3):
-        harvest_mapping_job(testdb, full_sync=True)
+    harvest_mapping_job(testdb, full_sync=True)
 
     assert 'TRUNCATE TABLE mapping_vkc' in testdb.qry_history()
     assert insert_statement_fixture() in testdb.qry_history()

@@ -13,8 +13,7 @@
 from task_services.mediahaven_api import MediahavenApi
 from task_services.mapping_table import MappingTable
 
-#BATCH_SIZE = 500
-BATCH_SIZE = 3
+BATCH_SIZE = 500
 
 
 # find all possible images with inventaris nr's and store in db table :
