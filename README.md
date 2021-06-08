@@ -229,45 +229,62 @@ $ airflow tasks test vkc_oai_harvester push_to_rabbitmq 2021-05-01
 
 # Testing
 Using the makefile you can generate a test coverage report
+This uses sqlite3 for running the tests so we don't destroy any valuable data and also this is easier
+to integrate in our openshift tests. We use the dbfile airflow/airflow.db sqlite database in the first
+2 dag tests and for the other actual task code we test using a custom written mock_database class which is
+in tests/mock_database.py. 
 
 ```
 $ make coverage
-================================== test session starts ==================================
-platform darwin -- Python 3.8.5, pytest-5.3.5, py-1.10.0, pluggy-0.13.1
+make coverage
+DB: sqlite:////Users/wschrep/FreelanceWork/VIAA/IIIF_newproject/datahub-metadata-sync/airflow/airflow.db
+[2021-06-08 20:57:36,461] {db.py:684} INFO - Creating tables
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+WARNI [airflow.models.crypto] empty cryptography key - values will not be stored encrypted.
+Initialization done
+===================================== test session starts ======================================
+platform darwin -- Python 3.9.5, pytest-6.2.4, py-1.10.0, pluggy-0.13.1
 rootdir: /Users/wschrep/FreelanceWork/VIAA/IIIF_newproject/datahub-metadata-sync
-plugins: cov-2.8.1, mock-3.5.1
-collected 6 items
+plugins: recording-0.11.0, docker-tools-1.0.3, cov-2.8.1, mock-3.5.1
+collected 8 items                                                                              
 
-tests/test_dag_tasks.py .                                                         [ 16%]
-tests/test_harvest_dag.py .                                                       [ 33%]
-tests/test_harvest_mapping_task.py .                                              [ 50%]
-tests/test_harvest_vkc_task.py .                                                  [ 66%]
-tests/test_push_to_rabbit_task.py s                                               [ 83%]
-tests/test_transform_xml_task.py .                                                [100%]
+tests/test_dag_tasks.py .                                                                [ 12%]
+tests/test_harvest_dag.py .                                                              [ 25%]
+tests/test_harvest_mapping_job.py ..                                                     [ 50%]
+tests/test_harvest_vkc_job.py ..                                                         [ 75%]
+tests/test_pg_conn_mock.py .                                                             [ 87%]
+tests/test_transform_xml_job.py .                                                        [100%]
 
----------- coverage: platform darwin, python 3.8.5-final-0 -----------
+---------- coverage: platform darwin, python 3.9.5-final-0 -----------
 Name                                                Stmts   Miss  Cover
 -----------------------------------------------------------------------
 airflow/dags/task_services/__init__.py                  0      0   100%
-airflow/dags/task_services/harvest_table.py            52     12    77%
-airflow/dags/task_services/mapping_table.py            34     15    56%
-airflow/dags/task_services/mediahaven_api.py           48     13    73%
+airflow/dags/task_services/harvest_mapping_job.py      29      0   100%
+airflow/dags/task_services/harvest_table.py            54      5    91%
+airflow/dags/task_services/harvest_vkc_job.py          27      2    93%
+airflow/dags/task_services/mapping_table.py            37      6    84%
+airflow/dags/task_services/mediahaven_api.py           24      1    96%
+airflow/dags/task_services/publish_updates_job.py      27     22    19%
 airflow/dags/task_services/rabbit.py                   40     33    18%
 airflow/dags/task_services/rabbit_publisher.py         10      5    50%
+airflow/dags/task_services/transform_xml_job.py        29      0   100%
 airflow/dags/task_services/transformer_process.py      19      0   100%
-airflow/dags/task_services/vkc_api.py                  52      9    83%
+airflow/dags/task_services/vkc_api.py                  78     10    87%
 airflow/dags/task_services/xml_transformer.py          17      0   100%
-airflow/dags/vkc_oai_harvester.py                     115     28    76%
+airflow/dags/vkc_oai_harvester.py                      42     16    62%
 -----------------------------------------------------------------------
-TOTAL                                                 387    115    70%
+TOTAL                                                 433    100    77%
 Coverage HTML written to dir htmlcov
 
 
-============================= 5 passed, 1 skipped in 4.94s ==============================
+====================================== 8 passed in 2.04s =======================================
 ```
 
+The VkcApi and MediahavenApi data are now mocked using pytest-recorder (responses are saved as yaml files in the tests).
+The harvest_mapping and harvest_vkc are well enough tested. The xml transformer is work in progress but is already
+running some tests. 
 
-Further improving coverage and mocking db and api connections is work in progress now...
 
 
 # Docker container build
