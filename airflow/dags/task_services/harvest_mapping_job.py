@@ -49,6 +49,7 @@ def harvest_mapping_job(db_connection, full_sync=False):
         records = result['MediaDataList']
 
         # add this break to create a smaller pytest-recording
+        # in tests/cassettes/test_mapping_full.yaml
         # if offset > 6:
         #    break
 
