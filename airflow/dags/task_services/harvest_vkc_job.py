@@ -26,6 +26,7 @@ def harvest_vkc_job(db_connection, full_sync):
 
     api = VkcApi()
     records, token, total = api.list_records(from_filter=last_synced)
+
     total_count = len(records)
 
     while len(records) > 0:
