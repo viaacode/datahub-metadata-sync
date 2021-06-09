@@ -1,0 +1,169 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<ns0:record xmlns:ns0="http://www.openarchives.org/OAI/2.0/" xmlns:ns1="http://www.lido-schema.org">
+      <ns0:header>
+        <ns0:identifier>oai:datahub.vlaamsekunstcollectie.be:(not assigned)</ns0:identifier>
+        <ns0:datestamp>2021-05-26T21:18:22Z</ns0:datestamp>
+      </ns0:header>
+      <ns0:metadata>
+        <ns1:lido>
+  <ns1:lidoRecID ns1:pref="alternate" ns1:type="purl" ns1:source="Koninklijk Museum voor Schone Kunsten Antwerpen" ns1:label="dataPID">(not assigned)</ns1:lidoRecID>
+  <ns1:lidoRecID ns1:pref="preferred" ns1:type="urn" ns1:source="Vlaamse Kunstcollectie - Arthub Flanders" ns1:label="dataPID">oai:datahub.vlaamsekunstcollectie.be:(not assigned)</ns1:lidoRecID>
+  <ns1:objectPublishedID ns1:type="purl" ns1:source="Koninklijk Museum voor Schone Kunsten Antwerpen" ns1:label="workPID">(not assigned)</ns1:objectPublishedID>
+  <ns1:category>
+    <ns1:conceptID ns1:type="purl" ns1:source="cidoc-crm">http://www.cidoc-crm.org/Entity/e22-man-made-object/version-6.1</ns1:conceptID>
+    <ns1:term>Man-Made Object</ns1:term>
+  </ns1:category>
+  <ns1:descriptiveMetadata xml:lang="nl">
+    <ns1:objectClassificationWrap>
+      <ns1:objectWorkTypeWrap>
+        <ns1:objectWorkType>
+          <ns1:term />
+        </ns1:objectWorkType>
+      </ns1:objectWorkTypeWrap>
+      <ns1:classificationWrap>
+        <ns1:classification ns1:type="object-category">
+          <ns1:conceptID ns1:pref="preferred" ns1:type="local" ns1:source="TMS">12</ns1:conceptID>
+          <ns1:term ns1:pref="preferred" xml:lang="nl">schilderij</ns1:term>
+        </ns1:classification>
+      </ns1:classificationWrap>
+    </ns1:objectClassificationWrap>
+    <ns1:objectIdentificationWrap>
+      <ns1:titleWrap>
+        <ns1:titleSet>
+          <ns1:appellationValue ns1:pref="preferred" xml:lang="en">Head of a Man in Profile</ns1:appellationValue>
+          <ns1:sourceAppellation xml:lang="en">56297</ns1:sourceAppellation>
+        </ns1:titleSet>
+      </ns1:titleWrap>
+      <ns1:repositoryWrap>
+        <ns1:repositorySet>
+          <ns1:repositoryName>
+            <ns1:legalBodyID ns1:type="local" ns1:source="TMS">15</ns1:legalBodyID>
+            <ns1:legalBodyName>
+              <ns1:appellationValue>Tentoonstellingen</ns1:appellationValue>
+            </ns1:legalBodyName>
+          </ns1:repositoryName>
+          <ns1:workID ns1:type="object-number">T2023.065-1</ns1:workID>
+        </ns1:repositorySet>
+      </ns1:repositoryWrap>
+      <ns1:objectMeasurementsWrap>
+        <ns1:objectMeasurementsSet>
+          <ns1:displayObjectMeasurements>49,1 × 37,2 cm</ns1:displayObjectMeasurements>
+          <ns1:objectMeasurements>
+            <ns1:measurementsSet>
+              <ns1:measurementType>Hoogte</ns1:measurementType>
+              <ns1:measurementUnit>Centimeters</ns1:measurementUnit>
+              <ns1:measurementValue>49.1</ns1:measurementValue>
+            </ns1:measurementsSet>
+            <ns1:extentMeasurements>Volledig</ns1:extentMeasurements>
+          </ns1:objectMeasurements>
+        </ns1:objectMeasurementsSet>
+        <ns1:objectMeasurementsSet>
+          <ns1:displayObjectMeasurements>49,1 × 37,2 cm</ns1:displayObjectMeasurements>
+          <ns1:objectMeasurements>
+            <ns1:measurementsSet>
+              <ns1:measurementType>Breedte</ns1:measurementType>
+              <ns1:measurementUnit>Centimeters</ns1:measurementUnit>
+              <ns1:measurementValue>37.2</ns1:measurementValue>
+            </ns1:measurementsSet>
+            <ns1:extentMeasurements>Volledig</ns1:extentMeasurements>
+          </ns1:objectMeasurements>
+        </ns1:objectMeasurementsSet>
+        <ns1:objectMeasurementsSet>
+          <ns1:displayObjectMeasurements>49,1 × 37,2 cm</ns1:displayObjectMeasurements>
+          <ns1:objectMeasurements>
+            <ns1:measurementsSet>
+              <ns1:measurementType>Diepte</ns1:measurementType>
+              <ns1:measurementUnit>Centimeters</ns1:measurementUnit>
+              <ns1:measurementValue>0</ns1:measurementValue>
+            </ns1:measurementsSet>
+            <ns1:extentMeasurements>Volledig</ns1:extentMeasurements>
+          </ns1:objectMeasurements>
+        </ns1:objectMeasurementsSet>
+        <ns1:objectMeasurementsSet>
+          <ns1:displayObjectMeasurements>49,1 × 37,2 cm</ns1:displayObjectMeasurements>
+          <ns1:objectMeasurements>
+            <ns1:measurementsSet>
+              <ns1:measurementType>Diameter</ns1:measurementType>
+              <ns1:measurementUnit>Centimeters</ns1:measurementUnit>
+              <ns1:measurementValue>0</ns1:measurementValue>
+            </ns1:measurementsSet>
+            <ns1:extentMeasurements>Volledig</ns1:extentMeasurements>
+          </ns1:objectMeasurements>
+        </ns1:objectMeasurementsSet>
+      </ns1:objectMeasurementsWrap>
+    </ns1:objectIdentificationWrap>
+    <ns1:eventWrap>
+      <ns1:eventSet>
+        <ns1:event>
+          <ns1:eventType>
+            <ns1:term>production</ns1:term>
+          </ns1:eventType>
+          <ns1:eventActor>
+            <ns1:actorInRole>
+              <ns1:actor>
+                <ns1:actorID ns1:type="local" ns1:source="TMS">2469</ns1:actorID>
+                <ns1:actorID ns1:type="purl" ns1:source="VIAF">http://viaf.org/viaf/56647196</ns1:actorID>
+                <ns1:actorID ns1:type="purl" ns1:source="RKD">https://rkd.nl/explore/artists/68737</ns1:actorID>
+                <ns1:actorID ns1:type="purl" ns1:source="Wikidata">http://www.wikidata.org/wiki/Q5599</ns1:actorID>
+                <ns1:nameActorSet>
+                  <ns1:appellationValue ns1:pref="preferred">Peter Paul Rubens</ns1:appellationValue>
+                  <ns1:appellationValue ns1:pref="alternate">Peter Paul Rubens</ns1:appellationValue>
+                </ns1:nameActorSet>
+                <ns1:vitalDatesActor>
+                  <ns1:earliestDate>1577</ns1:earliestDate>
+                  <ns1:latestDate>1640</ns1:latestDate>
+                </ns1:vitalDatesActor>
+              </ns1:actor>
+              <ns1:roleActor>
+                <ns1:term>schilder</ns1:term>
+              </ns1:roleActor>
+            </ns1:actorInRole>
+          </ns1:eventActor>
+          <ns1:periodName>
+            <ns1:term xml:lang="nl" />
+          </ns1:periodName>
+          <ns1:eventMaterialsTech>
+            <ns1:displayMaterialsTech>olieverf op paneel</ns1:displayMaterialsTech>
+          </ns1:eventMaterialsTech>
+        </ns1:event>
+      </ns1:eventSet>
+    </ns1:eventWrap>
+  </ns1:descriptiveMetadata>
+  <ns1:administrativeMetadata xml:lang="nl">
+    <ns1:rightsWorkWrap>
+      <ns1:rightsWorkSet>
+        <ns1:rightsType>
+          <ns1:conceptID ns1:type="purl" ns1:source="Creative Commons">https://creativecommons.org/publicdomain/zero/1.0/</ns1:conceptID>
+          <ns1:term>CC0</ns1:term>
+        </ns1:rightsType>
+        <ns1:creditLine>CC0</ns1:creditLine>
+      </ns1:rightsWorkSet>
+    </ns1:rightsWorkWrap>
+    <ns1:recordWrap>
+      <ns1:recordID ns1:type="global">(not assigned)</ns1:recordID>
+      <ns1:recordID ns1:type="local">23865</ns1:recordID>
+      <ns1:recordType>
+        <ns1:conceptID ns1:type="local" ns1:source="AAT">http://vocab.getty.edu/aat/300133025</ns1:conceptID>
+        <ns1:term>Item</ns1:term>
+      </ns1:recordType>
+      <ns1:recordSource>
+        <ns1:legalBodyID ns1:type="local" ns1:source="TMS">15</ns1:legalBodyID>
+        <ns1:legalBodyName>
+          <ns1:appellationValue>Tentoonstellingen</ns1:appellationValue>
+        </ns1:legalBodyName>
+        <ns1:legalBodyWeblink>http://kmska.be</ns1:legalBodyWeblink>
+      </ns1:recordSource>
+    </ns1:recordWrap>
+    <ns1:resourceWrap>
+      <ns1:resourceSet>
+        <ns1:resourceID ns1:type="purl" ns1:label="representationPID">(not assigned)</ns1:resourceID>
+        <ns1:resourceRepresentation>
+          <ns1:linkResource>(not assigned)</ns1:linkResource>
+        </ns1:resourceRepresentation>
+      </ns1:resourceSet>
+    </ns1:resourceWrap>
+  </ns1:administrativeMetadata>
+</ns1:lido>
+      </ns0:metadata>
+    </ns0:record>
+    

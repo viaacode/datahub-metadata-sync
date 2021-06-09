@@ -12,13 +12,22 @@
 #
 
 import pytest
+import os
 from unittest import mock
 from airflow.dags.task_services.transform_xml_job import transform_xml_job
-from airflow.dags.task_services.harvest_table import HarvestTable
-from datetime import datetime
 from mock_database import MockDatabase
 
 pytestmark = [pytest.mark.vcr(ignore_localhost=True)]
+
+
+def load_xml(name):
+    currentdir = os.path.dirname(os.path.abspath(__file__))
+    print(f"current_dir={currentdir}")
+    filepath = os.path.join(currentdir, "fixtures", name)
+    print(f"filepath={filepath}")
+
+    with open(filepath, "r") as xmlfile:
+        return xmlfile.read()
 
 
 def transform_xml_fixture():
@@ -28,10 +37,6 @@ def transform_xml_fixture():
                 'qry': 'SELECT count(*)',
                 'rows': [5]
             },
-            {
-                'qry': 'SELECT max(datestamp)',
-                'rows': [datetime(2021, 5, 26, 23, 18, 22)]  # TODO CHANGE THIS
-            }
         ],
         'fetchmany': [
             {
@@ -39,13 +44,28 @@ def transform_xml_fixture():
                 'rows': [
                     {
                         'id': 1,
-                        'work_id': '123',
-                        'vkc_xml': 'some xmldoc here'  # TODO: actual valid XML HERE!
+                        'work_id': 'T2023.065-1',
+                        'vkc_xml': load_xml('vkc_doc1.xml')
                     },
                     {
                         'id': 2,
-                        'work_id': '345',
-                        'vkc_xml': 'some other doc here'  # TODO: valid XML here!
+                        'work_id': '4030/3',
+                        'vkc_xml': load_xml('vkc_doc2.xml')
+                    },
+                    {
+                        'id': 3,
+                        'work_id': '4039/3',
+                        'vkc_xml': load_xml('vkc_doc3.xml')
+                    },
+                    {
+                        'id': 4,
+                        'work_id': '4037/6',
+                        'vkc_xml': load_xml('vkc_doc4.xml')
+                    },
+                    {
+                        'id': 5,
+                        'work_id': '4045/3',
+                        'vkc_xml': load_xml('vkc_doc5.xml')
                     }
                 ]
             }
@@ -53,22 +73,6 @@ def transform_xml_fixture():
     }
 
 
-def insert_statement_fixture():
-    qry = HarvestTable.insert_qry()
-
-    fragment_id = '{}{}{}'.format(
-        '352a50c10dcb454495ee0ef481cf019002c2',
-        '0da43a3b444184c1603324833f8e918488a4',
-        '60064ef4b8f18b353035b4cf'
-    )
-    return qry % (
-        'val1',       # col name
-        'val2',       #
-        fragment_id,  # TODO: figure out position of this...
-    )
-
-
-# @pytest.mark.skip(reason="we need valid xml data in above fixture")
 @mock.patch('airflow.dags.task_services.transform_xml_job.BATCH_SIZE', 3)
 def test_xml_transformations():
     # set up mocked database connection with fixture data
@@ -77,15 +81,16 @@ def test_xml_transformations():
 
     transform_xml_job(read_conn, update_conn)
 
-    assert read_conn.close_count == 1
-    assert update_conn.close_count == 1
-
     assert read_conn.commit_count == 0
     assert update_conn.commit_count == 1
 
-    # __import__('pdb').set_trace()
-    # TODO: further test the converted mam_xml is actually inserted here!
-    # right now our current transformer task kinda fails silently, we need to
-    # improve this and add more tests for these cases here!
+    # TODO: add output fixtures mam_doc1.xml .. mam_doc5.xml
+    # TODO: use load_xml('mam_doc1.xml') ...
     assert 'UPDATE harvest_vkc' in update_conn.qry_history()[0]
     assert 'UPDATE harvest_vkc' in update_conn.qry_history()[1]
+    assert 'UPDATE harvest_vkc' in update_conn.qry_history()[2]
+    assert 'UPDATE harvest_vkc' in update_conn.qry_history()[3]
+    assert 'UPDATE harvest_vkc' in update_conn.qry_history()[4]
+
+    assert read_conn.close_count == 1
+    assert update_conn.close_count == 1

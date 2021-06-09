@@ -1,0 +1,208 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<ns0:record xmlns:ns0="http://www.openarchives.org/OAI/2.0/" xmlns:ns1="http://www.lido-schema.org">
+      <ns0:header>
+        <ns0:identifier>oai:datahub.vlaamsekunstcollectie.be:kmska.be:5xgxpq</ns0:identifier>
+        <ns0:datestamp>2021-05-26T21:18:11Z</ns0:datestamp>
+      </ns0:header>
+      <ns0:metadata>
+        <ns1:lido>
+  <ns1:lidoRecID ns1:pref="alternate" ns1:type="purl" ns1:source="Koninklijk Museum voor Schone Kunsten Antwerpen" ns1:label="dataPID">http://kmska.be/collection/work/data/5xgxpq</ns1:lidoRecID>
+  <ns1:lidoRecID ns1:pref="preferred" ns1:type="urn" ns1:source="Vlaamse Kunstcollectie - Arthub Flanders" ns1:label="dataPID">oai:datahub.vlaamsekunstcollectie.be:kmska.be:5xgxpq</ns1:lidoRecID>
+  <ns1:objectPublishedID ns1:type="purl" ns1:source="Koninklijk Museum voor Schone Kunsten Antwerpen" ns1:label="workPID">http://kmska.be/collection/work/id/5xgxpq</ns1:objectPublishedID>
+  <ns1:category>
+    <ns1:conceptID ns1:type="purl" ns1:source="cidoc-crm">http://www.cidoc-crm.org/Entity/e22-man-made-object/version-6.1</ns1:conceptID>
+    <ns1:term>Man-Made Object</ns1:term>
+  </ns1:category>
+  <ns1:descriptiveMetadata xml:lang="nl">
+    <ns1:objectClassificationWrap>
+      <ns1:objectWorkTypeWrap>
+        <ns1:objectWorkType>
+          <ns1:term />
+        </ns1:objectWorkType>
+      </ns1:objectWorkTypeWrap>
+      <ns1:classificationWrap>
+        <ns1:classification ns1:type="object-category">
+          <ns1:conceptID ns1:pref="preferred" ns1:type="local" ns1:source="TMS">15</ns1:conceptID>
+          <ns1:conceptID ns1:pref="alternate" ns1:type="purl" ns1:source="AAT">http://vocab.getty.edu/aat/300033973</ns1:conceptID>
+          <ns1:term ns1:pref="preferred" xml:lang="nl">tekening</ns1:term>
+          <ns1:term ns1:pref="alternate" xml:lang="nl">tekeningen</ns1:term>
+        </ns1:classification>
+      </ns1:classificationWrap>
+    </ns1:objectClassificationWrap>
+    <ns1:objectIdentificationWrap>
+      <ns1:titleWrap>
+        <ns1:titleSet>
+          <ns1:appellationValue ns1:pref="preferred" xml:lang="nl">Espace envahi</ns1:appellationValue>
+          <ns1:appellationValue ns1:pref="preferred" xml:lang="en">Espace envahi</ns1:appellationValue>
+          <ns1:sourceAppellation xml:lang="nl">56177</ns1:sourceAppellation>
+          <ns1:sourceAppellation xml:lang="en">56179</ns1:sourceAppellation>
+        </ns1:titleSet>
+      </ns1:titleWrap>
+      <ns1:repositoryWrap>
+        <ns1:repositorySet>
+          <ns1:repositoryName>
+            <ns1:legalBodyID ns1:type="local" ns1:source="TMS">1</ns1:legalBodyID>
+            <ns1:legalBodyName>
+              <ns1:appellationValue>Koninklijk Museum voor Schone Kunsten Antwerpen</ns1:appellationValue>
+            </ns1:legalBodyName>
+          </ns1:repositoryName>
+          <ns1:workID ns1:type="object-number">4037/6</ns1:workID>
+        </ns1:repositorySet>
+      </ns1:repositoryWrap>
+      <ns1:objectMeasurementsWrap>
+        <ns1:objectMeasurementsSet>
+          <ns1:displayObjectMeasurements>670 × 510 mm</ns1:displayObjectMeasurements>
+          <ns1:objectMeasurements>
+            <ns1:measurementsSet>
+              <ns1:measurementType>Hoogte</ns1:measurementType>
+              <ns1:measurementUnit>Millimeters</ns1:measurementUnit>
+              <ns1:measurementValue>67</ns1:measurementValue>
+            </ns1:measurementsSet>
+            <ns1:extentMeasurements>Volledig</ns1:extentMeasurements>
+          </ns1:objectMeasurements>
+        </ns1:objectMeasurementsSet>
+        <ns1:objectMeasurementsSet>
+          <ns1:displayObjectMeasurements>670 × 510 mm</ns1:displayObjectMeasurements>
+          <ns1:objectMeasurements>
+            <ns1:measurementsSet>
+              <ns1:measurementType>Breedte</ns1:measurementType>
+              <ns1:measurementUnit>Millimeters</ns1:measurementUnit>
+              <ns1:measurementValue>51</ns1:measurementValue>
+            </ns1:measurementsSet>
+            <ns1:extentMeasurements>Volledig</ns1:extentMeasurements>
+          </ns1:objectMeasurements>
+        </ns1:objectMeasurementsSet>
+        <ns1:objectMeasurementsSet>
+          <ns1:displayObjectMeasurements>670 × 510 mm</ns1:displayObjectMeasurements>
+          <ns1:objectMeasurements>
+            <ns1:measurementsSet>
+              <ns1:measurementType>Diepte</ns1:measurementType>
+              <ns1:measurementUnit>Centimeters</ns1:measurementUnit>
+              <ns1:measurementValue>0</ns1:measurementValue>
+            </ns1:measurementsSet>
+            <ns1:extentMeasurements>Volledig</ns1:extentMeasurements>
+          </ns1:objectMeasurements>
+        </ns1:objectMeasurementsSet>
+        <ns1:objectMeasurementsSet>
+          <ns1:displayObjectMeasurements>670 × 510 mm</ns1:displayObjectMeasurements>
+          <ns1:objectMeasurements>
+            <ns1:measurementsSet>
+              <ns1:measurementType>Diameter</ns1:measurementType>
+              <ns1:measurementUnit>Centimeters</ns1:measurementUnit>
+              <ns1:measurementValue>0</ns1:measurementValue>
+            </ns1:measurementsSet>
+            <ns1:extentMeasurements>Volledig</ns1:extentMeasurements>
+          </ns1:objectMeasurements>
+        </ns1:objectMeasurementsSet>
+      </ns1:objectMeasurementsWrap>
+    </ns1:objectIdentificationWrap>
+    <ns1:eventWrap>
+      <ns1:eventSet>
+        <ns1:event>
+          <ns1:eventType>
+            <ns1:term>production</ns1:term>
+          </ns1:eventType>
+          <ns1:eventActor>
+            <ns1:actorInRole>
+              <ns1:actor>
+                <ns1:actorID ns1:type="local" ns1:source="TMS">2596</ns1:actorID>
+                <ns1:actorID ns1:type="purl" ns1:source="VIAF">http://viaf.org/viaf/109890866</ns1:actorID>
+                <ns1:actorID ns1:type="purl" ns1:source="RKD">https://rkd.nl/explore/artists/72098</ns1:actorID>
+                <ns1:actorID ns1:type="purl" ns1:source="Wikidata">http://www.wikidata.org/wiki/Q548860</ns1:actorID>
+                <ns1:nameActorSet>
+                  <ns1:appellationValue ns1:pref="preferred">Michel Seuphor</ns1:appellationValue>
+                  <ns1:appellationValue ns1:pref="alternate">Michel Seuphor</ns1:appellationValue>
+                </ns1:nameActorSet>
+                <ns1:vitalDatesActor>
+                  <ns1:earliestDate>1901</ns1:earliestDate>
+                  <ns1:latestDate>1999</ns1:latestDate>
+                </ns1:vitalDatesActor>
+              </ns1:actor>
+              <ns1:roleActor>
+                <ns1:term>tekenaar</ns1:term>
+              </ns1:roleActor>
+            </ns1:actorInRole>
+          </ns1:eventActor>
+          <ns1:eventDate>
+            <ns1:displayDate>1966</ns1:displayDate>
+            <ns1:date>
+              <ns1:earliestDate>1966</ns1:earliestDate>
+              <ns1:latestDate>1966</ns1:latestDate>
+            </ns1:date>
+          </ns1:eventDate>
+          <ns1:periodName>
+            <ns1:term xml:lang="nl">20ste eeuw</ns1:term>
+          </ns1:periodName>
+          <ns1:eventMaterialsTech>
+            <ns1:displayMaterialsTech>inkt op papier</ns1:displayMaterialsTech>
+          </ns1:eventMaterialsTech>
+        </ns1:event>
+      </ns1:eventSet>
+    </ns1:eventWrap>
+    <ns1:objectRelationWrap>
+      <ns1:relatedWorksWrap>
+        <ns1:relatedWorkSet>
+          <ns1:relatedWork>
+            <ns1:object>
+              <ns1:objectID ns1:type="local" ns1:source="TMS">4037/1-6</ns1:objectID>
+              <ns1:objectID ns1:type="oai">oai:datahub.vlaamsekunstcollectie.be:kmska.be:5xgxpq</ns1:objectID>
+            </ns1:object>
+          </ns1:relatedWork>
+          <ns1:relatedWorkRelType>
+            <ns1:conceptID ns1:type="local" ns1:source="TMS">0</ns1:conceptID>
+            <ns1:conceptID ns1:pref="preferred" ns1:type="URI">http://purl.org/dc/terms/isPartOf</ns1:conceptID>
+            <ns1:term>deel van</ns1:term>
+            <ns1:term ns1:pref="preferred" xml:lang="en">Is Part Of</ns1:term>
+          </ns1:relatedWorkRelType>
+        </ns1:relatedWorkSet>
+        <ns1:relatedWorkSet>
+          <ns1:relatedWork>
+            <ns1:object>
+              <ns1:objectID ns1:type="local" ns1:source="TMS">4037/1-6</ns1:objectID>
+              <ns1:objectID ns1:type="oai">oai:datahub.vlaamsekunstcollectie.be:kmska.be:5xgxpq</ns1:objectID>
+            </ns1:object>
+          </ns1:relatedWork>
+          <ns1:relatedWorkRelType>
+            <ns1:conceptID ns1:type="local" ns1:source="TMS">0</ns1:conceptID>
+            <ns1:conceptID ns1:pref="preferred" ns1:type="URI">http://purl.org/dc/terms/isPartOf</ns1:conceptID>
+            <ns1:term>deel van</ns1:term>
+            <ns1:term ns1:pref="preferred" xml:lang="en">Is Part Of</ns1:term>
+          </ns1:relatedWorkRelType>
+        </ns1:relatedWorkSet>
+      </ns1:relatedWorksWrap>
+    </ns1:objectRelationWrap>
+  </ns1:descriptiveMetadata>
+  <ns1:administrativeMetadata xml:lang="nl">
+    <ns1:rightsWorkWrap>
+      <ns1:rightsWorkSet>
+        <ns1:creditLine>© SABAM Belgium</ns1:creditLine>
+      </ns1:rightsWorkSet>
+    </ns1:rightsWorkWrap>
+    <ns1:recordWrap>
+      <ns1:recordID ns1:type="global">http://kmska.be/collection/work/data/5xgxpq</ns1:recordID>
+      <ns1:recordID ns1:type="local">23805</ns1:recordID>
+      <ns1:recordType>
+        <ns1:conceptID ns1:type="local" ns1:source="AAT">http://vocab.getty.edu/aat/300133025</ns1:conceptID>
+        <ns1:term>Item</ns1:term>
+      </ns1:recordType>
+      <ns1:recordSource>
+        <ns1:legalBodyID ns1:type="local" ns1:source="TMS">1</ns1:legalBodyID>
+        <ns1:legalBodyName>
+          <ns1:appellationValue>Koninklijk Museum voor Schone Kunsten Antwerpen</ns1:appellationValue>
+        </ns1:legalBodyName>
+        <ns1:legalBodyWeblink>http://kmska.be</ns1:legalBodyWeblink>
+      </ns1:recordSource>
+    </ns1:recordWrap>
+    <ns1:resourceWrap>
+      <ns1:resourceSet>
+        <ns1:resourceID ns1:type="purl" ns1:label="representationPID">http://kmska.be/collection/work/representation/5xgxpq</ns1:resourceID>
+        <ns1:resourceRepresentation>
+          <ns1:linkResource>http://kmska.be/collection/work/representation/5xgxpq</ns1:linkResource>
+        </ns1:resourceRepresentation>
+      </ns1:resourceSet>
+    </ns1:resourceWrap>
+  </ns1:administrativeMetadata>
+</ns1:lido>
+      </ns0:metadata>
+    </ns0:record>
+    
