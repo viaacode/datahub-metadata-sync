@@ -8,6 +8,11 @@
 #   DAG with tasks for harvesting and converting OAI data from
 #   Vlaamse Kunst Collectie to target MAM and publish via RabbitMQ
 #
+#   When starting a dag in admin site, you can pass in a json configuration
+#   for forcing a full sync in the optional json config text input:
+#       {"full_sync": true}
+#   then press the trigger button
+#
 
 from airflow import DAG
 from airflow.operators.python import PythonOperator
@@ -23,7 +28,6 @@ from task_services.publish_updates_job import publish_updates_job
 
 from airflow.providers.postgres.operators.postgres import PostgresOperator
 from airflow.providers.postgres.hooks.postgres import PostgresHook
-# from psycopg2.extras import DictCursor
 
 DB_CONNECT_ID = 'postgres_default'
 
@@ -40,16 +44,11 @@ dag = DAG(
 )
 
 
-# when triggering dag you can pass in json configuration
-# for full sync by entering the following in optional json config:
-# {"full_sync": true}
-# then press the trigger button
 def harvest_vkc(**context):
     print(f"harvest_vkc called. context={context}")
     params = context.get('params', {})
     full_sync = params.get('full_sync', False)
 
-    # fetch all vkc records with api and store in db table
     harvest_vkc_job(
         PostgresHook(postgres_conn_id=DB_CONNECT_ID).get_conn(),
         full_sync
