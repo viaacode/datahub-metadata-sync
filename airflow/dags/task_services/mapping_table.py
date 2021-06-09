@@ -84,14 +84,13 @@ class MappingTable:
             return 0
 
     # not used yet, might be useful for some kind of delta later on
-
-    @staticmethod
-    def get_max_datestamp(cursor):
-        cursor.execute("""
-            SELECT max(updated_at) FROM mapping_vkc
-        """)
-        result = cursor.fetchone()
-        if len(result) == 1:
-            return result[0]
-        else:
-            return None
+    # @staticmethod
+    # def get_max_datestamp(cursor):
+    #     cursor.execute("""
+    #         SELECT max(updated_at) FROM mapping_vkc
+    #     """)
+    #     result = cursor.fetchone()
+    #     if len(result) == 1:
+    #         return result[0]
+    #     else:
+    #         return None

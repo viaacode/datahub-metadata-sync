@@ -12,7 +12,7 @@
 #   rows with the HarvestTable model
 #
 
-from task_services.rabbit_publisher import RabbitPublisher
+from task_services.rabbit import RabbitClient
 from psycopg2.extras import DictCursor
 from task_services.harvest_table import HarvestTable
 
@@ -20,7 +20,7 @@ BATCH_SIZE = 200
 
 
 def publish_updates_job(read_conn, update_conn):
-    rp = RabbitPublisher()
+    rabbit = RabbitClient()
     publish_count = 0
     publish_total = HarvestTable.publish_count(read_conn)
     print(f"Now sending {publish_total} mam xml records...")
@@ -35,7 +35,7 @@ def publish_updates_job(read_conn, update_conn):
         print(f"Fetched {len(records)} records, pushing on rabbitmq...")
         uc = update_conn.cursor(cursor_factory=DictCursor)
         for record in records:
-            rp.publish(record)
+            rabbit.publish(record)
             HarvestTable.set_synchronized(uc, record, True)
 
         publish_count += len(records)

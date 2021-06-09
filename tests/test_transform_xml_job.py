@@ -84,7 +84,6 @@ def update_mam_qry(record_id, xml_fixture):
     return update_qry
 
 
-
 @mock.patch('airflow.dags.task_services.transform_xml_job.BATCH_SIZE', 3)
 def test_xml_transformations():
     # set up mocked database connection with fixture data

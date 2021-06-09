@@ -8,10 +8,15 @@
 #   Utility class that wraps pika and uses env vars to
 #   set rabbit mq host, port, user, pass, prefetch, queue_name
 #
+#   publish method: publishes our record with
+#   converted xml to the mam-update-requests micro service
+#   using send_message.
+#
 
 import time
 import pika
 import os
+import json
 
 
 class RabbitClient:
@@ -28,6 +33,7 @@ class RabbitClient:
             self.RABBIT_USER, self.RABBIT_PASS
         )
 
+        print("RabbitClient connecting...")
         self.connection = pika.BlockingConnection(
             pika.ConnectionParameters(
                 host=self.RABBIT_HOST,
@@ -38,6 +44,21 @@ class RabbitClient:
 
         self.channel = self.connection.channel()
         self.prefetch_count = int(os.environ.get('RABBIT_PREFETCH', '1'))
+        print("RabbitClient ready.")
+
+    def publish(self, record):
+        """publish update request to rabbitmq"""
+        update_request = {
+            "correlation_id": record['work_id'],
+            "fragment_id": record['fragment_id'],
+            "cp_id": record['cp_id'],
+            "data": record['mam_xml']
+        }
+
+        self.send_message(
+            routing_key='mam-update-requests',
+            body=json.dumps(update_request),
+        )
 
     def send_message(self, routing_key, body, exchange=""):
         try:
