@@ -151,28 +151,32 @@ class HarvestTable:
             (val, record['id'])
         )
 
-    @staticmethod
-    def set_xml_converted(cursor, record, val):
-        cursor.execute(
-            """
-            UPDATE harvest_vkc
-            SET xml_converted = %s,
-                updated_at = now()
-            WHERE id=%s
-            """,
-            (val, record['id'])
-        )
+    # @staticmethod
+    # def set_xml_converted(cursor, record, val):
+    #     cursor.execute(
+    #         """
+    #         UPDATE harvest_vkc
+    #         SET xml_converted = %s,
+    #             updated_at = now()
+    #         WHERE id=%s
+    #         """,
+    #         (val, record['id'])
+    #     )
 
     @staticmethod
-    def update_mam_xml(cursor, record, mam_xml):
-        cursor.execute(
-            """
+    def update_mam_xml_qry():
+        return """
             UPDATE harvest_vkc
             SET mam_xml = %s,
                 synchronized = FALSE,
                 xml_converted = TRUE,
                 updated_at = now()
             WHERE id=%s
-            """,
+            """
+
+    @staticmethod
+    def update_mam_xml(cursor, record, mam_xml):
+        cursor.execute(
+            HarvestTable.update_mam_xml_qry(),
             (mam_xml, record['id'])
         )

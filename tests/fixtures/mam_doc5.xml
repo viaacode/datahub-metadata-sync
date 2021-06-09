@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MediaHAVEN_external_metadata xmlns:oai="http://www.openarchives.org/OAI/2.0/"
+                              version="1.0"
+                              name="VIAA Datamodel">
+   <MDProperties>
+      <dc_title>Les formes rendent hommage aux carré</dc_title>
+      <dc_titles type="list"/>
+      <dc_coverages type="list">
+         <tijd>1975</tijd>
+      </dc_coverages>
+      <dc_creators type="list">
+         <Maker>Michel Seuphor</Maker>
+      </dc_creators>
+      <dc_subjects type="list">
+         <Trefwoord>NL | Keywords | tekening</Trefwoord>
+         <Trefwoord>NL | Material | inkt op papier</Trefwoord>
+      </dc_subjects>
+   </MDProperties>
+</MediaHAVEN_external_metadata>

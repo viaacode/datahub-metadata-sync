@@ -15,6 +15,7 @@ import pytest
 import os
 from unittest import mock
 from airflow.dags.task_services.transform_xml_job import transform_xml_job
+from airflow.dags.task_services.harvest_table import HarvestTable
 from mock_database import MockDatabase
 
 pytestmark = [pytest.mark.vcr(ignore_localhost=True)]
@@ -73,6 +74,17 @@ def transform_xml_fixture():
     }
 
 
+def update_mam_qry(record_id, xml_fixture):
+    mam_xml = load_xml(xml_fixture)
+    update_qry = HarvestTable.update_mam_xml_qry() % (
+        mam_xml,
+        record_id
+    )
+
+    return update_qry
+
+
+
 @mock.patch('airflow.dags.task_services.transform_xml_job.BATCH_SIZE', 3)
 def test_xml_transformations():
     # set up mocked database connection with fixture data
@@ -84,13 +96,11 @@ def test_xml_transformations():
     assert read_conn.commit_count == 0
     assert update_conn.commit_count == 1
 
-    # TODO: add output fixtures mam_doc1.xml .. mam_doc5.xml
-    # TODO: use load_xml('mam_doc1.xml') ...
-    assert 'UPDATE harvest_vkc' in update_conn.qry_history()[0]
-    assert 'UPDATE harvest_vkc' in update_conn.qry_history()[1]
-    assert 'UPDATE harvest_vkc' in update_conn.qry_history()[2]
-    assert 'UPDATE harvest_vkc' in update_conn.qry_history()[3]
-    assert 'UPDATE harvest_vkc' in update_conn.qry_history()[4]
+    assert update_mam_qry(1, 'mam_doc1.xml') in update_conn.qry_history()[0]
+    assert update_mam_qry(2, 'mam_doc2.xml') in update_conn.qry_history()[1]
+    assert update_mam_qry(3, 'mam_doc3.xml') in update_conn.qry_history()[2]
+    assert update_mam_qry(4, 'mam_doc4.xml') in update_conn.qry_history()[3]
+    assert update_mam_qry(5, 'mam_doc5.xml') in update_conn.qry_history()[4]
 
     assert read_conn.close_count == 1
     assert update_conn.close_count == 1
