@@ -236,49 +236,48 @@ in tests/mock_database.py.
 
 ```
 $ make coverage
-make coverage
 DB: sqlite:////Users/wschrep/FreelanceWork/VIAA/IIIF_newproject/datahub-metadata-sync/airflow/airflow.db
-[2021-06-08 20:57:36,461] {db.py:684} INFO - Creating tables
+[2021-06-10 10:20:38,315] {db.py:684} INFO - Creating tables
 INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
 INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
 WARNI [airflow.models.crypto] empty cryptography key - values will not be stored encrypted.
 Initialization done
-===================================== test session starts ======================================
+====================================== test session starts ======================================
 platform darwin -- Python 3.9.5, pytest-6.2.4, py-1.10.0, pluggy-0.13.1
 rootdir: /Users/wschrep/FreelanceWork/VIAA/IIIF_newproject/datahub-metadata-sync
 plugins: recording-0.11.0, docker-tools-1.0.3, cov-2.8.1, mock-3.5.1
-collected 8 items                                                                              
+collected 9 items                                                                               
 
-tests/test_dag_tasks.py .                                                                [ 12%]
-tests/test_harvest_dag.py .                                                              [ 25%]
-tests/test_harvest_mapping_job.py ..                                                     [ 50%]
-tests/test_harvest_vkc_job.py ..                                                         [ 75%]
-tests/test_pg_conn_mock.py .                                                             [ 87%]
-tests/test_transform_xml_job.py .                                                        [100%]
+tests/test_dag_tasks.py .                                                                 [ 11%]
+tests/test_harvest_dag.py .                                                               [ 22%]
+tests/test_harvest_mapping_job.py ..                                                      [ 44%]
+tests/test_harvest_vkc_job.py ..                                                          [ 66%]
+tests/test_pg_conn_mock.py .                                                              [ 77%]
+tests/test_publish_updates_job.py .                                                       [ 88%]
+tests/test_transform_xml_job.py .                                                         [100%]
 
 ---------- coverage: platform darwin, python 3.9.5-final-0 -----------
 Name                                                Stmts   Miss  Cover
 -----------------------------------------------------------------------
 airflow/dags/task_services/__init__.py                  0      0   100%
 airflow/dags/task_services/harvest_mapping_job.py      29      0   100%
-airflow/dags/task_services/harvest_table.py            54      5    91%
+airflow/dags/task_services/harvest_table.py            54      1    98%
 airflow/dags/task_services/harvest_vkc_job.py          27      2    93%
-airflow/dags/task_services/mapping_table.py            37      6    84%
+airflow/dags/task_services/mapping_table.py            30      1    97%
 airflow/dags/task_services/mediahaven_api.py           24      1    96%
-airflow/dags/task_services/publish_updates_job.py      27     22    19%
-airflow/dags/task_services/rabbit.py                   40     33    18%
-airflow/dags/task_services/rabbit_publisher.py         10      5    50%
+airflow/dags/task_services/publish_updates_job.py      27      0   100%
+airflow/dags/task_services/rabbit.py                   46     37    20%
 airflow/dags/task_services/transform_xml_job.py        29      0   100%
 airflow/dags/task_services/transformer_process.py      19      0   100%
 airflow/dags/task_services/vkc_api.py                  78     10    87%
 airflow/dags/task_services/xml_transformer.py          17      0   100%
 airflow/dags/vkc_oai_harvester.py                      42     16    62%
 -----------------------------------------------------------------------
-TOTAL                                                 433    100    77%
+TOTAL                                                 422     68    84%
 Coverage HTML written to dir htmlcov
 
 
-====================================== 8 passed in 2.04s =======================================
+======================================= 9 passed in 3.47s =======================================
 ```
 
 The VkcApi and MediahavenApi data are now mocked using pytest-recorder (responses are saved as yaml files in the tests).
@@ -288,7 +287,6 @@ running some tests.
 
 
 # Docker container build
-
 
 Build a container with saxonc for xml transformer and complete airflow installation.
 
