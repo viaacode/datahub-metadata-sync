@@ -61,7 +61,20 @@
                     </xsl:for-each>
                 </dc_creators>
 
-
+                <!-- local_id -->
+                <dc_identifier_localids type="list">
+                    <xsl:for-each select="oai:metadata/lido:lido/lido:lidoRecID[@lido:type='purl']">
+                        <PersistenteURI_VKC_Record>
+                            <xsl:value-of select="." />
+                        </PersistenteURI_VKC_Record>
+                    </xsl:for-each>
+                    <xsl:for-each select="oai:metadata/lido:lido/lido:objectPublishedID[@lido:type='purl']">
+                        <PersistenteURI_VKC_Work>
+                            <xsl:value-of select="." />
+                        </PersistenteURI_VKC_Work>
+                    </xsl:for-each>
+                </dc_identifier_localids>
+    
                 <!-- dc_subjects-->
                 <dc_subjects type="list">
                     <xsl:for-each select="oai:metadata/lido:lido/lido:descriptiveMetadata/lido:objectClassificationWrap/lido:objectWorkTypeWrap/lido:objectWorkType/lido:term[@lido:pref='preferred']">
