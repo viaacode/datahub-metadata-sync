@@ -937,10 +937,10 @@ end_of_log_mark = end_of_log
 frontend =
 
 # Write the task logs to the stdout of the worker, rather than the default files
-write_stdout = False
+write_stdout = True
 
 # Instead of the default log formatter, write the log lines as JSON
-json_format = False
+json_format = True
 
 # Log fields to also attach to the json output, if enabled
 json_fields = asctime, filename, lineno, levelname, message
