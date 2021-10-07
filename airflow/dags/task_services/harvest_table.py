@@ -25,9 +25,9 @@ class HarvestTable:
                 aanbieder VARCHAR,
                 min_breedte_cm DECIMAL,
                 max_breedte_cm DECIMAL,
-                vd_actor_earliest VARCHAR,
-                vd_actor_latest VARCHAR,
-                maker_name VARCHAR,
+                vd_actor_earliest VARCHAR DEFAULT NULL,
+                vd_actor_latest VARCHAR DEFAULT NULL,
+                maker_name VARCHAR DEFAULT_NULL,
                 created_at timestamp with time zone NOT NULL DEFAULT now(),
                 updated_at timestamp with time zone NOT NULL DEFAULT now()
             );
