@@ -27,7 +27,7 @@ class HarvestTable:
                 max_breedte_cm DECIMAL,
                 vd_actor_earliest VARCHAR DEFAULT NULL,
                 vd_actor_latest VARCHAR DEFAULT NULL,
-                maker_name VARCHAR DEFAULT_NULL,
+                maker_name VARCHAR DEFAULT NULL,
                 created_at timestamp with time zone NOT NULL DEFAULT now(),
                 updated_at timestamp with time zone NOT NULL DEFAULT now()
             );

@@ -81,26 +81,6 @@ class VkcApi:
 
         return records, resumptionToken, total_records
 
-    # deprecated method used for testing/debugging paths
-    # def process_xml_record(self, xml_data):
-    #     record = ET.fromstring(xml_data)
-    #     header = record.find('.//ns0:header', self.ns0)
-    #     header_datestamp = header.find('.//ns0:datestamp', self.ns0).text
-    #     work_id = self._get_work_id(record, header)
-    #     min_w, max_w = self._get_widths(record)
-    #     vd_actor_earliest, vd_actor_latest = self._get_vital_dates_actor(record)
-
-    #     return {
-    #                 'work_id': work_id,
-    #                 'datestamp': header_datestamp,
-    #                 'aanbieder': self._get_aanbieder(record),
-    #                 'min_breedte_cm': min_w,
-    #                 'max_breedte_cm': max_w,
-    #                 'vd_actor_earliest': vd_actor_earliest,
-    #                 'vd_actor_latest': vd_actor_latest,
-    #                 'maker_name': self._get_maker_name(record)
-    #             }
-
     def _list_params(self, from_filter, prefix, resumptionToken):
         params = {
             'verb': 'ListRecords',
@@ -183,10 +163,19 @@ class VkcApi:
 
         # for now, just return dates on first actor we find
         for actor in self._get_actors(metadata):
-            earliest_date = actor.find(
-                './/ns1:vitalDatesActor/ns1:earliestDate', self.ns1).text
-            latest_date = actor.find(
-                './/ns1:vitalDatesActor/ns1:latestDate', self.ns1).text
+            earliest_date = None
+            latest_date = None
+            earliest_date_node = actor.find(
+                './/ns1:vitalDatesActor/ns1:earliestDate', self.ns1)
+            if earliest_date_node:
+                earliest_date = earliest_date_node.text
+
+            latest_date_node = actor.find(
+                './/ns1:vitalDatesActor/ns1:latestDate', self.ns1)
+
+            if latest_date_node:
+                latest_date = latest_date_node.text
+
             return earliest_date, latest_date
 
     def _get_maker_name(self, record):
@@ -196,6 +185,10 @@ class VkcApi:
         for actor in self._get_actors(metadata):
             worker_names = actor.findall(
                 './/ns1:nameActorSet/ns1:appellationValue', self.ns1)
+
+            if not worker_names:
+                return None
+
             for wn in worker_names:
                 if wn.attrib['{http://www.lido-schema.org}pref'] == 'alternate':
                     return wn.text
