@@ -163,20 +163,29 @@ class VkcApi:
 
         # for now, just return dates on first actor we find
         for actor in self._get_actors(metadata):
-            earliest_date = None
-            latest_date = None
+            earliest_date = '' 
+            latest_date = ''
+
             earliest_date_node = actor.find(
-                './/ns1:vitalDatesActor/ns1:earliestDate', self.ns1)
+                './/ns1:vitalDatesActor/ns1:earliestDate',
+                self.ns1
+            )
+
             if earliest_date_node:
                 earliest_date = earliest_date_node.text
 
             latest_date_node = actor.find(
-                './/ns1:vitalDatesActor/ns1:latestDate', self.ns1)
+                './/ns1:vitalDatesActor/ns1:latestDate',
+                self.ns1
+            )
 
             if latest_date_node:
                 latest_date = latest_date_node.text
 
             return earliest_date, latest_date
+    
+        return '',''
+
 
     def _get_maker_name(self, record):
         metadata = record.find('.//ns0:metadata', self.ns0)
