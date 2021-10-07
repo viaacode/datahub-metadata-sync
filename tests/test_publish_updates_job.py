@@ -128,12 +128,17 @@ def test_publish_updates_job(mock_rc):
     assert test_rabbit.publish_history[0]['work_id'] == 'T2023.065-1'
     assert test_rabbit.publish_history[0]['fragment_id'] == 'fragment1'
     assert test_rabbit.publish_history[0]['cp_id'] == 'OR-1testd'
-    assert test_rabbit.publish_history[0]['mam_xml'] == load_xml('mam_doc1.xml')
+    assert test_rabbit.publish_history[0]['mam_xml'] == load_xml(
+        'mam_doc1.xml')
 
-    assert test_rabbit.publish_history[1]['mam_xml'] == load_xml('mam_doc2.xml')
-    assert test_rabbit.publish_history[2]['mam_xml'] == load_xml('mam_doc3.xml')
-    assert test_rabbit.publish_history[3]['mam_xml'] == load_xml('mam_doc4.xml')
-    assert test_rabbit.publish_history[4]['mam_xml'] == load_xml('mam_doc5.xml')
+    assert test_rabbit.publish_history[1]['mam_xml'] == load_xml(
+        'mam_doc2.xml')
+    assert test_rabbit.publish_history[2]['mam_xml'] == load_xml(
+        'mam_doc3.xml')
+    assert test_rabbit.publish_history[3]['mam_xml'] == load_xml(
+        'mam_doc4.xml')
+    assert test_rabbit.publish_history[4]['mam_xml'] == load_xml(
+        'mam_doc5.xml')
 
     # assert test_rabbit.publish_history[0]['correlation_id'] == 'T2023.065-1'
     # assert test_rabbit.publish_history[0]['fragment_id'] == 'fragment1'

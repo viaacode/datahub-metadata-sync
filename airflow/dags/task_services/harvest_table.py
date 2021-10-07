@@ -25,6 +25,9 @@ class HarvestTable:
                 aanbieder VARCHAR,
                 min_breedte_cm DECIMAL,
                 max_breedte_cm DECIMAL,
+                vd_actor_earliest VARCHAR,
+                vd_actor_latest VARCHAR,
+                maker_name VARCHAR,
                 created_at timestamp with time zone NOT NULL DEFAULT now(),
                 updated_at timestamp with time zone NOT NULL DEFAULT now()
             );
@@ -52,9 +55,11 @@ class HarvestTable:
         return """
             INSERT INTO harvest_vkc (
                 work_id, vkc_xml, mam_xml, datestamp,
-                aanbieder, min_breedte_cm, max_breedte_cm
+                aanbieder, min_breedte_cm, max_breedte_cm,
+                vd_actor_earliest, vd_actor_latest,
+                maker_name
             )
-            VALUES(%s, %s, NULL, %s, %s, %s, %s)
+            VALUES(%s, %s, NULL, %s, %s, %s, %s, %s, %s, %s)
             """
 
     @staticmethod
@@ -64,7 +69,9 @@ class HarvestTable:
             (
                 record['work_id'], record['xml'], record['datestamp'],
                 record['aanbieder'], record['min_breedte_cm'],
-                record['max_breedte_cm']
+                record['max_breedte_cm'],
+                record['vd_actor_earliest'], record['vd_actor_latest'],
+                record['maker_name']
             )
         )
 

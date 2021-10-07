@@ -38,7 +38,8 @@ def harvest_vkc_job(db_connection, full_sync):
                 # for a few records, work_id is missing, we omit these
                 HarvestTable.insert(cursor, record)
             else:
-                print(f"Skipping record with empty work_id record={record}", flush=True)
+                print(
+                    f"Skipping record with empty work_id record={record}", flush=True)
 
         db_connection.commit()  # commit batch of inserts
 

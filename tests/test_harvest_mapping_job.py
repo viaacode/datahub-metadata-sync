@@ -32,7 +32,8 @@ def mapping_delta_fixture():
             },
             {
                 'qry': 'SELECT max(datestamp)',
-                'rows': [datetime(2021, 5, 26, 23, 18, 22)]     # 1 last vkc entry
+                # 1 last vkc entry
+                'rows': [datetime(2021, 5, 26, 23, 18, 22)]
                 # 'rows': [datetime(2021, 5, 26, 23, 18, 12)]   # gives back 3 results
             }
         ],
