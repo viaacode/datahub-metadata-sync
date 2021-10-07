@@ -30,7 +30,7 @@ install:
 	python3 -m pip install -r requirements-test.txt; \
 	cd saxon/Saxon.C.API/python-saxon && \
 	python3 saxon-setup.py build_ext -if && \
-	export PYTHONPATH=$PYTHONPATH:$(pwd) && \
+	export PYTHONPATH=$(PYTHONPATH):$(pwd) && \
 	cd ../../../
 
 

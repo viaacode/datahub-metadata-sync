@@ -56,6 +56,7 @@ class VkcApi:
                 header_datestamp = header.find('.//ns0:datestamp', self.ns0).text
                 work_id = self._get_work_id(record, header)
                 min_w, max_w = self._get_widths(record)
+                vd_actor_earliest, vd_actor_latest = self._get_vital_dates_actor(record)
 
                 records.append({
                     'xml': vkc_xml,
@@ -64,6 +65,9 @@ class VkcApi:
                     'aanbieder': self._get_aanbieder(record),
                     'min_breedte_cm': min_w,
                     'max_breedte_cm': max_w
+                    'vd_actor_earliest': vd_actor_earliest,
+                    'vd_actor_latest': vd_actor_latest,
+                    'maker_name': self._get_maker_name(record)
                 })
 
         resumptionTag = items.find('.//ns0:resumptionToken', self.ns0)
@@ -74,6 +78,28 @@ class VkcApi:
             total_records = len(records)
 
         return records, resumptionToken, total_records
+
+
+    # deprecated method used for testing/debugging paths
+    # def process_xml_record(self, xml_data):
+    #     record = ET.fromstring(xml_data)
+    #     header = record.find('.//ns0:header', self.ns0)
+    #     header_datestamp = header.find('.//ns0:datestamp', self.ns0).text
+    #     work_id = self._get_work_id(record, header)
+    #     min_w, max_w = self._get_widths(record)
+    #     vd_actor_earliest, vd_actor_latest = self._get_vital_dates_actor(record)
+
+    #     return {
+    #                 'work_id': work_id,
+    #                 'datestamp': header_datestamp,
+    #                 'aanbieder': self._get_aanbieder(record),
+    #                 'min_breedte_cm': min_w,
+    #                 'max_breedte_cm': max_w,
+    #                 'vd_actor_earliest': vd_actor_earliest,
+    #                 'vd_actor_latest': vd_actor_latest,
+    #                 'maker_name': self._get_maker_name(record)
+    #             }
+
 
     def _list_params(self, from_filter, prefix, resumptionToken):
         params = {
@@ -136,6 +162,38 @@ class VkcApi:
                 max_breedte = breedte
 
         return min_breedte, max_breedte
+
+    def _get_actors(self, metadata):
+        return metadata.findall('.//{}/{}/{}/{}/{}/{}/{}'.format(
+                'ns1:descriptiveMetadata',
+                'ns1:eventWrap',
+                'ns1:eventSet',
+                'ns1:event',
+                'ns1:eventActor',
+                'ns1:actorInRole',
+                'ns1:actor' 
+            ),
+            self.ns1
+        )
+
+    def _get_vital_dates_actor(self, record):
+        metadata = record.find('.//ns0:metadata', self.ns0)
+        
+        # for now, just return dates on first actor we find
+        for actor in self._get_actors(metadata):
+            earliest_date = actor.find('.//ns1:vitalDatesActor/ns1:earliestDate', self.ns1).text
+            latest_date = actor.find('.//ns1:vitalDatesActor/ns1:latestDate', self.ns1).text
+            return earliest_date, latest_date
+
+    def _get_maker_name(self, record):
+        metadata = record.find('.//ns0:metadata', self.ns0)
+        # for now, just return first actor name that we find
+        # we do however make sure already we have the 'alternate' attribute tag
+        for actor in self._get_actors(metadata):
+            worker_names = actor.findall('.//ns1:nameActorSet/ns1:appellationValue', self.ns1)
+            for wn in worker_names:
+                if wn.attrib['{http://www.lido-schema.org}pref'] == 'alternate':
+                    return wn.text
 
     def _get_aanbieder(self, record):
         metadata = record.find('.//ns0:metadata', self.ns0)
