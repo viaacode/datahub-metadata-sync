@@ -171,7 +171,7 @@ class VkcApi:
                 self.ns1
             )
 
-            if earliest_date_node:
+            if earliest_date_node is not None:
                 earliest_date = earliest_date_node.text
 
             latest_date_node = actor.find(
@@ -179,7 +179,7 @@ class VkcApi:
                 self.ns1
             )
 
-            if latest_date_node:
+            if latest_date_node is not None:
                 latest_date = latest_date_node.text
 
             return earliest_date, latest_date
