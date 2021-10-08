@@ -191,7 +191,7 @@ class HarvestTable:
     #         """,
     #         (val, record['id'])
     #     )
-    # 
+    #
     # 8629 results with this qry(but we have 8635 records with converted==true). Meaning there
     # are 6 duplicate harvest_vkc.work_id's
     # SELECT DISTINCT ON (harvest_vkc.work_id) harvest_vkc.work_id, harvest_vkc.id, harvest_vkc.mam_xml, harvest_vkc.vkc_xml,
@@ -203,5 +203,3 @@ class HarvestTable:
     #             WHERE
     #             harvest_vkc.xml_converted=true
     #             ORDER BY harvest_vkc.work_id
-
-
