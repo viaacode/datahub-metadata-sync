@@ -23,9 +23,7 @@ pytestmark = [pytest.mark.vcr(ignore_localhost=True)]
 
 def load_xml(name):
     currentdir = os.path.dirname(os.path.abspath(__file__))
-    print(f"current_dir={currentdir}")
     filepath = os.path.join(currentdir, "fixtures", name)
-    print(f"filepath={filepath}")
 
     with open(filepath, "r") as xmlfile:
         return xmlfile.read()
@@ -35,13 +33,13 @@ def transform_xml_fixture():
     return {
         'fetchone': [
             {
-                'qry': """SELECT count(*)""",
+                'qry': 'SELECT COUNT(DISTINCT harvest_vkc.id)',
                 'rows': [5]
             },
         ],
         'fetchmany': [
             {
-                'qry': 'SELECT harvest_vkc.id, harvest_vkc.mam_xml, harvest_vkc.vkc_xml',
+                'qry': 'SELECT DISTINCT ON (harvest_vkc.id) harvest_vkc.id, harvest_vkc.work_id',
                 'rows': [
                     {
                         'id': 1,
@@ -84,6 +82,10 @@ def update_mam_qry(record_id, xml_fixture):
     return update_qry
 
 
+def compare_query(a, b):
+    return [c for c in a if c.isalpha()] == [c for c in b if c.isalpha()]
+
+
 @mock.patch('airflow.dags.task_services.transform_xml_job.BATCH_SIZE', 3)
 def test_xml_transformations():
     # set up mocked database connection with fixture data
@@ -95,11 +97,16 @@ def test_xml_transformations():
     assert read_conn.commit_count == 0
     assert update_conn.commit_count == 1
 
-    assert update_mam_qry(1, 'mam_doc1.xml') in update_conn.qry_history()[0]
-    assert update_mam_qry(2, 'mam_doc2.xml') in update_conn.qry_history()[1]
-    assert update_mam_qry(3, 'mam_doc3.xml') in update_conn.qry_history()[2]
-    assert update_mam_qry(4, 'mam_doc4.xml') in update_conn.qry_history()[3]
-    assert update_mam_qry(5, 'mam_doc5.xml') in update_conn.qry_history()[4]
+    assert compare_query(update_mam_qry(1, 'mam_doc1.xml'),
+                         update_conn.qry_history()[0])
+    assert compare_query(update_mam_qry(2, 'mam_doc2.xml'),
+                         update_conn.qry_history()[1])
+    assert compare_query(update_mam_qry(3, 'mam_doc3.xml'),
+                         update_conn.qry_history()[2])
+    assert compare_query(update_mam_qry(4, 'mam_doc4.xml'),
+                         update_conn.qry_history()[3])
+    assert compare_query(update_mam_qry(5, 'mam_doc5.xml'),
+                         update_conn.qry_history()[4])
 
     assert read_conn.close_count == 1
     assert update_conn.close_count == 1
