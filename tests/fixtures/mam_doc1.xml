@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<MediaHAVEN_external_metadata xmlns:oai="http://www.openarchives.org/OAI/2.0/"
-                              version="1.0"
-                              name="VIAA Datamodel">
-   <MDProperties>
-      <dc_title>Head of a Man in Profile</dc_title>
-      <dc_titles type="list"/>
-      <dc_coverages type="list">
-         <tijd/>
-      </dc_coverages>
-      <dc_creators type="list">
-         <Maker>Peter Paul Rubens</Maker>
-      </dc_creators>
-      <dc_subjects type="list">
-         <Trefwoord>NL | Keywords | schilderij</Trefwoord>
-         <Trefwoord>NL | Material | olieverf op paneel</Trefwoord>
-      </dc_subjects>
-   </MDProperties>
+<MediaHAVEN_external_metadata xmlns:oai="http://www.openarchives.org/OAI/2.0/" version="1.0" name="VIAA Datamodel">
+<MDProperties>
+    <dc_title>Head of a Man in Profile</dc_title>
+    <dc_titles type="list"/>
+    <dc_coverages type="list">
+      <tijd/>
+    </dc_coverages>
+    <dc_creators type="list">
+      <Maker>Peter Paul Rubens</Maker>
+    </dc_creators>
+    <dc_identifier_localids type="list">
+      <PersistenteURI_VKC_Record>(not assigned)</PersistenteURI_VKC_Record>
+      <PersistenteURI_VKC_Work>(not assigned)</PersistenteURI_VKC_Work>
+    </dc_identifier_localids>
+    <dc_subjects type="list">
+      <Trefwoord>NL | Keywords | schilderij</Trefwoord>
+      <Trefwoord>NL | Material | olieverf op paneel</Trefwoord>
+    </dc_subjects>
+</MDProperties>
 </MediaHAVEN_external_metadata>

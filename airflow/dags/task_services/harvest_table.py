@@ -25,6 +25,9 @@ class HarvestTable:
                 aanbieder VARCHAR,
                 min_breedte_cm DECIMAL,
                 max_breedte_cm DECIMAL,
+                vd_actor_earliest VARCHAR DEFAULT NULL,
+                vd_actor_latest VARCHAR DEFAULT NULL,
+                maker_name VARCHAR DEFAULT NULL,
                 created_at timestamp with time zone NOT NULL DEFAULT now(),
                 updated_at timestamp with time zone NOT NULL DEFAULT now()
             );
@@ -52,9 +55,11 @@ class HarvestTable:
         return """
             INSERT INTO harvest_vkc (
                 work_id, vkc_xml, mam_xml, datestamp,
-                aanbieder, min_breedte_cm, max_breedte_cm
+                aanbieder, min_breedte_cm, max_breedte_cm,
+                vd_actor_earliest, vd_actor_latest,
+                maker_name
             )
-            VALUES(%s, %s, NULL, %s, %s, %s, %s)
+            VALUES(%s, %s, NULL, %s, %s, %s, %s, %s, %s, %s)
             """
 
     @staticmethod
@@ -64,7 +69,9 @@ class HarvestTable:
             (
                 record['work_id'], record['xml'], record['datestamp'],
                 record['aanbieder'], record['min_breedte_cm'],
-                record['max_breedte_cm']
+                record['max_breedte_cm'],
+                record['vd_actor_earliest'], record['vd_actor_latest'],
+                record['maker_name']
             )
         )
 
@@ -85,28 +92,34 @@ class HarvestTable:
         return HarvestTable.count_qry(
             connection,
             """
-            SELECT count(*)
-            FROM harvest_vkc JOIN mapping_vkc ON
-            (harvest_vkc.work_id = mapping_vkc.work_id)
-            WHERE
-            harvest_vkc.xml_converted=FALSE
+            SELECT count(*) from (
+                SELECT COUNT(DISTINCT harvest_vkc.id) FROM harvest_vkc JOIN mapping_vkc ON
+                            (harvest_vkc.work_id = mapping_vkc.work_id)
+                            WHERE
+                            harvest_vkc.xml_converted=FALSE
+                            GROUP BY harvest_vkc.id
+            ) as mapped_count
             """
         )
 
+    # this join also distincts our id, removing duplicates. and we have
+    # 8635 results now (this is better than the 13k we had originally that
+    # would also convert some xml's multiple times)
     @staticmethod
     def batch_select_transform_records(server_cursor):
         # we do a join with our new mapping_vkc table instead:
         server_cursor.execute(
             """
-            SELECT harvest_vkc.id, harvest_vkc.mam_xml, harvest_vkc.vkc_xml,
-                harvest_vkc.work_id, harvest_vkc.datestamp,
+            SELECT DISTINCT ON (harvest_vkc.id) harvest_vkc.id, harvest_vkc.work_id,
+                harvest_vkc.mam_xml, harvest_vkc.vkc_xml,
+                harvest_vkc.datestamp,
                 harvest_vkc.synchronized, harvest_vkc.xml_converted,
                 mapping_vkc.fragment_id, mapping_vkc.cp_id, mapping_vkc.external_id
             FROM harvest_vkc JOIN mapping_vkc ON
             (harvest_vkc.work_id = mapping_vkc.work_id)
             WHERE
             harvest_vkc.xml_converted=FALSE
-            ORDER BY work_id
+            ORDER BY harvest_vkc.id
             """
         )
 
@@ -115,11 +128,13 @@ class HarvestTable:
         return HarvestTable.count_qry(
             connection,
             """
-            SELECT count(*)
-            FROM harvest_vkc JOIN mapping_vkc ON
-            (harvest_vkc.work_id = mapping_vkc.work_id)
-            WHERE
-            harvest_vkc.synchronized=FALSE AND harvest_vkc.xml_converted=TRUE
+            SELECT count(*) from (
+                SELECT COUNT(DISTINCT harvest_vkc.id) FROM harvest_vkc JOIN mapping_vkc ON
+                            (harvest_vkc.work_id = mapping_vkc.work_id)
+                            WHERE
+                            harvest_vkc.synchronized=FALSE AND harvest_vkc.xml_converted=TRUE
+                            GROUP BY harvest_vkc.id
+            ) as mapped_count
             """
         )
 
@@ -127,7 +142,8 @@ class HarvestTable:
     def batch_select_publish_records(server_cursor):
         server_cursor.execute(
             """
-            SELECT harvest_vkc.id, harvest_vkc.mam_xml, harvest_vkc.vkc_xml,
+            SELECT DISTINCT ON (harvest_vkc.id) harvest_vkc.id,
+                harvest_vkc.mam_xml, harvest_vkc.vkc_xml,
                 harvest_vkc.work_id, harvest_vkc.datestamp,
                 harvest_vkc.synchronized, harvest_vkc.xml_converted,
                 mapping_vkc.fragment_id, mapping_vkc.cp_id, mapping_vkc.external_id
@@ -135,7 +151,7 @@ class HarvestTable:
             (harvest_vkc.work_id = mapping_vkc.work_id)
             WHERE
             harvest_vkc.synchronized=FALSE AND harvest_vkc.xml_converted=TRUE
-            ORDER BY work_id
+            ORDER BY harvest_vkc.id
             """
         )
 
@@ -181,3 +197,16 @@ class HarvestTable:
     #         """,
     #         (val, record['id'])
     #     )
+    #
+    # 8629 results with this qry(but we have 8635 records with converted==true). Meaning there
+    # are 6 duplicate harvest_vkc.work_id's
+    # SELECT DISTINCT ON (harvest_vkc.work_id) harvest_vkc.work_id,
+    #             harvest_vkc.id, harvest_vkc.mam_xml, harvest_vkc.vkc_xml,
+    #                 harvest_vkc.datestamp,
+    #                 harvest_vkc.synchronized, harvest_vkc.xml_converted,
+    #                 mapping_vkc.fragment_id, mapping_vkc.cp_id, mapping_vkc.external_id
+    #             FROM harvest_vkc JOIN mapping_vkc ON
+    #             (harvest_vkc.work_id = mapping_vkc.work_id)
+    #             WHERE
+    #             harvest_vkc.xml_converted=true
+    #             ORDER BY harvest_vkc.work_id

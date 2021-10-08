@@ -53,9 +53,12 @@ class VkcApi:
                 ).decode()
 
                 header = record.find('.//ns0:header', self.ns0)
-                header_datestamp = header.find('.//ns0:datestamp', self.ns0).text
+                header_datestamp = header.find(
+                    './/ns0:datestamp', self.ns0).text
                 work_id = self._get_work_id(record, header)
                 min_w, max_w = self._get_widths(record)
+                vd_actor_earliest, vd_actor_latest = self._get_vital_dates_actor(
+                    record)
 
                 records.append({
                     'xml': vkc_xml,
@@ -63,7 +66,10 @@ class VkcApi:
                     'datestamp': header_datestamp,
                     'aanbieder': self._get_aanbieder(record),
                     'min_breedte_cm': min_w,
-                    'max_breedte_cm': max_w
+                    'max_breedte_cm': max_w,
+                    'vd_actor_earliest': vd_actor_earliest,
+                    'vd_actor_latest': vd_actor_latest,
+                    'maker_name': self._get_maker_name(record)
                 })
 
         resumptionTag = items.find('.//ns0:resumptionToken', self.ns0)
@@ -101,11 +107,11 @@ class VkcApi:
     def _get_widths(self, record):
         metadata = record.find('.//ns0:metadata', self.ns0)
         measurements = metadata.findall('.//{}/{}/{}/{}'.format(
-                'ns1:descriptiveMetadata',
-                'ns1:objectIdentificationWrap',
-                'ns1:objectMeasurementsWrap',
-                'ns1:objectMeasurementsSet',
-            ),
+            'ns1:descriptiveMetadata',
+            'ns1:objectIdentificationWrap',
+            'ns1:objectMeasurementsWrap',
+            'ns1:objectMeasurementsSet',
+        ),
             self.ns1
         )
 
@@ -114,7 +120,8 @@ class VkcApi:
         breedte = 0
 
         for m in measurements:
-            mset = m.find('.//ns1:objectMeasurements/ns1:measurementsSet', self.ns1)
+            mset = m.find(
+                './/ns1:objectMeasurements/ns1:measurementsSet', self.ns1)
             #  mextent is inconsistent to determine we use min/max instead
             #  mextent = m.find('.//ns1:objectMeasurements/ns1:extentMeasurements', self.ns1)
 
@@ -125,7 +132,8 @@ class VkcApi:
                     breedte = float(mset[2].text)
                 except ValueError:
                     breedte = 0
-                    print(f'warning could not parse breedte = {mset[2].text}, using 0 as value')
+                    print(
+                        f'warning could not parse breedte = {mset[2].text}, using 0 as value')
                 except TypeError:
                     breedte = 0
 
@@ -137,15 +145,71 @@ class VkcApi:
 
         return min_breedte, max_breedte
 
+    def _get_actors(self, metadata):
+        return metadata.findall('.//{}/{}/{}/{}/{}/{}/{}'.format(
+            'ns1:descriptiveMetadata',
+            'ns1:eventWrap',
+            'ns1:eventSet',
+            'ns1:event',
+            'ns1:eventActor',
+            'ns1:actorInRole',
+            'ns1:actor'
+        ),
+            self.ns1
+        )
+
+    def _get_vital_dates_actor(self, record):
+        metadata = record.find('.//ns0:metadata', self.ns0)
+
+        # for now, just return dates on first actor we find
+        for actor in self._get_actors(metadata):
+            earliest_date = ''
+            latest_date = ''
+
+            earliest_date_node = actor.find(
+                './/ns1:vitalDatesActor/ns1:earliestDate',
+                self.ns1
+            )
+
+            if earliest_date_node is not None:
+                earliest_date = earliest_date_node.text
+
+            latest_date_node = actor.find(
+                './/ns1:vitalDatesActor/ns1:latestDate',
+                self.ns1
+            )
+
+            if latest_date_node is not None:
+                latest_date = latest_date_node.text
+
+            return earliest_date, latest_date
+
+        return '', ''
+
+    def _get_maker_name(self, record):
+        metadata = record.find('.//ns0:metadata', self.ns0)
+        # for now, just return first actor name that we find
+        # we do however make sure already we have the 'alternate' attribute tag
+        for actor in self._get_actors(metadata):
+            worker_names = actor.findall(
+                './/ns1:nameActorSet/ns1:appellationValue', self.ns1)
+
+            if not worker_names:
+                return None
+
+            for wn in worker_names:
+                if wn.attrib['{http://www.lido-schema.org}pref'] == 'alternate':
+                    return wn.text
+
     def _get_aanbieder(self, record):
         metadata = record.find('.//ns0:metadata', self.ns0)
         legal_appelation = metadata.find('.//{}/{}/{}/{}/{}'.format(
-                'ns1:administrativeMetadata',
-                'ns1:recordWrap',
-                'ns1:recordSource',
-                'ns1:legalBodyName',
-                'ns1:appellationValue'
-            ),
+            'ns1:administrativeMetadata',
+            'ns1:recordWrap',
+            'ns1:recordSource',
+            'ns1:legalBodyName',
+            'ns1:appellationValue'
+        ),
             self.ns1
         )
         aanbieder = legal_appelation.text

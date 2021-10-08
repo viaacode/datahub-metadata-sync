@@ -29,7 +29,8 @@ class MockCursor:
         self.name = 'default'
 
     def create(self, name='default', cursor_factory=None):
-        print(f"cursor create name={name}, cursor_factory={cursor_factory}", flush=True)
+        print(
+            f"cursor create name={name}, cursor_factory={cursor_factory}", flush=True)
         self.create_params.append(cursor_factory)
         self.name = name
 
