@@ -32,6 +32,7 @@ def transform_xml_job(read_conn, update_conn):
     while True:
         records = rc.fetchmany(size=BATCH_SIZE)
         if not records:
+            print("BREAKING, 0 new records found!")
             break
 
         transform_count += len(records)

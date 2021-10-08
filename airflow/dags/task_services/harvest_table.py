@@ -118,7 +118,7 @@ class HarvestTable:
             FROM harvest_vkc JOIN mapping_vkc ON
             (harvest_vkc.work_id = mapping_vkc.work_id)
             WHERE
-            harvest_vkc.xml_converted=true
+            harvest_vkc.xml_converted=FALSE
             ORDER BY harvest_vkc.id
             """
         )
