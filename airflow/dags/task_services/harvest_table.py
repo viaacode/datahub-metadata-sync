@@ -92,10 +92,13 @@ class HarvestTable:
         return HarvestTable.count_qry(
             connection,
             """
-            SELECT count(*)
-            FROM harvest_vkc 
-            WHERE
-            xml_converted=FALSE
+            SELECT count(*) from (
+                SELECT COUNT(DISTINCT harvest_vkc.id) FROM harvest_vkc JOIN mapping_vkc ON
+                            (harvest_vkc.work_id = mapping_vkc.work_id)
+                            WHERE
+                            harvest_vkc.xml_converted=FALSE
+                            GROUP BY harvest_vkc.id
+            ) as mapped_count
             """
         )
 
@@ -107,7 +110,7 @@ class HarvestTable:
         # we do a join with our new mapping_vkc table instead:
         server_cursor.execute(
             """
-            SELECT DISTINCT ON (harvest_vkc.id) harvest_vkc.id, harvest_vkc.work_id, 
+            SELECT DISTINCT ON (harvest_vkc.id) harvest_vkc.id, harvest_vkc.work_id,
                 harvest_vkc.mam_xml, harvest_vkc.vkc_xml,
                 harvest_vkc.datestamp,
                 harvest_vkc.synchronized, harvest_vkc.xml_converted,
@@ -125,10 +128,13 @@ class HarvestTable:
         return HarvestTable.count_qry(
             connection,
             """
-            SELECT count(*)
-            FROM harvest_vkc
-            WHERE
-            synchronized=FALSE AND xml_converted=TRUE
+            SELECT count(*) from (
+                SELECT COUNT(DISTINCT harvest_vkc.id) FROM harvest_vkc JOIN mapping_vkc ON
+                            (harvest_vkc.work_id = mapping_vkc.work_id)
+                            WHERE
+                            harvest_vkc.synchronized=FALSE AND harvest_vkc.xml_converted=TRUE
+                            GROUP BY harvest_vkc.id
+            ) as mapped_count
             """
         )
 
@@ -194,7 +200,8 @@ class HarvestTable:
     #
     # 8629 results with this qry(but we have 8635 records with converted==true). Meaning there
     # are 6 duplicate harvest_vkc.work_id's
-    # SELECT DISTINCT ON (harvest_vkc.work_id) harvest_vkc.work_id, harvest_vkc.id, harvest_vkc.mam_xml, harvest_vkc.vkc_xml,
+    # SELECT DISTINCT ON (harvest_vkc.work_id) harvest_vkc.work_id,
+    #             harvest_vkc.id, harvest_vkc.mam_xml, harvest_vkc.vkc_xml,
     #                 harvest_vkc.datestamp,
     #                 harvest_vkc.synchronized, harvest_vkc.xml_converted,
     #                 mapping_vkc.fragment_id, mapping_vkc.cp_id, mapping_vkc.external_id

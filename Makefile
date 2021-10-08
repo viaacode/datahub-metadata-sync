@@ -1,4 +1,4 @@
-NAME := ldap2db
+NAME := airflow_vkc
 FOLDERS := ./app/ ./tests/
 
 .DEFAULT_GOAL := help
@@ -51,7 +51,8 @@ lint:
 format:
 	@. python_env/bin/activate; \
 	autopep8 --in-place -r airflow; \
-	autopep8 --in-place -r tests;
+	autopep8 --in-place -r tests; \
+	autopep8 --in-place -r datachecking;
 
 .PHONY: test
 test:
@@ -66,8 +67,8 @@ test:
 
 .PHONY: dockertest
 dockertest:
-	docker build . -t ldap2db; \
-	docker container run --name ldap2db --env-file .env.example --entrypoint python "ldap2db" "-m" "pytest"
+	docker build . -t airflow_vkc; \
+	docker container run --name airflow_vkc --env-file .env.example --entrypoint python "airflow_vkc" "-m" "pytest"
 
 
 .PHONY: coverage

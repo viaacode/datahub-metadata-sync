@@ -35,7 +35,7 @@ def transform_xml_fixture():
     return {
         'fetchone': [
             {
-                'qry': 'SELECT count(*)',
+                'qry': """SELECT count(*)""",
                 'rows': [5]
             },
         ],
