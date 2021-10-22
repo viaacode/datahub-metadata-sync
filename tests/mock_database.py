@@ -16,6 +16,8 @@
 #   a useful way to create fixtures is to just run the test code
 #   and pass -s that will print the query history here:
 #   python -m pytest tests/test_harvest_vkc_job.py -s
+#
+
 
 class MockCursor:
     def __init__(self):

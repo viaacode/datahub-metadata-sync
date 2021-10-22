@@ -1,4 +1,11 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+#
+#  @Author: Walter Schreppers
+#
+#  tests/test_pg_conn_mock.py
+#    Unit test to see the postgres mocking is working correctly
+#
 
 import unittest
 import psycopg2

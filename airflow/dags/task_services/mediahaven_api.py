@@ -77,7 +77,7 @@ class MediahavenApi:
             'height_px': mh_record['Technical']['Height']
         }
 
-# this is now deprecated, we use mapping_vkc table and a join with
+# This is now deprecated, we use mapping_vkc table and a join with
 # harvest_vkc table instead. the code is left for future reference as it shows
 # an alternative to do deltas without maintaining a db mapping table
 #
