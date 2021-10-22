@@ -1,4 +1,5 @@
 import sys
+import os
 import csv
 import psycopg2
 
@@ -32,22 +33,19 @@ def check_fragment(cursor, row):
 
 
 if __name__ == '__main__':
-
     if len(sys.argv) < 2:
         print(f"USAGE: python {sys.argv[0]} <csv file to check>")
         sys.exit(1)
 
-    # 'AIF_QAS_20210512.csv'
-    # 'aif_production.csv'
     csv_file = sys.argv[1]
 
     database = psycopg2.connect(
-        dbname="airflow_development",
-        user="postgres",
-        password="postgres",
-        host="127.0.0.1"
-
+        dbname=os.environ.get('DB_NAME'),
+        user=os.environ.get('DB_USER'),
+        password=os.environ.get('DB_PASS'),
+        host=os.environ.get('DB_HOST')
     )
+
     cursor = database.cursor()
 
     with open(csv_file, newline='') as csvfile:

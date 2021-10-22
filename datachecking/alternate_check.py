@@ -1,4 +1,5 @@
 import sys
+import os
 import csv
 import psycopg2
 
@@ -26,11 +27,10 @@ if __name__ == '__main__':
     csv_file = sys.argv[1]
 
     database = psycopg2.connect(
-        dbname="airflow_development",
-        user="postgres",
-        password="postgres",
-        host="127.0.0.1"
-
+        dbname=os.environ.get('DB_NAME'),
+        user=os.environ.get('DB_USER'),
+        password=os.environ.get('DB_PASS'),
+        host=os.environ.get('DB_HOST')
     )
     cursor = database.cursor()
 

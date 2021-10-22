@@ -96,19 +96,19 @@ def test_publish_updates_job(mock_rc):
     test_rabbit = MockRabbitClient()
     mock_rc.return_value = test_rabbit
 
-    # rabbitmq is down (according to previous hetarchief meeting as mentioned by Maarten)
-    # for now just passing this test then as we can't re-record the responses into a testing
-    # cassette
+    # set up mocked database connection with fixture data
+    read_conn = MockDatabase(transform_xml_fixture())
+    update_conn = MockDatabase()
+
+    publish_updates_job(read_conn, update_conn)
+
+    assert read_conn.commit_count == 0
+    assert update_conn.commit_count == 1
+
+    # rabbitmq is deprecated (according to previous hetarchief meeting as mentioned by Maarten)
+    # for now just passing this test. We can't re-record the responses into a testing
+    # cassette anymore... TODO: later refactor out this entiry rabbit sync part
     pass
-
-    # # set up mocked database connection with fixture data
-    # read_conn = MockDatabase(transform_xml_fixture())
-    # update_conn = MockDatabase()
-
-    # publish_updates_job(read_conn, update_conn)
-
-    # assert read_conn.commit_count == 0
-    # assert update_conn.commit_count == 1
 
     # assert 'SET synchronized = True' in update_conn.qry_history()[0]
     # assert 'WHERE id=1' in update_conn.qry_history()[0]
