@@ -107,49 +107,15 @@ Using existing mapping table mapping_vkc.
 Testrun a task for instance harvest oai data to target database, for first call even delta does full_sync as table is empty:
 ```
 $ airflow tasks test vkc_oai_harvester harvest_vkc 2015-06-01
+...
 
-[2021-04-27 19:22:11,352] {dagbag.py:451} INFO - Filling up the DagBag from /Users/wschrep/FreelanceWork/VIAA/IIIF_newproject/datahub-metadata-sync/airflow/dags
-[2021-04-27 19:22:11,381] {taskinstance.py:877} INFO - Dependencies all met for <TaskInstance: vkc_oai_harvester.harvest_oai 2015-06-01T00:00:00+00:00 [None]>
-[2021-04-27 19:22:11,390] {taskinstance.py:877} INFO - Dependencies all met for <TaskInstance: vkc_oai_harvester.harvest_oai 2015-06-01T00:00:00+00:00 [None]>
-[2021-04-27 19:22:11,390] {taskinstance.py:1068} INFO - 
---------------------------------------------------------------------------------
-[2021-04-27 19:22:11,390] {taskinstance.py:1069} INFO - Starting attempt 1 of 1
-[2021-04-27 19:22:11,391] {taskinstance.py:1070} INFO - 
---------------------------------------------------------------------------------
-[2021-04-27 19:22:11,393] {taskinstance.py:1089} INFO - Executing <Task(PythonOperator): harvest_oai> on 2015-06-01T00:00:00+00:00
-[2021-04-27 19:22:11,479] {taskinstance.py:1281} INFO - Exporting the following env vars:
-AIRFLOW_CTX_DAG_OWNER=airflow
-AIRFLOW_CTX_DAG_ID=vkc_oai_harvester
-AIRFLOW_CTX_TASK_ID=harvest_oai
-AIRFLOW_CTX_EXECUTION_DATE=2015-06-01T00:00:00+00:00
-harvest_oai called with full_sync=True harvest OAI data and store it in database
-[2021-04-27 19:22:11,489] {base.py:69} INFO - Using connection to: id: postgres_default. Host: localhost, Port: 5432, Schema: airflow_development, Login: postgres, Password: XXXXXXXX, extra: None
 OaiApi initialized
 Saving 100 of 15901 records progress is 0.6 %
 Saving 100 of 15901 records progress is 1.2 %
-Saving 100 of 15901 records progress is 1.8 %
-Saving 100 of 15901 records progress is 2.5 %
-Saving 100 of 15901 records progress is 3.1 %
-Saving 100 of 15901 records progress is 3.7 %
-Saving 100 of 15901 records progress is 4.4 %
-
 ...
-Saving 100 of 15901 records progress is 91.8 %
-Saving 100 of 15901 records progress is 92.4 %
-Saving 100 of 15901 records progress is 93.0 %
-Saving 100 of 15901 records progress is 93.7 %
-Saving 100 of 15901 records progress is 94.3 %
-Saving 100 of 15901 records progress is 94.9 %
-Saving 100 of 15901 records progress is 95.5 %
-Saving 100 of 15901 records progress is 96.2 %
-Saving 100 of 15901 records progress is 96.8 %
-Saving 100 of 15901 records progress is 97.4 %
-Saving 100 of 15901 records progress is 98.1 %
-Saving 100 of 15901 records progress is 98.7 %
-Saving 100 of 15901 records progress is 99.3 %
 Saving 100 of 15901 records progress is 99.9 %
 Saving 1 of 15901 records progress is 100.0 %
-[2021-04-27 19:24:31,314] {python.py:118} INFO - Done. Returned value was: None
+...
 [2021-04-27 19:24:31,320] {taskinstance.py:1185} INFO - Marking task as SUCCESS. dag_id=vkc_oai_harvester, task_id=harvest_oai, execution_date=20150601T000000, start_date=20210427T172211, end_date=20210427T172431
 ```
 
@@ -175,34 +141,11 @@ This truncates the table, then does full sync.
 ```
 $ airflow tasks test vkc_oai_harvester transform_xml 2015-06-01
 
-[2021-05-08 17:32:07,767] {dagbag.py:451} INFO - Filling up the DagBag from /Users/wschrep/FreelanceWork/VIAA/IIIF_newproject/datahub-metadata-sync/airflow/dags
-[2021-05-08 17:32:07,832] {taskinstance.py:877} INFO - Dependencies all met for <TaskInstance: vkc_oai_harvester.transform_xml 2015-06-01T00:00:00+00:00 [None]>
-[2021-05-08 17:32:07,840] {taskinstance.py:877} INFO - Dependencies all met for <TaskInstance: vkc_oai_harvester.transform_xml 2015-06-01T00:00:00+00:00 [None]>
-[2021-05-08 17:32:07,840] {taskinstance.py:1068} INFO -
---------------------------------------------------------------------------------
-[2021-05-08 17:32:07,840] {taskinstance.py:1069} INFO - Starting attempt 1 of 1
-[2021-05-08 17:32:07,841] {taskinstance.py:1070} INFO -
---------------------------------------------------------------------------------
-[2021-05-08 17:32:07,841] {taskinstance.py:1089} INFO - Executing <Task(PythonOperator): transform_xml> on 2015-06-01T00:00:00+00:00
-[2021-05-08 17:32:07,919] {taskinstance.py:1281} INFO - Exporting the following env vars:
-AIRFLOW_CTX_DAG_OWNER=airflow
-AIRFLOW_CTX_DAG_ID=vkc_oai_harvester
-AIRFLOW_CTX_TASK_ID=transform_xml
-AIRFLOW_CTX_EXECUTION_DATE=2015-06-01T00:00:00+00:00
-transform_lido_to_mh called, ... 
+... 
 XmlTransformer initialized
-[2021-05-08 17:32:08,126] {base.py:69} INFO - Using connection to: id: postgres_default. Host: localhost, Port: 5432, Schema: airflow_development, Login: postgres, Password: XXXXXXXX, extra: None
-[2021-05-08 17:32:08,136] {base.py:69} INFO - Using connection to: id: postgres_default. Host: localhost, Port: 5432, Schema: airflow_development, Login: postgres, Password: XXXXXXXX, extra: None
-fetched 100 records, now converting...
-Skipping record with work_id=0000.GRO1561.I
-Skipping record with work_id=0000.GRO1390.I
+...
 Skipping record with work_id=0000.GRO0128.I
-Skipping record with work_id=0000.GRO1476.I
-Skipping record with work_id=0000.GRO0479.I
-Skipping record with work_id=0000.GRO1372.I
-Skipping record with work_id=0000.GRO1360.I
-Skipping record with work_id=0000.GRO1359.I
-Skipping record with work_id=0000.GRO0227.I
+...
 Record work_id=0000.GRO1280.I found, fragment_id=7ba7f34a1d3b404590d7bcaa7f93687ce6e986214b8442cfb168d9fcf85b9194686ad969521f415c8a1bbbca34919135 cp_id=OR-x921j0n
 Skipping record with work_id=0000.GRO1243.I
 Skipping record with work_id=0000.GRO0299.I
@@ -210,8 +153,8 @@ Skipping record with work_id=0000.GRO0299.I
 
 ```
 So when a record is found in mediahaven using the api then we convert the xml and fill in the fragment_id and cp_id needed for the last task, sending it with rabbitmq as
-a mam-update-request.
-
+a mam-update-request. Records that are skipped or matched are logged as you can see in the above
+example (you can look this up in the airflow web interface after running a DAG).
 
 
 To now send the records to be updated with a task we run the following (the date is not really used, instead we look at the synchronized boolean flag, all that are not set to true will be sent and then the flag is updated to true):
@@ -236,18 +179,7 @@ in tests/mock_database.py.
 
 ```
 $ make coverage
-DB: sqlite:////Users/wschrep/FreelanceWork/VIAA/IIIF_newproject/datahub-metadata-sync/airflow/airflow.db
-[2021-06-10 10:20:38,315] {db.py:684} INFO - Creating tables
-INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
-INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
-WARNI [airflow.models.crypto] empty cryptography key - values will not be stored encrypted.
-Initialization done
-====================================== test session starts ======================================
-platform darwin -- Python 3.9.5, pytest-6.2.4, py-1.10.0, pluggy-0.13.1
-rootdir: /Users/wschrep/FreelanceWork/VIAA/IIIF_newproject/datahub-metadata-sync
-plugins: recording-0.11.0, docker-tools-1.0.3, cov-2.8.1, mock-3.5.1
-collected 9 items                                                                               
-
+...
 tests/test_dag_tasks.py .                                                                 [ 11%]
 tests/test_harvest_dag.py .                                                               [ 22%]
 tests/test_harvest_mapping_job.py ..                                                      [ 44%]
