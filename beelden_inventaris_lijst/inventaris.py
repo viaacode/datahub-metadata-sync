@@ -32,6 +32,10 @@ def read_inventaris_excel(mh_api, filename):
                     inventaris_nr,
                     mh_result['fragment_id']
                 ))
+
+                print(f"\nDEBUG {inventaris_nr} -> mh_result={mh_result}")
+                print("\n\n")
+
             else:
                 print(f"NOT FOUND inventaris_nr={inventaris_nr}")
 

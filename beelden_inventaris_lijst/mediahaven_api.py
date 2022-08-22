@@ -25,7 +25,6 @@ class MediahavenApi:
     )
     API_USER = os.environ.get('MEDIAHAVEN_USER', 'apiUser')
     API_PASSWORD = os.environ.get('MEDIAHAVEN_PASS', 'password')
-
     ESCAPE_WORK_ID = os.environ.get('ESCAPE_WORK_ID', 'false')
 
     def __init__(self, session=None):
