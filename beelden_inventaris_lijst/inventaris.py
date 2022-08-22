@@ -1,4 +1,11 @@
 # https://meemoo.atlassian.net/browse/OPS-1614
+# to install packages
+# cd ..
+# make install
+# source python_env/bin/activate
+# cd beelden_inventaris_lijst
+# python inventaris.py
+#
 import openpyxl
 
 # this works and can write to an xlsx, but is really slow:
@@ -60,3 +67,5 @@ for ws in wb:
 # Descriptive.Authors.Author,
 # Descriptive.OriginalFilename,
 # Descriptive.Title
+# Creator en rechtenstatus (SABAM etc) mogen ook toegevoegd worden. 
+
