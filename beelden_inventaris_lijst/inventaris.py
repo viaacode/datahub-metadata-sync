@@ -62,14 +62,16 @@ def write_csv_header(writer):
     writer.writerow(first_row)
 
 def write_csv(writer, csv_row):
-    print(f"writing csv_row={csv_row}\n")
     data = []
     for col in csv_cols():
         data.append( csv_row.get(col) )
 
+    print(f"row = {data}\n")
     writer.writerow(data)
 
 def process_inventaris_excel(mh_api, filename, outputfile):
+    SKIP_ROWS=1851  # 1 
+
     wb = openpyxl.load_workbook(filename, read_only=True)
     outfile = open(outputfile, 'w')
     writer = csv.writer(outfile)
@@ -79,8 +81,12 @@ def process_inventaris_excel(mh_api, filename, outputfile):
     for ws in wb:
         for row in ws.rows:
             inventaris_nr = row[1].value
+            count += 1
             if inventaris_nr == 'Inventarisnummer':
-                pass
+                continue
+
+            if count < SKIP_ROWS:
+                continue
 
             instelling = row[0].value
             csv_row = {
@@ -111,13 +117,12 @@ def process_inventaris_excel(mh_api, filename, outputfile):
                 csv_row['fragment_id'] = 'INVENTARIS NOT FOUND IN MEDIAHAVEN'
 
             write_csv(writer, csv_row)
-            count += 1
             print(
                     "processed = ", count,
                     "total rows=", ws.max_row,
                     " procent processed=",
                     float(count)/float(ws.max_row)*100,
-                    "\n\n"
+                    "\n"
             )
 
     outfile.close()
@@ -128,7 +133,7 @@ def main():
     process_inventaris_excel(
         mh_api,
         "OPS1614_inventarisnrs_20220804_copyright.xlsx",
-        "inventaris_output.csv"
+        "inventaris_output_deel2.csv"
     )
 
 
