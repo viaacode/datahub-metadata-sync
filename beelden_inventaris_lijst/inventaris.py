@@ -7,74 +7,120 @@
 # python inventaris.py
 #
 import openpyxl
+import csv
 from mediahaven_api import MediahavenApi
 
-def read_inventaris_excel(mh_api, filename):
+def set_dynamic_fields(result, csv_row):
+    dynamic = result['Dynamic']
+    csv_row['dc_title']= dynamic.get('dc_title')
+    csv_row['dc_source']= dynamic.get('dc_source')
+    csv_row['dc_rechtenstatus']= dynamic.get('dc_rights_rightsHolders')
+    csv_row['dc_creators']= dynamic.get('dc_creators')
+    csv_row['dc_rights_credit']= dynamic.get('dc_rigths_credit')
+    csv_row['dc_creators_maker']= dynamic['dc_creators'].get('Maker')
+    csv_row['dc_creators_fotograaf']= dynamic['dc_creators'].get('Fotograaf')
+    csv_row['dc_identifier_localid']= dynamic.get('dc_identifier_localid')
+    csv_row['dc_pid']= dynamic.get('PID')
+    csv_row['dc_titles_archief']= dynamic['dc_titles'].get('archief')
+    csv_row['dc_titles_deelarchief']= dynamic['dc_titles'].get('deelarchief')
+    return csv_row
+
+def set_local_ids(result, csv_row):
+    li = result['Dynamic']['dc_identifier_localids']    
+    csv_row['li_persistente_uri_werk'] = li.get('PersistenteURI_Werk')
+    csv_row['li_workpid'] = li.get('WorkPID')
+    csv_row['li_inventarisnummer'] = li.get('Inventarisnummer')
+    csv_row['li_afbeelding'] = li.get('Afbeelding')
+    csv_row['li_objectnaam'] = li.get('Objectnaam')
+    csv_row['li_persistente_uri_record'] = li.get('PersistenteURI_Record')
+    return csv_row
+
+def set_technical_fields(result, csv_row):
+    technical = result['Technical'] 
+    csv_row['file_size'] = technical['FileSize']
+    csv_row['mimetype'] = technical['MimeType']
+    csv_row['height'] = technical['Height']
+    csv_row['width'] = technical['Width']
+    csv_row['orientation'] = technical['ImageOrientation']
+    return csv_row
+
+def set_descriptive_fields(result, csv_row):
+    descriptive = result['Descriptive']               
+    csv_row['creation_date'] = descriptive.get('CreationDate')
+    csv_row['author'] = descriptive['Authors'].get('Author')
+    csv_row['original_filename'] = descriptive.get('OriginalFilename')
+    csv_row['title'] = descriptive.get('Title')
+    return csv_row
+
+
+def csv_cols():
+    return ['instelling', 'inventaris_nr', 'fragment_id', 'copyright', 'vervaardiger1', 'vervaardiger2', 'vervaardiger3', 'vervaardiger4', 'vervaardiger5', 'vervaardiger6', 'vervaardiger7', 'dc_title', 'dc_source', 'dc_rechtenstatus', 'dc_creators', 'dc_rights_credit', 'dc_creators_maker', 'dc_creators_fotograaf', 'dc_identifier_localid', 'dc_pid', 'dc_titles_archief', 'dc_titles_deelarchief', 'li_persistente_uri_werk', 'li_workpid', 'li_inventarisnummer', 'li_afbeelding', 'li_objectnaam', 'li_persistente_uri_record', 'file_size', 'mimetype', 'height', 'width', 'orientation', 'creation_date', 'author', 'original_filename', 'title']
+
+def write_csv_header(writer):
+    colnames = csv_cols()
+    first_row = [col.capitalize() for col in colnames]
+    writer.writerow(first_row)
+
+def write_csv(writer, csv_row):
+    print(f"writing csv_row={csv_row} \n")
+    data = []
+    for col in csv_cols():
+        data.append( csv_row.get(col) )
+
+    writer.writerow(data)
+
+def process_inventaris_excel(mh_api, filename, outputfile):
     wb = openpyxl.load_workbook(filename, read_only=True)
+    outfile = open(outputfile, 'w')
+    writer = csv.writer(outfile)
+    write_csv_header(writer)
+
     for ws in wb:
         for row in ws.rows:
-            # for cell in row:
-            #     print(cell.value, end=" ")
-            instelling = row[0].value
             inventaris_nr = row[1].value
-            copyright = row[2].value
-            vervaardiger1 = row[3].value
-            vervaardiger2 = row[4].value
-            vervaardiger3 = row[5].value
-            vervaardiger4 = row[6].value
-            vervaardiger5 = row[7].value
-            vervaardiger6 = row[8].value
-            vervaardiger7 = row[9].value
+            if inventaris_nr == 'Inventarisnummer':
+                pass
+
+            instelling = row[0].value
+            csv_row = {
+                'instelling': instelling,
+                'inventaris_nr': inventaris_nr,
+                'fragment_id': 'LOOKUP PENDING...',
+                'copyright': row[2].value,
+                'vervaardiger1': row[3].value,
+                'vervaardiger2': row[4].value,
+                'vervaardiger3': row[5].value,
+                'vervaardiger4': row[6].value,
+                'vervaardiger5': row[7].value,
+                'vervaardiger6': row[8].value,
+                'vervaardiger7': row[9].value
+            }
 
             mh_result = mh_api.find_vkc_record(inventaris_nr)
             if mh_result:
-                print("FOUND inventaris_nr={} fragment_id={}".format(
-                    inventaris_nr,
-                    mh_result['fragment_id']
-                ))
+                result = mh_api.find_fragment(mh_result['fragment_id'])
 
-                print(f"\nDEBUG {inventaris_nr} -> mh_result={mh_result}")
-                print("\n\n")
+                csv_row['fragment_id'] = mh_result.get('fragment_id') 
+                csv_row = set_dynamic_fields(result, csv_row) 
+                csv_row = set_local_ids(result, csv_row)
+                csv_row = set_technical_fields(result, csv_row)
+                csv_row = set_descriptive_fields(result, csv_row)
 
             else:
-                print(f"NOT FOUND inventaris_nr={inventaris_nr}")
+                csv_row['fragment_id'] = 'INVENTARIS NOT FOUND IN MEDIAHAVEN'
 
-            # TODO:
-            # output to csv format instead of xlsx because of poor python performance
-            # when writing to xlsx files.
-            # Velden voor csv export:
-            # inventarisnummer
-            # mediaobject ID (of fragment ID)
-            # titel
-            # Dynamic.dc_source,
-            # Dynamic.dc_rights_credit,
-            # Dynamic.dc_identifier_localids.PersistenteURI_Werk,
-            # Dynamic.dc_identifier_localids.WorkPID,
-            # Dynamic.dc_identifier_localids.Inventarisnummer,
-            # Dynamic.dc_identifier_localids.Afbeelding,
-            # Dynamic.dc_identifier_localids.Objectnaam,
-            # Dynamic.dc_identifier_localids.PersistenteURI_Record,
-            # Dynamic.dc_creators.Maker,
-            # Dynamic.dc_title,
-            # Dynamic.dc_identifier_localid,
-            # Dynamic.PID,
-            # Dynamic.dc_titles.archief,
-            # Dynamic.dc_titles.deelarchief,
-            # Technical.FileSize,
-            # Technical.MimeType,
-            # Technical.Height,
-            # Technical.Width,
-            # Technical.ImageOrientation,
-            # Descriptive.CreationDate,
-            # Descriptive.Authors.Author,
-            # Descriptive.OriginalFilename,
-            # Descriptive.Title
-            # Creator en rechtenstatus (SABAM etc) mogen ook toegevoegd worden. 
-            
+            write_csv(writer, csv_row)
+
+    outfile.close()
+
 
 def main():
     mh_api = MediahavenApi()
-    read_inventaris_excel(mh_api, "OPS1614_inventarisnrs_20220804_copyright.xlsx")
+    process_inventaris_excel(
+        mh_api,
+        "OPS1614_inventarisnrs_20220804_copyright.xlsx",
+        "inventaris_output.csv"
+    )
 
 
 if __name__ == '__main__':

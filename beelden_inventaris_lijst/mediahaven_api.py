@@ -57,6 +57,16 @@ class MediahavenApi:
             f"/resources/media/?q={search}&startIndex={offset}&nrOfResults={limit}"
         )
 
+    def find_by(self, department, object_key, value):
+        search_matches = self.list_objects(
+            department, search=f"+({object_key}:{value})")
+        return search_matches
+
+
+    def find_fragment(self, frag_id):
+        frag_url = f"/resources/media/{frag_id}"
+        return self.get_proxy(frag_url)
+
     def list_inventaris(self, offset=0, limit=20):
         return self.list_objects(
             search='%2B(Type:image)%2B(dc_identifier_localidsinventarisnummer:*)',
