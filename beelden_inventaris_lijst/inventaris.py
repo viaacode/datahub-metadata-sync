@@ -62,7 +62,7 @@ def write_csv_header(writer):
     writer.writerow(first_row)
 
 def write_csv(writer, csv_row):
-    print(f"writing csv_row={csv_row} \n")
+    print(f"writing csv_row={csv_row}\n")
     data = []
     for col in csv_cols():
         data.append( csv_row.get(col) )
@@ -75,6 +75,7 @@ def process_inventaris_excel(mh_api, filename, outputfile):
     writer = csv.writer(outfile)
     write_csv_header(writer)
 
+    count = 0
     for ws in wb:
         for row in ws.rows:
             inventaris_nr = row[1].value
@@ -110,6 +111,14 @@ def process_inventaris_excel(mh_api, filename, outputfile):
                 csv_row['fragment_id'] = 'INVENTARIS NOT FOUND IN MEDIAHAVEN'
 
             write_csv(writer, csv_row)
+            count += 1
+            print(
+                    "processed = ", count,
+                    "total rows=", ws.max_row,
+                    " procent processed=",
+                    float(count)/float(ws.max_row)*100,
+                    "\n\n"
+            )
 
     outfile.close()
 
