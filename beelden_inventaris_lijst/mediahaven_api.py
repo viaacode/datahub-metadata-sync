@@ -87,6 +87,7 @@ class MediahavenApi:
         }
 
     def find_vkc_record(self, work_id):
+        work_id = str(work_id)
         try:
             if self.ESCAPE_WORK_ID == 'true':
                 # this working on production:

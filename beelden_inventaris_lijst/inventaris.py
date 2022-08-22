@@ -17,12 +17,18 @@ def set_dynamic_fields(result, csv_row):
     csv_row['dc_rechtenstatus']= dynamic.get('dc_rights_rightsHolders')
     csv_row['dc_creators']= dynamic.get('dc_creators')
     csv_row['dc_rights_credit']= dynamic.get('dc_rigths_credit')
-    csv_row['dc_creators_maker']= dynamic['dc_creators'].get('Maker')
-    csv_row['dc_creators_fotograaf']= dynamic['dc_creators'].get('Fotograaf')
+
+    if dynamic.get('dc_creators'):
+        csv_row['dc_creators_maker']= dynamic['dc_creators'].get('Maker')
+        csv_row['dc_creators_fotograaf']= dynamic['dc_creators'].get('Fotograaf')
+
     csv_row['dc_identifier_localid']= dynamic.get('dc_identifier_localid')
     csv_row['dc_pid']= dynamic.get('PID')
-    csv_row['dc_titles_archief']= dynamic['dc_titles'].get('archief')
-    csv_row['dc_titles_deelarchief']= dynamic['dc_titles'].get('deelarchief')
+    
+    if dynamic.get('dc_titles'):
+        csv_row['dc_titles_archief']= dynamic['dc_titles'].get('archief')
+        csv_row['dc_titles_deelarchief']= dynamic['dc_titles'].get('deelarchief')
+
     return csv_row
 
 def set_local_ids(result, csv_row):
@@ -70,8 +76,7 @@ def write_csv(writer, csv_row):
     writer.writerow(data)
 
 def process_inventaris_excel(mh_api, filename, outputfile):
-    SKIP_ROWS=1851  # 1 
-
+    SKIP_ROWS = 10440  # 1 
     wb = openpyxl.load_workbook(filename, read_only=True)
     outfile = open(outputfile, 'w')
     writer = csv.writer(outfile)
@@ -133,7 +138,7 @@ def main():
     process_inventaris_excel(
         mh_api,
         "OPS1614_inventarisnrs_20220804_copyright.xlsx",
-        "inventaris_output_deel2.csv"
+        "inventaris_output_deel5.csv"
     )
 
 
