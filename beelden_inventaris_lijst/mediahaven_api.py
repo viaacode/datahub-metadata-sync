@@ -25,7 +25,10 @@ class MediahavenApi:
     )
     API_USER = os.environ.get('MEDIAHAVEN_USER', 'apiUser')
     API_PASSWORD = os.environ.get('MEDIAHAVEN_PASS', 'password')
-    ESCAPE_WORK_ID = os.environ.get('ESCAPE_WORK_ID', 'true') # true/false gives different results, with false most are found, but when toggling this to true we find some that we're not found when escape is off
+
+    # true/false gives different results, with false most are found,
+    # but when toggling this to true we find some that we're not found when escape is off
+    ESCAPE_WORK_ID = os.environ.get('ESCAPE_WORK_ID', 'false')
 
     def __init__(self, session=None):
         if session is None:
@@ -62,7 +65,6 @@ class MediahavenApi:
             department, search=f"+({object_key}:{value})")
         return search_matches
 
-
     def find_fragment(self, frag_id):
         frag_url = f"/resources/media/{frag_id}"
         return self.get_proxy(frag_url)
@@ -95,10 +97,11 @@ class MediahavenApi:
             else:
                 # for qas we skip the replace of .
                 localid = work_id.replace("/", "\\/")
-    
+
             search_matches = self.list_objects(
                 search=f'%2B(dc_identifier_localidsinventarisnummer:"{localid}")'
             )
+
             if search_matches['TotalNrOfResults'] >= 1:
                 mh_record = search_matches['MediaDataList'][0]
                 return self.mh_mapping(mh_record)
