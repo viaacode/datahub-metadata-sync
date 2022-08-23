@@ -52,7 +52,8 @@ format:
 	@. python_env/bin/activate; \
 	autopep8 --in-place -r airflow; \
 	autopep8 --in-place -r tests; \
-	autopep8 --in-place -r datachecking;
+	autopep8 --in-place -r datachecking; \
+	autopep8 --in-place -r beelden_inventaris_lijst;
 
 .PHONY: test
 test:
