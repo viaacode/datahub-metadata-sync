@@ -25,7 +25,7 @@ class MediahavenApi:
     )
     API_USER = os.environ.get('MEDIAHAVEN_USER', 'apiUser')
     API_PASSWORD = os.environ.get('MEDIAHAVEN_PASS', 'password')
-    ESCAPE_WORK_ID = os.environ.get('ESCAPE_WORK_ID', 'false')
+    ESCAPE_WORK_ID = os.environ.get('ESCAPE_WORK_ID', 'true') # true/false gives different results, with false most are found, but when toggling this to true we find some that we're not found when escape is off
 
     def __init__(self, session=None):
         if session is None:

@@ -10,6 +10,7 @@ import openpyxl
 import csv
 from mediahaven_api import MediahavenApi
 
+
 def set_dynamic_fields(result, csv_row):
     dynamic = result['Dynamic']
     csv_row['dc_title']= dynamic.get('dc_title')
@@ -31,6 +32,7 @@ def set_dynamic_fields(result, csv_row):
 
     return csv_row
 
+
 def set_local_ids(result, csv_row):
     li = result['Dynamic']['dc_identifier_localids']    
     csv_row['li_persistente_uri_werk'] = li.get('PersistenteURI_Werk')
@@ -41,6 +43,7 @@ def set_local_ids(result, csv_row):
     csv_row['li_persistente_uri_record'] = li.get('PersistenteURI_Record')
     return csv_row
 
+
 def set_technical_fields(result, csv_row):
     technical = result['Technical'] 
     csv_row['file_size'] = technical['FileSize']
@@ -49,6 +52,7 @@ def set_technical_fields(result, csv_row):
     csv_row['width'] = technical['Width']
     csv_row['orientation'] = technical['ImageOrientation']
     return csv_row
+
 
 def set_descriptive_fields(result, csv_row):
     descriptive = result['Descriptive']               
@@ -67,6 +71,7 @@ def write_csv_header(writer):
     first_row = [col.capitalize() for col in colnames]
     writer.writerow(first_row)
 
+
 def write_csv(writer, csv_row):
     data = []
     for col in csv_cols():
@@ -74,6 +79,7 @@ def write_csv(writer, csv_row):
 
     print(f"row = {data}\n")
     writer.writerow(data)
+
 
 def process_inventaris_excel(mh_api, filename, outputfile):
     SKIP_ROWS = 10440  # 1 
@@ -85,6 +91,7 @@ def process_inventaris_excel(mh_api, filename, outputfile):
     count = 0
     for ws in wb:
         for row in ws.rows:
+            instelling = row[0].value
             inventaris_nr = row[1].value
             count += 1
             if inventaris_nr == 'Inventarisnummer':
@@ -93,7 +100,6 @@ def process_inventaris_excel(mh_api, filename, outputfile):
             if count < SKIP_ROWS:
                 continue
 
-            instelling = row[0].value
             csv_row = {
                 'instelling': instelling,
                 'inventaris_nr': inventaris_nr,
@@ -133,17 +139,92 @@ def process_inventaris_excel(mh_api, filename, outputfile):
     outfile.close()
 
 
+def count_lines(filename):
+    fp = open(filename, 'r')
+    for line_count, line in enumerate(fp):
+        pass
+    fp.close()
+    return line_count
+
+
+def reprocess_missing_entries(mh_api, filename, outputfile):
+    total_rows = count_lines(filename)
+    inputfile = open(filename)
+    reader = csv.reader(inputfile)
+
+    outfile = open(outputfile, 'w')
+    writer = csv.writer(outfile)
+
+    count = 0
+    for row in reader:
+        instelling = row[0]
+        inventaris_nr = row[1]
+        count +=1
+        fragment_id = row[2]
+
+        if inventaris_nr == 'Inventaris_nr':
+            writer.writerow(row)
+            continue
+
+        if fragment_id != 'INVENTARIS NOT FOUND IN MEDIAHAVEN':
+            writer.writerow(row)
+            continue
+
+        csv_row = {
+            'instelling': instelling,
+            'inventaris_nr': inventaris_nr,
+            'fragment_id': 'LOOKUP PENDING...',
+            'copyright': row[3],
+            'vervaardiger1': row[4],
+            'vervaardiger2': row[5],
+            'vervaardiger3': row[6],
+            'vervaardiger4': row[7],
+            'vervaardiger5': row[8],
+            'vervaardiger6': row[9],
+            'vervaardiger7': row[10]
+        }
+
+        mh_result = mh_api.find_vkc_record(inventaris_nr)
+        if mh_result:
+            result = mh_api.find_fragment(mh_result['fragment_id'])
+
+            csv_row['fragment_id'] = mh_result.get('fragment_id') 
+            csv_row = set_dynamic_fields(result, csv_row) 
+            csv_row = set_local_ids(result, csv_row)
+            csv_row = set_technical_fields(result, csv_row)
+            csv_row = set_descriptive_fields(result, csv_row)
+
+        else:
+            csv_row['fragment_id'] = 'INVENTARIS NOT FOUND IN MEDIAHAVEN'
+
+        write_csv(writer, csv_row)
+        print(
+                "processed = ", count,
+                "total rows=", total_rows,
+                " procent processed=",
+                round(float(count)/float(total_rows)*100, 2),
+                "\n"
+        )
+
+    inputfile.close()
+    outfile.close()
+
+
 def main():
     mh_api = MediahavenApi()
-    process_inventaris_excel(
+    # process_inventaris_excel(
+    #     mh_api,
+    #     "OPS1614_inventarisnrs_20220804_copyright.xlsx",
+    #     "inventaris_output_deel5.csv"
+    # )
+
+    reprocess_missing_entries(
         mh_api,
-        "OPS1614_inventarisnrs_20220804_copyright.xlsx",
-        "inventaris_output_deel5.csv"
+        "output.csv",
+        "output_v2.csv"
     )
 
 
 if __name__ == '__main__':
     main()
-
-
 
